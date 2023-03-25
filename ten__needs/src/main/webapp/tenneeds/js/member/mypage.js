@@ -1,0 +1,1 @@
+console.log('mypage.js 연결확인');

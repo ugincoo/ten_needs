@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+.mypageContent{ display: flex; }
+.mypageTitle{
+	margin: 3% 0; 		font-family: 'TheJamsil5Bold'; 
+	font-size: 43px;	font-weight : 700;		color : #203725;
+}
+
+/* --------------------------------------------- side bar */
+.infobox{ width: 35%; margin-right: 5%; margin-bottom: 5%; }
+.infoTitle, .gameTitle{
+	margin: 3% 0; 		font-family: 'TheJamsil5Bold'; 
+	font-size: 35px; 	font-weight: 500;		color : #203725;
+}
+.infoContent div{ margin-top: 2%; font-size: 21px; }
+.mImg{ width: 70%; }
+
+.infobox button{
+	color: white;		width: 30%;			height: 45px;
+	margin-top: 3%;  	margin-right: 1%;
+	border: none;
+	background-color: #DBC8B9;	border-radius: 15px;
+}
+
+.deleteBtn{ background-color: #648977 !important; }
+
+
+/* --------------------------------------------- main */
+/* --------------------------------------------- 프로필 정보 */
+.gamewrap{ width: 60%; }
+
+.rImg{ width: 35%; }
+.rTitle, .rName{ 
+	font-size: 21px; margin-top: 2%;
+	display: flex; justify-content: space-around;
+}
+.rTitle, .gRank{ font-family: 'TheJamsil5Bold'; font-weight: 500; font-size: 25px; }
+
+/* --------------------------------------------- 게임 전적 정보 */
+.gameContent div{ margin-top: 2%; margin-right: 3%; font-size: 21px; width: 28%; }
+
+.gameContent{ display: flex; flex-wrap: wrap; }
+.infoContent, .gameContent i, .gRank i { color: #063223; font-size: 21px; }
+
+
