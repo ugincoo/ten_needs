@@ -1,0 +1,8 @@
+@charset "UTF-8";
+.gamebox{
+	display: flex; justify-content: center;
+}
+
+.game_userbox{
+	display: inline-block;
+}

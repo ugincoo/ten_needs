@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-18">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/cos.jar"/>
+	<classpathentry kind="lib" path="C:/jackson-annotations-2.14.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/jackson-core-2.14.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/jackson-databind-2.14.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/java-activation.jar"/>
+	<classpathentry kind="lib" path="C:/java-mail.jar"/>
+	<classpathentry kind="lib" path="C:/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

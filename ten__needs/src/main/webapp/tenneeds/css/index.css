@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+/*------------------------------ 외부 폰트 ------------------------------*/
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/*------------------------------------------------*/
+li{	list-style : none; }
+
+/*------------------------------------------------*/
+.maintitle{
+   display: inline-block;
+}
+
+a{
+	text-decoration: none; /*밑줄 제거*/
+	color : black; /*폰트색 검정으로*/
+}
+
+
+.test{ font-size: 90px; }
+
+/*------------------------- 프로필 사진 기본 값 ---------------------------*/
+.profile{/*사진 프로필*/
+	width : 70px;
+	height: 70px;
+	border:  solid 1px #e8e8e8;
+	border-radius: 50%; /*둥근 모서리*/
+}
+.mainbtnbox{
+   display: flex; justify-content: center;
+}
+
+.mainbtnbox li{
+   margin-left: 10px;
+   padding: 15px ;
+   background-color : transparent;
+   border: 1px solid #E6D9CF;
+   border-radius: 10px;
+}
+
+.mainball{
+	width: 30%; height: 30%;
+}
+/*  */
