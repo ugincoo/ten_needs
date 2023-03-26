@@ -21,7 +21,7 @@ function onDelete(){
 		}
 	})
 }
-
+//
 // ------------------------ 프로필 출력: memberInfo 이용 ------------------------
 // printInfo(); // --------------- 완료되면 주석 해제 처리
 function printInfo(){

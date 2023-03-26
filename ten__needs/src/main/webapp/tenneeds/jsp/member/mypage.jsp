@@ -37,7 +37,7 @@
 			<!-- main -->
 			<div class="gamewrap">
 				
-				<!-- 게임 전적 정보 -->
+				<!-- 게임 전적 정보 --><!--  -->
 				<div class="gamebox">
 				
 					<h4 class="gameTitle"> 게임 전적 정보 </h4>
