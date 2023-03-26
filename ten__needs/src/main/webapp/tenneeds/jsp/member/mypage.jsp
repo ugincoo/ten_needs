@@ -58,6 +58,21 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 모달 HTMLs -->
+	<div class="modal_wrap">
+		<div class="modal_box">
+			<h3 class="modal_title"></h3>
+			<div class="modal_content">
+				회원 탈퇴 하시겠습니까? <br/>
+				비밀번호: <input type="password" class="mPw">
+			</div>
+			<div class="modal_btns">
+				<button onclick="onDelete()" class="modla_cancle" type="button"> 확인 </button>
+				<button onclick="closeModal()" class="modla_cancle" type="button"> 취소 </button>
+			</div>
+		</div>
+	</div>
 
 	<script src="/ten__needs/tenneeds/js/member/mypage.js" type="text/javascript"></script>
 </body>
