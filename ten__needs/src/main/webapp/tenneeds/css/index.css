@@ -12,9 +12,7 @@
 li{	list-style : none; }
 
 /*------------------------------------------------*/
-.maintitle{
-   display: inline-block;
-}
+
 
 a{
 	text-decoration: none; /*밑줄 제거*/
@@ -31,19 +29,3 @@ a{
 	border:  solid 1px #e8e8e8;
 	border-radius: 50%; /*둥근 모서리*/
 }
-.mainbtnbox{
-   display: flex; justify-content: center;
-}
-
-.mainbtnbox li{
-   margin-left: 10px;
-   padding: 15px ;
-   background-color : transparent;
-   border: 1px solid #E6D9CF;
-   border-radius: 10px;
-}
-
-.mainball{
-	width: 30%; height: 30%;
-}
-/*  */
