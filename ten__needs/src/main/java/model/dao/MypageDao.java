@@ -44,11 +44,11 @@ public class MypageDao extends Dao {
 				
 				while( rs2.next() ) {
 					if( rs2.first() ) {
-						dto.setgBestRa(rs.getString(2));
-						dto.setrImg(rs.getString(3));
+						dto.setgBestRa(rs2.getString(2));
+						dto.setrImg(rs2.getString(3));
 					}
 					if( rs2.last() ) {
-						dto.setgWorstRa(rs.getString(2));
+						dto.setgWorstRa(rs2.getString(2));
 					}
 				}
 				return dto;
