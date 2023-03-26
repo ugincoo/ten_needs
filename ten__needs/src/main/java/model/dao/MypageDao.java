@@ -42,7 +42,7 @@ public class MypageDao extends Dao {
 				ps.setInt(1, mNo);
 				ResultSet rs2 = ps.executeQuery();
 				
-				while( rs2.next() ) {
+				while( rs2.next() ) { // --- test해야함
 					if( rs2.first() ) {
 						dto.setgBestRa(rs2.getString(2));
 						dto.setrImg(rs2.getString(3));
