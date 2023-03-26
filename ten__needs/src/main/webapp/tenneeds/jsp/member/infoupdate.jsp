@@ -5,25 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 	<link href="/ten__needs/tenneeds/css/member/signup.css" rel="stylesheet" >
 </head>
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>
 	
+	
 	<div class="container">
-		<form class="signupForm">
+		<form class="updateForm">
 		
 			<h3> TENNEEDS </h3>
-			<p> 회원가입 </p>
+			<p> 회원정보 수정 </p>
 			
 			<div class="title"> 아이디[닉네임] </div>
-			<input onkeyup="midcheck()" maxlength="30" name="mid" class="mid" type="text">
-			<div class="checkconfirm"></div>
+			<div class="mid"></div>
 			
 			<div class="title"> 비밀번호 </div>
-			<input name="mpw" onkeyup="mpwcheck()" maxlength="16" class="mpw" type="password">
+			<input name="mpw" maxlength="16" class="mpw" type="password">
+			
+			<div class="title"> new 비밀번호 </div>
+			<input name="newmpw" onkeyup="mpwcheck()" maxlength="16" class="newmpw" type="password">
 			<div class="checkconfirm"></div>
 		
 			<div class="title"> 전화번호 </div>
@@ -45,14 +47,17 @@
 			<div class="title"> 프로필 </div>
 			<div class="pimgbox">
 				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.webp">
-				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
+				<div>
+					<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
+					<input class="defaultimg" type="checkbox"> 기본프로필 사용
+				</div>
 			</div>
 			
-			<button class="signupbtn" onclick="signup()" type="button"> 회원가입 완료 </button>
+			<button class="signupbtn" onclick="infoupdate()" type="button"> 정보수정 완료 </button>
 		</form>
 	</div>
-
 	
-	<script src="/ten__needs/tenneeds/js/member/signup.js" type="text/javascript"></script>
+	
+	<script src="/ten__needs/tenneeds/js/member/infoupdate.js" type="text/javascript"></script>
 </body>
 </html>
