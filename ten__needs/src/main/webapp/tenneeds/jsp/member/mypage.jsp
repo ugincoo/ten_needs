@@ -41,9 +41,11 @@
 				<div class="gamebox">
 				
 					<h4 class="gameTitle"> 게임 전적 정보 </h4>
-					<div class="gRank"> <i class="fab fa-ravelry"></i> 랭크 3위 </div>
+					<!-- <div class="gRank"> <i class="fab fa-ravelry"></i> 랭크 3위 </div> -->
 					<div class="racketwrap">
 						<img class="rImg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/파리채.png"> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
+						<div class="racketTitle"> 가장 잘하는 라켓 </div>
+						<div class="racketContent"> 파리채 </div>
 					</div>
 					<div class="gameContent">
 						<div class="gId"> <i class="fas fa-regular fa-id-badge"></i> 닉네임 호키 </div>
@@ -62,9 +64,8 @@
 	<!-- 모달 HTMLs -->
 	<div class="modal_wrap">
 		<div class="modal_box">
-			<h3 class="modal_title"></h3>
+			<h3 class="modal_title"> 회원 탈퇴 하시겠습니까?  </h3>
 			<div class="modal_content">
-				회원 탈퇴 하시겠습니까? <br/>
 				비밀번호: <input type="password" class="mPw">
 			</div>
 			<div class="modal_btns">

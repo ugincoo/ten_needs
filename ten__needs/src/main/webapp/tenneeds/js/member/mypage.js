@@ -50,6 +50,7 @@ function printGameInfo(){
 			document.querySelector('.gWinRate').innerHTML = r.gWinRate;
 			// SQL: select count(*) as gCount, sum(gsResult) as gWin, (sum(gsResult)/count(*))*100 as gWinRate from gamestatus where mNo = ?;
 			document.querySelector('.rImg').src = "";
+			document.querySelector('.racketContent').innerHTML = r.gBestRa;
 			document.querySelector('.gBestRa').innerHTML = r.gBestRa; 	// 마지막 인덱스 라켓
 			document.querySelector('.gWorstRa').innerHTML = r.gWorstRa; // 첫번째 인덱스 라켓
 			// SQL: select r.rNo, r.rName, r.rImg, sum(g.gsResult) as total from gamestatus g join racket r on g.rNo = r.rNo where mNo = ? group by r.rNo order by total desc;
