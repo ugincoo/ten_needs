@@ -14,8 +14,11 @@
    <%@include file = "/tenneeds/header.jsp" %>
    
    <div class="container gameback" >   
+      	 <a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
+
       <!-- 방 번호 / 방제목  -->
       <div class="gametitle_box"> 
+      
          <div class="gno"> 방번호 : 1 </div>
          <div class="gtitle"> 방 제목 :  테니스게임~~~~~하실분~~ </div>
       </div>
