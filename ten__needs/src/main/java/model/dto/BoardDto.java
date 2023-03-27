@@ -25,7 +25,14 @@ public class BoardDto {
 		this.bcontent = bcontent;
 	}
 
-
+	//수정용 생성자
+	
+	public BoardDto(int bno, String btitle, String bcontent) {
+		super();
+		this.bno = bno;
+		this.btitle = btitle;
+		this.bcontent = bcontent;
+	}
    	
 	//출력용 생성자
 	public BoardDto(int bno, String btitle, String bcontent, String bwritedate) {
@@ -39,14 +46,16 @@ public class BoardDto {
 		
 		String now = dformat.format(date);
 		
-		if(now.split(" ")[0].equals(now.split((" "))[0])){
+		if(now.split(" ")[0].equals(bwritedate.split((" "))[0])){
 			//2. 만약에 오늘 날짜와 작성일과 동일하면 시간 출력 아니면 날짜출력
-			this.bwritedate = now.split(" ")[1]; //시간 출력
+			this.bwritedate = bwritedate.split(" ")[1]; //시간 출력
 		}else {
-			this.bwritedate = now.split(" ")[0]; //시간 출력
+			this.bwritedate = bwritedate.split(" ")[0]; //시간 출력
 		}		
 		
 	}
+
+
 
 	public int getBno() {
 		return bno;

@@ -21,9 +21,7 @@
 				<h3>공지사항/이벤트</h3>
 			</div>
 			<div class = "boardtopetc"> <!-- 글쓰기 버튼 [관리자일 경우] -->
-				<a href = "write.jsp">
-					<button class = "blbtn" type = "button">글쓰기</button>
-				</a>
+				
 			</div>
 			<div class ="boardTable"> <!-- 공지사항/이벤트 목록 출력 부분 -->
 								
@@ -44,6 +42,7 @@
 				<div>
 					<input class = "keyword" type = "text" placeholder="키워드 검색">
 					<button class = "blbtn" onClick = "boardSearch()">검색</button>
+					<button class = "blbtn" onClick = "setSearch()">검색초기화</button>
 				</div>
 			</div>
 		</div>

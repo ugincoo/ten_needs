@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+*{
+	font-family: "TheJamsil5Bold";
+}
+
 /*---------------------------- board 위쪽 css  -------------------------*/
 
 .boardtoptitle h3{ /*이벤트 공지 타이틀 부분*/
