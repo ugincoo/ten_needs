@@ -13,7 +13,7 @@ function signup(){
 		success : (r)=>{
 			if( r == 'true'){
 				alert('[회원가입 성공]')
-				location.href="/ten__needs/tenneeds/jsp/index.jsp"
+				location.href="/ten__needs/tenneeds/main.jsp"
 			}else{
 				alert('[회원가입 실패] 다시 시도해주세요.')
 			}
