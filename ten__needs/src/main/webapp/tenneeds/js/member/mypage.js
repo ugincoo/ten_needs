@@ -10,13 +10,13 @@ function onDelete(){
 	$.ajax({
 		url: "/ten__needs/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
 		method: "delete",
-		data: { "mId" : memberInfo.mId ,"mPw" : document.querySelector('.mPw').value },
+		data: { "mPw" : document.querySelector('.mPw').value },
 		success: (r)=>{
 				console.log("onDelete 결과");
 				console.log( r);
 			if( r == 'true' ){
 				alert('[회원탈퇴 성공] 이용해주셔 감사합니다.')
-				location.href="/ten__needs/tenneeds/jsp/index.jsp"
+				location.href="/ten__needs/tenneeds/jsp/main.jsp"
 			} else{ alert('[회원탈퇴 실패]비밀번호 불일치') }
 		}
 	})

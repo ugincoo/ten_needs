@@ -13,6 +13,7 @@ public class MypageDao extends Dao {
 	// --------------------------------------------------- MemberDao랑 합치기 작업 필요
 	// 회원 탈퇴
 	public boolean onDelete( String mId, String mPw ) {
+			System.out.println( mId );		System.out.println( mPw );
 		String sql = "delete from member where mId = ? and mPw = ?";
 		try {
 			ps = con.prepareStatement(sql);

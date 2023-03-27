@@ -68,7 +68,7 @@ public class Mypage extends HttpServlet {
 		
 		// 2. DB 결과값
 		boolean result = MypageDao.getInstance().onDelete(mId, mPw);
-		
+			System.out.println(result);
 		// 3. 결과 전송
 		response.getWriter().print(result);
 	}

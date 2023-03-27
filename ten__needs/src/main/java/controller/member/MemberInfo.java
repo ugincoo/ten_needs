@@ -11,6 +11,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.MemberDao;
+import model.dao.MypageDao;
 import model.dto.MemberDto;
 
 /**
@@ -91,7 +92,14 @@ public class MemberInfo extends HttpServlet {
 
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. mId, mPw 이용해서 DB 검토 후 삭제 처리
+		String mId = (String)request.getSession().getAttribute("login");
+		String mPw = request.getParameter("mPw");
 		
+		// 2. DB 결과값
+		boolean result = MypageDao.getInstance().onDelete(mId, mPw);
+		
+		// 3. 결과 전송
+		response.getWriter().print(result);
 	}
-
 }
