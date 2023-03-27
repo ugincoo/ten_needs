@@ -61,12 +61,23 @@
    padding : 10px 10px;
    font-size: 12px;
    color : #333333;
-   
+   overflow-y: scroll;
 }
 .geme_chatbox{
    width:70%; 
    margin: 0 auto;
 }
+.alarmBox{  text-align: center; margin: 2% 0; }
+.sendWrap{ display: flex; justify-content: flex-end; align-items: center; }    
+.sDate{ margin-right: 1%; font-size: 10px; }
+.sContent{ max-width: 70%; word-break: break-all; }
+.receiveWrap{ display: flex; align-items: center; }
+.rBox{ width: 89%; }
+.rImgBox{ width: 10%; }
+.rImg{ width: 100%; }
+.rContentDateBox{ display: flex; }
+.rContent{ margin-right: 1%; max-width: 70%; word-break: break-all;  }
+.rDate{ font-size: 10px; } 
 .geme_chatbox input{
    width: 80%;
    padding: 5px 10px;
