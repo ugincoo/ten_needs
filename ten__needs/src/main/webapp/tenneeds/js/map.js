@@ -98,12 +98,3 @@ function getPos(){
 	printExeList( east, west, south, north );
 	// 목적: getproductlist
 }
-
-// ------------------------ modal method ------------------------
-function openModal(){
-	document.querySelector('.modal_wrap').style.display = 'flex';
-}
-
-function closeModal(){
-	document.querySelector('.modal_wrap').style.display = 'none';
-}

@@ -2,7 +2,7 @@
 
 if( memberInfo == null ){ // --- memberInfo 빈 상태일 때, 객체로 받아지면 .mId 추가
 	alert( '[알림] 로그인된 회원만 이용 가능합니다.' )
-	location.href="/ten_needs/tenneeds/jsp/index.jsp"
+	location.href="/ten__needs/tenneeds/jsp/index.jsp"
 }
 
 // ------------------------ 회원 탈퇴 ------------------------
@@ -16,7 +16,7 @@ function onDelete(){
 				console.log( r);
 			if( r == 'true' ){
 				alert('[회원탈퇴 성공] 이용해주셔 감사합니다.')
-				location.href="/ten_needs/tenneeds/jsp/index.jsp"
+				location.href="/ten__needs/tenneeds/jsp/index.jsp"
 			} else{ alert('[회원탈퇴 실패]비밀번호 불일치') }
 		}
 	})
@@ -57,14 +57,4 @@ function printGameInfo(){
 			// => Dao에서 SQL 2번 작성하는 식으로 고고 (type 나누면, Dto 관리 복잡해짐)
 		}
 	})
-}
-
-
-// ------------------------ modal method ------------------------
-function openModal(){
-	document.querySelector('.modal_wrap').style.display = 'flex';
-}
-
-function closeModal(){
-	document.querySelector('.modal_wrap').style.display = 'none';
 }

@@ -76,5 +76,7 @@
 	</div>
 
 	<script src="/ten__needs/tenneeds/js/member/mypage.js" type="text/javascript"></script>
+	<script src="/ten__needs/tenneeds/js/modal.js" type="text/javascript"> </script>
+	
 </body>
 </html>

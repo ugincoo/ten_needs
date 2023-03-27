@@ -36,6 +36,7 @@
 	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db8620d22f203bb5f5678d7b78ad885a&libraries=clusterer"></script>
 	<script src="/ten__needs/tenneeds/js/map.js" type="text/javascript"> </script>
+	<script src="/ten__needs/tenneeds/js/modal.js" type="text/javascript"> </script>
 	
 </body>
 </html>

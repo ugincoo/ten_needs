@@ -20,14 +20,14 @@
 .modal_box{
 	font-family: 'TheJamsil5Bold'; 
 	background-color: white;
-	width: 30%; 	padding: 3%;
+	width: 27%;		height: 32%;  	padding: 3%;
 	border: 3px solid #203624;	border-radius: 15px;
 }
 .modal_title{ font-size: 35px; font-weight: 500; margin-bottom: 5%; } 
 .modal_content{ font-size: 21px;  }
 .contentAddr{ margin-bottom: 2%; }
 .modal_btns{
-	display: flex;	justify-content: flex-end;	margin-top: 3%;
+	display: flex;	justify-content: center;	margin-top: 3%;
 }
 .modal_btns button{
 	color: white;		width: 45%;			height: 45px;
