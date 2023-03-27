@@ -5,8 +5,7 @@ $(document).ready(function() { /*썸머노트 */
 			 minHeight: 300 
 		});
 });
-    
-    
+     
     
 /* 게시글 쓰기 */
 function writeBoard(){

@@ -48,14 +48,9 @@ public class BoardReply extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		/*
-		 * int mno =
-		 * MemberDao.getInstance().getMno((String)request.getSession().getAttribute(
-		 * "login"));
-		 */
 		
-		int mno = 3; 
-		
+		int mno = MemberDao.getInstance().getMno((String)request.getSession().getAttribute("login"));
+
 		String reContent = request.getParameter("reContent");
 		
 		ReplyDto dto = new ReplyDto(reContent, bno, mno);
