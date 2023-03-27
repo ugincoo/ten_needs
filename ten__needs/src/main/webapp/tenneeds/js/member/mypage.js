@@ -8,7 +8,7 @@ if( memberInfo == null ){ // --- memberInfo 빈 상태일 때, 객체로 받아�
 // ------------------------ 회원 탈퇴 ------------------------
 function onDelete(){
 	$.ajax({
-		url: "/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
+		url: "/ten__needs/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
 		method: "delete",
 		data: { "mId" : memberInfo.mId ,"mPw" : document.querySelector('.mPw').value },
 		success: (r)=>{

@@ -30,7 +30,7 @@
 						<div class="mEmail"> <i class="fas fa-envelope"></i> 이메일: hohohohoho@naver.com </div>
 					</form>
 				</div>
-				<a href="/ten__needs/tenneeds/member/updateinfo.jsp"><button class="updateBtn" type="button"> 정보수정 </button> </a>
+				<a href="/ten__needs/tenneeds/jsp/member/infoupdate.jsp"><button class="updateBtn" type="button"> 정보수정 </button> </a>
 				<button class="deleteBtn" onclick="openModal()" type="button"> 회원탈퇴 </button>	
 			</div>
 			
