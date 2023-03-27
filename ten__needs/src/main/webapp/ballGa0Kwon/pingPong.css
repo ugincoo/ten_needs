@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.contentDiv{ /*경기장 전체*/
+	display: flex;
+    justify-content: center;
+}
+
+.scoreBar{ /*점수판*/
+	display: flex;
+    justify-content: space-around;
+}
+
+.player2Name, .player1Name{ /*플레이어 이름*/
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.player1Score, .player2Score{ /*플레이어 이름*/
+	font-size: 16px;
+	font-weight: 600;
+	color : red;
+}
