@@ -17,7 +17,7 @@ tenNeeds(project3)
 ![tenNeeds_WBS](https://user-images.githubusercontent.com/119651889/227172244-d6ce74f5-1a4b-4371-b839-4024c5ef3853.png)
 
 #### 5. 사용한 스킬 및 외부라이브러리
-JSP
+JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome 
 
 #### 6. mySQL ER diagram
 ![image](https://user-images.githubusercontent.com/119651889/227860825-073b312c-2547-4c2f-a9d1-ab4e35eb6be9.png)
