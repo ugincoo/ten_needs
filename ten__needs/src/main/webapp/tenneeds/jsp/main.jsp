@@ -27,9 +27,9 @@
           </div>
             <!-- 버튼 구역 -->
             <ul class="mainbtnbox">
-               <li><a href ="#"> 로그인 </a></li>
-               <li><a href ="#"> 마이페이지 </a></li>
-               <li><a href ="#"> 공지사항 </a></li>
+               <li><a href ="/ten__needs/tenneeds/jsp/member/login.jsp"> 로그인 </a></li>
+               <li><a href ="/ten__needs/tenneeds/jsp/member/mypage.jsp"> 마이페이지 </a></li>
+               <li><a href ="/ten__needs/tenneeds/jsp/board/list.jsp"> 공지사항 </a></li>
             </ul>
       </div>
    </div>
