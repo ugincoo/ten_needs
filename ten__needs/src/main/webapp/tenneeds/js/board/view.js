@@ -1,12 +1,5 @@
 console.log('board view js 실행')
 
-let memberInfo = {
-	mid : 'admin', //관리자가 아니면 글을쓸수 없읍ㅁ!!!
-	mpwd : null,
-	memail : 'asd123@kakao.com',
-	mphone : '010-2222-2222'
-}
-
 let bno = document.querySelector('.bno').value;
 
 console.log(bno)
@@ -86,7 +79,7 @@ function getReplyList(){
 					console.log(o)
 					html += `<div class = "replyOne">
 								<div class = "replyTopContent">
-									<img class = "replyProfile" src = "/ten__needs/tenneeds/jsp/member/mimg/cat.png"/>
+									<img class = "replyProfile" src = "/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg}" />
 									<span class = "replyName">${o.mId}</span>
 									<span class = "replyDate">${o.reDate}</span>
 									<div clsss = "replyBtns">${

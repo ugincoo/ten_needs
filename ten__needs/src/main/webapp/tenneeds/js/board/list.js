@@ -1,12 +1,5 @@
 console.log('list js 열림');
 
-let memberInfo = {
-	mid : 'admin', //관리자가 아니면 글을쓸수 없읍ㅁ!!!
-	mpwd : null,
-	memail : 'asd123@kakao.com',
-	mphone : '010-2222-2222'
-}
-
 /* 현재 페이지, 검색, 전송타입 */
 let pageObject = {
 	page : 1,
@@ -14,14 +7,14 @@ let pageObject = {
 	keyword : "",
 	type : 1, //1. 전체 출력 2. 개별 출력
 }
-
-if(memberInfo.mid == 'admin'){
+if(memberInfo == null){
+	getBoard(1);
+	
+}else if(memberInfo.mid == 'admin'){
 	document.querySelector('.boardtopetc').innerHTML = `
 		<a href = "write.jsp">
 			<button class = "blbtn writebtn" type = "button" >글쓰기</button>
-		</a>
-	`
-	
+		</a>`
 }
 
 getBoard(1)
