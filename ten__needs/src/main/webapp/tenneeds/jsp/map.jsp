@@ -17,7 +17,7 @@
 			<h3> 주변 테니스장 정보 </h3>
 		</div>
 		<div class="mapbox"> 
-			<div id="map" style="width:650px;height:650px;"></div>
+			<div id="map" style="width:100%;height:900px;"></div>
 		</div>
 	</div>
 	
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b7c0acb1395b016fc6b2661dad73840f&libraries=clusterer"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db8620d22f203bb5f5678d7b78ad885a&libraries=clusterer"></script>
 	<script src="/ten__needs/tenneeds/js/map.js" type="text/javascript"> </script>
 	
 </body>
