@@ -1,25 +1,25 @@
 @charset "UTF-8";
-/* 회원가입 페이지 */
 .signupForm , .updateForm{
 	width: 30%;
 	margin: 30px auto;
 	font-size: 15px;
 }
-.signupForm , .updateForm h3{
+.signupForm h3 , .updateForm h3{
 	font-family: TheJamsil5Bold;
 	text-align: center;
 }
-.signupForm , .updateForm p{
+.signupForm  p , .updateForm p{
 	font-size: 16px;
 	text-align: center;
 }
-.signupForm , .updateForm input:not(.img , .defaultimg){
+.signupForm input:not(.img , .defaultimg) , .updateForm input:not(.img , .defaultimg){
 	width: 100%;
 	height: 45px;
 	padding: 20px;
 	border: 1px solid #e8e8e8;
 	border-radius: 13px;
 }
+
 .title{
 	font-size: 13px;
 	margin: 10px 0px;

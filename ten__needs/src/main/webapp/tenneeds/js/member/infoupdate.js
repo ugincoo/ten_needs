@@ -1,13 +1,31 @@
 
-/*if( memberInfo == null ){
+console.log(memberInfo)
+
+if( memberInfo.mid == null ){
 	alert('로그인이 필요합니다.')
 	location.href = "/ten__needs/tenneeds/jsp/member/login.jsp"
-}*/
+}
 
-/*document.querySelector('.mid').innerHTML = memberInfo.mid;
+document.querySelector('.mid').innerHTML = memberInfo.mid;
 document.querySelector('.mphone').value = memberInfo.mphone;
 document.querySelector('.memail').value = memberInfo.memail;
-document.querySelector('.mimg').src = `/tenneeds/jsp/member/mimg/${ memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg }`;
+document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/${ memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg }`;
+
+function onchecked(){
+	let check = document.querySelector('.defaultimg').checked;
+	
+	
+	if(check){
+      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/default.webp`;
+    
+   }else{
+      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/` + memberInfo.mimg;
+    
+   }
+			
+		
+}
+
 
 
 function infoupdate(){
@@ -32,7 +50,7 @@ function infoupdate(){
 			}
 		}
 	})
-}*/
+}
 // 2. 유효성 검사
 let checkconfirm = document.querySelectorAll('.checkconfirm');
 function mpwcheck(){
@@ -145,6 +163,7 @@ function premimg( object ){
 	let file = new FileReader();
 	file.readAsDataURL( object.files[0] )
 	file.onload = (e)=>{
+		
 		document.querySelector('.premimg').src = e.target.result;
 	}
 }

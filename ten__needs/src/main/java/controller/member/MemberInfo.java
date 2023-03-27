@@ -62,6 +62,7 @@ public class MemberInfo extends HttpServlet {
 	// 회원정보 수정
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
 		String uploadpath = request.getSession().getServletContext().getRealPath("tenneeds/jsp/member/mimg");
 		MultipartRequest multi = new MultipartRequest(request, uploadpath, 1024*1024*10, "UTF-8" , new DefaultFileRenamePolicy() );
 		

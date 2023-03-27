@@ -49,7 +49,7 @@
 				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.webp">
 				<div>
 					<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
-					<input class="defaultimg" type="checkbox"> 기본프로필 사용
+					<input onclick="onchecked()" class="defaultimg" type="checkbox"> 기본프로필 사용
 				</div>
 			</div>
 			

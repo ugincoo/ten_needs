@@ -38,9 +38,12 @@ public class Login extends HttpServlet {
 		
 		MemberDto result = MemberDao.getInstance().getMember(mid);
 		
-		System.out.println( result );
-		
 		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(result);
+		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.getWriter().print( json );
 	}
 
 	/**

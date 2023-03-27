@@ -27,7 +27,7 @@
 				<a href="/ten__needs/tenneeds/jsp/member/signup.jsp"> 회원가입 </a>|
 				<a class="modalfind" onclick="onpenModalID()"> 아이디찾기 </a>|
 				<a class="modalfind" onclick="onpenModalPW()"> 비밀번호찾기</a>
-				<a href="/ten__needs/tenneeds/jsp/member/infoupdate.jsp"> 회원정보 수정 </a>
+				
 			</div>
 			
 			<button class="signupbtn" onclick="login()" type="button"> 로그인 </button>
