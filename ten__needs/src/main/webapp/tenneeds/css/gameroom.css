@@ -10,13 +10,24 @@
    display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 30px;
     border-bottom: 1px solid black;
+
     padding: 10px ;
     color : #333333;
 }
 .gtitle{
    margin-left: 40px;
+   margin-bottom : 10px;
+}
+.gomain{
+   background-color: #648977;
+   border: none;
+   border-radius: 5px;
+   padding: 5px 5px;
+   margin : 10px 10px;
+   color : white;
+   font-size : 12px;
+   text-align: left;
 }
 .gamebox{
    display: flex; justify-content: center;
@@ -84,11 +95,12 @@
    color : #333333;
 }
 .ex_img{
-   width : 40%; height : 40%;
+   width : 50%; height : 50%;
    border :  1px solid #E6D9CF;
    margin: 10px 0px;
 }
 .startbtn{
    width: 60%;
-   margin-top: 150px;
+   margin-top : 50px;
+   margin-bottom : 20px;
 }
