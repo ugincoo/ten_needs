@@ -20,6 +20,7 @@ tenNeeds(project3)
 JSP
 
 #### 6. mySQL ER diagram
+![image](https://user-images.githubusercontent.com/119651889/227860825-073b312c-2547-4c2f-a9d1-ab4e35eb6be9.png)
 
 
 #### 7. MVC Structure
