@@ -1,60 +1,66 @@
-// 1. 회원가입
-function signup(){
+
+console.log(memberInfo)
+
+if( memberInfo.mid == null ){
+	alert('로그인이 필요합니다.')
+	location.href = "/ten__needs/tenneeds/jsp/member/login.jsp"
+}
+
+document.querySelector('.mid').innerHTML = memberInfo.mid;
+document.querySelector('.mphone').value = memberInfo.mphone;
+document.querySelector('.memail').value = memberInfo.memail;
+document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/${ memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg }`;
+
+function onchecked(){
+	let check = document.querySelector('.defaultimg').checked;
 	
-	let signupForm = document.querySelectorAll('.signupForm')[0];
-	let signupFormData = new FormData( signupForm );
+	
+	if(check){
+      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/default.webp`;
+    
+   }else{
+      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/` + memberInfo.mimg;
+    
+   }
+			
+		
+}
+
+
+
+function infoupdate(){
+	
+	let updateForm = document.querySelectorAll('.updateForm')[0];
+	let updateFormData = new FormData( updateForm );
+	let defaultimg = document.querySelector('.defaultimg').checked
+	updateFormData.set( "defaultimg" , defaultimg );
 	
 	$.ajax({
 		url : "/ten__needs/member/info" ,
-		method : "post" ,
-		data : signupFormData ,
+		method : "put" ,
+		data : updateFormData ,
 		contentType : false ,			
 		processData : false ,
 		success : (r)=>{
 			if( r == 'true'){
-				alert('[회원가입 성공]')
-				location.href="/ten__needs/tenneeds/jsp/index.jsp"
+				alert('수정이 완료되었습니다.');
+				location.href = "/ten__needs/tenneeds/jsp/member/login.jsp";
 			}else{
-				alert('[회원가입 실패] 다시 시도해주세요.')
+				alert('수정 실패 : 비밀번호를 확인해주세요.')
 			}
 		}
 	})
-	
 }
-
-
 // 2. 유효성 검사
 let checkconfirm = document.querySelectorAll('.checkconfirm');
-function midcheck(){
-	let mid= document.querySelector('.mid').value;
-	let midj = /^[a-zA-Zㄱ-힣0-9-_/,.]{2,30}$/;
-	
-	if(midj.test(mid)){
-		// 아이디 중복검사
-		$.ajax({
-			url : "/ten__needs/member/info" ,
-			method : "get" ,
-			data : { "mid" : mid } ,
-			success : (r)=>{
-				if( r == 'true'){
-					checkconfirm[0].innerHTML = '사용중인 아이디[닉네임]입니다.'
-				}else{
-					checkconfirm[0].innerHTML = '✓'
-				}
-			}
-		})
-	}else{
-		checkconfirm[0].innerHTML = '사용불가능한 아이디[닉네임]입니다.'
-	}
-}
 function mpwcheck(){
-	let mpw = document.querySelector('.mpw').value;
+	let mpw = document.querySelector('.newmpw').value;
 	let mpwj = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 	
 	if( mpwj.test(mpw)){
-		checkconfirm[1].innerHTML = '✓'
+		checkconfirm[0].innerHTML = '✓'
 	}else{
-		checkconfirm[1].innerHTML = '사용불가능한 비밀번호입니다.</br>[8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합]'
+		checkconfirm[0].innerHTML = '사용불가능한 비밀번호입니다.</br>[8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합]'
 	}
 }
 function mphonecheck(){
@@ -62,9 +68,9 @@ function mphonecheck(){
 	let mphonej = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 	
 	if( mphonej.test(mphone)){
-		checkconfirm[2].innerHTML = '✓'
+		checkconfirm[1].innerHTML = '✓'
 	}else{
-		checkconfirm[2].innerHTML = '휴대폰 형식으로 입력해주세요.'
+		checkconfirm[1].innerHTML = '휴대폰 형식으로 입력해주세요.'
 	}
 }
 function memailcheck(){
@@ -72,10 +78,10 @@ function memailcheck(){
 	let memailj = /^[a-zA-Z0-9+-_-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/
 	
 	if( memailj.test(memail)){
-		checkconfirm[3].innerHTML = '인증해주세요.'
+		checkconfirm[2].innerHTML = '인증해주세요.'
 		document.querySelector('.authbtn').disabled = false;
 	}else{
-		checkconfirm[3].innerHTML = '이메일 형식으로 입력해주세요.'
+		checkconfirm[2].innerHTML = '이메일 형식으로 입력해주세요.'
 		document.querySelector('.authbtn').disabled = true;	
 	}
 }
@@ -131,7 +137,7 @@ function settimer(){
 		
 		if( timer < 0 ){ 
 			clearInterval(timerInter) 
-			checkconfirm[3].innerHTML = '인증실패'
+			checkconfirm[2].innerHTML = '인증실패'
 			document.querySelector('.authbox').innerHTML = '';
 		}
 	} , 1000 )
@@ -145,9 +151,9 @@ function authconfirm(){
 		document.querySelector('.authbox').innerHTML = '';
 		document.querySelector('.authbtn').innerHTML = '완료';
 		document.querySelector('.authbtn').disabled = false;
-		checkconfirm[3].innerHTML = '✓'
+		checkconfirm[2].innerHTML = '✓'
 	}else{
-		checkconfirm[3].innerHTML = '인증코드가 일치하지않습니다.'
+		checkconfirm[2].innerHTML = '인증코드가 일치하지않습니다.'
 	}
 }
 
@@ -157,6 +163,7 @@ function premimg( object ){
 	let file = new FileReader();
 	file.readAsDataURL( object.files[0] )
 	file.onload = (e)=>{
+		
 		document.querySelector('.premimg').src = e.target.result;
 	}
 }
