@@ -12,8 +12,12 @@ tenNeeds(project3)
 5) SQL 활용(DB관리 및 통계처리)
 
 #### 3. 팀원: 권가영, 김미영, 김태호, 오유진
+[R&R]
 
-#### 4. 일정
+[개인별 일정]
+
+
+#### 4.개발 전체 일정
 ![tenNeeds_WBS](https://user-images.githubusercontent.com/119651889/227172244-d6ce74f5-1a4b-4371-b839-4024c5ef3853.png)
 
 #### 5. 사용한 스킬 및 외부라이브러리
