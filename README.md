@@ -18,3 +18,26 @@ tenNeeds(project3)
 
 #### 5. 사용한 스킬 및 외부라이브러리
 JSP
+
+#### 6. mySQL ER diagram
+
+
+#### 7. MVC Structure
+
+#### 8. Front-End Structure [ layout ]
+
+#### 9. 페이지명
+Ten-Needs
+
+#### 10. 페이지 로고
+
+#### 6. 테마 색상
+![image](https://user-images.githubusercontent.com/119651889/227859770-11cd2b0b-7216-4e6e-a318-676ea4e9e624.png)
+
+#### 7. 메인 폰트
+@font-face {
+    font-family: 'HS-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/HS-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
