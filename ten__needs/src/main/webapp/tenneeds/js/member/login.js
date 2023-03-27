@@ -9,7 +9,7 @@ function login(){
 		data : { "mid" : mid , "mpw" : mpw } ,
 		success :(r)=>{
 			if( r == 'true'){
-				location.href="/ten__needs/tenneeds/jsp/member/infoupdate.jsp"
+				location.href="/ten__needs/tenneeds/jsp/main.jsp"
 			}else{
 				document.querySelector('.checkconfirm').innerHTML = '회원정보가 틀립니다.'
 			}
