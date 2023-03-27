@@ -11,32 +11,37 @@
 </head>
 <body>
 	<!-- jsp 태그; JSP 페이지 포함 --> 
-<%-- 	<%@ include file = "/header.jsp" %> <!-- 헤더 포함 --> --%>
+	<%@ include file = "/tenneeds/header.jsp" %> <!-- 헤더 포함 --> 
 	
 	<%	
 		String bno = request.getParameter("bno");
 	%>
 	
 	<input type = "hidden" type = "text" class = "bno" value="<%=bno%>">
+	
 	<div class ="container">
 		<div class = boardbox>
 			<div class ="viewTop">
-				<div>
+				<div class = "writerInfo">
 					<img class = "profile" src = "/ten__needs/tenneeds/jsp/board/bimg/admin.png"/>
-				</div>
-				<div>
-					<span>관리자</span>
+					<span class = "adminname">관리자</span>
 					<span class = "bwritedate"></span> <!-- 작성일 -->
 				</div>
-				<div class = "btitle"></div> <!-- 제목 -->
-				<div class = "bcontent"></div> <!-- 내용 -->
+				<div class = "boardViewInfo"> <!-- 게시물의 실질적 내용 -->
+					<div class = "btitle"></div> <!-- 제목 -->
+					<div class = "bcontent"></div> <!-- 내용 -->
+				</div>
+				
 				<div class ="btnBox"></div>  <!-- 관리자라면, 수정 삭제[공지사항/이벤트] -->
 				<div class = "replycount"></div> <!-- 댓글 수 -->
 				<div class = "replyWritebox"> <!-- 댓글 작성 -->
 					<textarea  class = "rcontent" rows="" cols=""></textarea>
-					<button class = "bbtn replyBtn" onClick = "rWrite()" type = "button">댓글 작성</button>
+					<button class = "replyBtn" onClick = "writeReply()" type = "button">댓글 작성</button>
 				</div>
-				<div class = "replayListBox">댓글출력</div>
+				<div class = "replayListBox">
+					<!-- 댓글 출력 -->
+				</div>
+				
 			</div>
 		</div>
 	</div>

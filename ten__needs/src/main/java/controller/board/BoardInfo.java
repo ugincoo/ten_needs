@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.BoardDao;
 import model.dto.BoardDto;
@@ -38,7 +40,7 @@ public class BoardInfo extends HttpServlet {
 		if(type == 1) { //1. 전체 출력
 			String key = request.getParameter("key"); //키
 			String keyword = request.getParameter("keyword"); //키워드
-			
+
 			//페이지 처리
 			int page = Integer.parseInt(request.getParameter("page"));
 			int startRow = (page-1)*10; //10개씩 출력
@@ -66,28 +68,79 @@ public class BoardInfo extends HttpServlet {
 			
 			String jsonArray = mapper.writeValueAsString(pageDto);
 			
-			
 			response.getWriter().print(jsonArray);
 			
 		}else if(type == 2) { //개별 출력
+			int bno = Integer.parseInt(request.getParameter("bno"));
 			
+			BoardDto result = BoardDao.getInstance().getBoard(bno);
+			
+			String json =  mapper.writeValueAsString(result);
+
+			response.getWriter().print(json);
 		}
 		
 	}
-
-
+	
+	//게시물 등록[글쓰기]
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
+		String path = request.getSession().getServletContext().getRealPath("/tenneeds/jsp/board/bimg");
+		
+		
+		MultipartRequest multi = new MultipartRequest(
+				request, 
+				path,
+				1024*1024*10,
+				"UTF-8",
+				new DefaultFileRenamePolicy());
+		
+		String bTitle = multi.getParameter("bTitle");
+		String bContent = multi.getParameter("bContent");
+		
+		BoardDto dto = new BoardDto(bTitle, bContent);
+		
+		boolean result = BoardDao.getInstance().writeBoard(dto);
+		
+		response.getWriter().print(result);
 	}
 
-
+	//게시물 수정
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
+		String path = request.getSession().getServletContext().getRealPath("/tenneeds/jsp/board/bimg");
+		
+		MultipartRequest multi = new MultipartRequest(
+				request, 
+				path,
+				1024*1024*10,
+				"UTF-8",
+				new DefaultFileRenamePolicy());
+		
+		int bno = Integer.parseInt(multi.getParameter("bno"));
+		
+		
+		String bTitle = multi.getParameter("bTitle");
+		String bContent = multi.getParameter("bContent");
+		
+		BoardDto dto = new BoardDto(bno, bTitle, bContent);
+		
+		System.out.println(dto);
+		
+		boolean result = BoardDao.getInstance().updateBoard(dto);
+		
+		response.getWriter().print(result);
 	}
 
-
+	//게시물 삭제
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int bno = Integer.parseInt(request.getParameter("bno"));
 		
+		boolean result = BoardDao.getInstance().deleteBoard(bno);
+		
+		response.getWriter().print(result);
 	}
 
 }

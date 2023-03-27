@@ -1,11 +1,27 @@
 console.log('list js 열림');
 
+let memberInfo = {
+	mid : 'admin', //관리자가 아니면 글을쓸수 없읍ㅁ!!!
+	mpwd : null,
+	memail : 'asd123@kakao.com',
+	mphone : '010-2222-2222'
+}
+
 /* 현재 페이지, 검색, 전송타입 */
 let pageObject = {
 	page : 1,
 	key : "",
 	keyword : "",
 	type : 1, //1. 전체 출력 2. 개별 출력
+}
+
+if(memberInfo.mid == 'admin'){
+	document.querySelector('.boardtopetc').innerHTML = `
+		<a href = "write.jsp">
+			<button class = "blbtn writebtn" type = "button" >글쓰기</button>
+		</a>
+	`
+	
 }
 
 getBoard(1)
@@ -18,18 +34,19 @@ function getBoard(page){
 		data : pageObject,
 		success : (r) => {
 			let html = '';
-			if(r != null){
-				console.log(r);
+			if(r.boardList != null){
+				console.log(r);	
 				r.boardList.forEach((o) => {
+				
 					html += `<div class = "boardContent">
 								<div>
-									<img class = "profile" src = "/tenNeeds/tenneeds/board/bImg/admin.png"/>
+									<img class = "profile" src = "/ten__needs/tenneeds/jsp/board/bimg/admin.png"/>
 									<span>관리자</span>
 									<span class = "bwritedate">${o.bwritedate}</span>
 								</div>
 								
 								<div class = "bTitle">
-									<a href = "/tenNeeds/tenneeds/board/view.jsp?bno = ${o.bno}">${o.btitle}</a>
+									<a href = "/ten__needs/tenneeds/jsp/board/view.jsp?bno=${o.bno}">${o.btitle}</a>
 								</div>
 							</div>`
 				})
@@ -48,21 +65,21 @@ function getBoard(page){
 			html += `<button class = "pagebtn" onClick = "getBoard(1)" type = "button"><i class="fas fa-angle-double-left"></i></button>`;
 			
 			html += page <=1 ? 
-				`<button class = "pagebtn" onClick = "printBoard(${page})" type = "button"><i class="fas fa-angle-left"></i></button>`	
+				`<button class = "pagebtn" onClick = "getBoard(${page})" type = "button"><i class="fas fa-angle-left"></i></button>`	
 				:
-				`<button class = "pagebtn" onClick = "printBoard(${page-1})" type = "button"><i class="fas fa-angle-left"></i></button>`	;
+				`<button class = "pagebtn" onClick = "getBoard(${page-1})" type = "button"><i class="fas fa-angle-left"></i></button>`	;
 			
 			for(let i = r.startBtn; i <= r.endBtn; i++){ //시작 버튼 번호부터 마지막 버튼 번호까지 버튼 생성
-				html += `<button class = "pagebtn" onClick = "printBoard(${i})" type = "button">${i}</button>`	
+				html += `<button class = "pagebtn" onClick = "getBoard(${i})" type = "button">${i}</button>`	
 			}
 			
 			html += page >= r.totalpage ?
-			` <button class = "pagebtn" onClick = "printBoard(${page})" type = "button"><i class="fas fa-angle-right"></i></button>`	
+			` <button class = "pagebtn" onClick = "getBoard(${page})" type = "button"><i class="fas fa-angle-right"></i></button>`	
 			:	
-			` <button class = "pagebtn" onClick = "printBoard(${page+1})" type = "button"><i class="fas fa-angle-right"></i></button>`	
+			` <button class = "pagebtn" onClick = "getBoard(${page+1})" type = "button"><i class="fas fa-angle-right"></i></button>`	
 			
 			//맨뒤
-			html += `<button class = "pagebtn" onClick = "printBoard(${r.totalpage})" type = "button"><i class="fas fa-angle-double-right"></i></button>`;
+			html += `<button class = "pagebtn" onClick = "getBoard(${r.totalpage})" type = "button"><i class="fas fa-angle-double-right"></i></button>`;
 			
 			document.querySelector('.pagebox').innerHTML = html;
 			
@@ -70,3 +87,22 @@ function getBoard(page){
 		}
 	})
 }
+
+//2. 키워드 검색
+function boardSearch(){
+	pageObject.key = document.querySelector('.key').value;
+	pageObject.keyword = document.querySelector('.keyword').value;
+	
+	getBoard(1);
+}
+
+//3. 검색 초기화
+function setSearch(){
+	pageObject.key = "";
+	pageObject.keyword = "";
+	
+	document.querySelector('.keyword').value = "";
+	
+	getBoard(1);
+}
+

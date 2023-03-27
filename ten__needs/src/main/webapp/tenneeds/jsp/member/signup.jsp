@@ -6,46 +6,53 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-	<link href="/ten_needs/tenneeds/css/member/signup.css" rel="stylesheet" >
+	<link href="/ten__needs/tenneeds/css/member/signup.css" rel="stylesheet" >
 </head>
 <body>
+	<!-- 헤더 정보 -->
+	<%@ include file = "/tenneeds/header.jsp" %>
+	
 	<div class="container">
 		<form class="signupForm">
 		
-			<h3> TenNeeds에 오신 것을 환영합니다! </h3>
+			<h3> TENNEEDS </h3>
+			<p> 회원가입 </p>
 			
 			<div class="title"> 아이디[닉네임] </div>
-			<input name="mid" type="text">
-			<div></div>
+			<input onkeyup="midcheck()" maxlength="30" name="mid" class="mid" type="text">
+			<div class="checkconfirm"></div>
 			
 			<div class="title"> 비밀번호 </div>
-			<input name="mpw" type="password">
-			<div></div>
-			
-			<div class="title"> 비밀번호 확인 </div>
-			<input name="mpwconfirm" type="password">
-			<div></div>
-			
+			<input name="mpw" onkeyup="mpwcheck()" maxlength="16" class="mpw" type="password">
+			<div class="checkconfirm"></div>
+		
 			<div class="title"> 전화번호 </div>
-			<input name="mphone" type="text">
+			<input name="mphone" placeholder="010-0000-0000" onkeyup="mphonecheck()" maxlength="13" class="mphone" type="text">
+			<div class="checkconfirm"></div>
 			
 			<div class="title"> 이메일 </div>
-			<input name="memail" type="text">
-			<div></div>
-			
-			<div class="title"> 프로필 </div>
-			<div>
-				<input name="mimg" type="file">
-				<img alt="" src="">
+			<div class="memailbox">
+				<input onkeyup="memailcheck()" type="text" name="memail" class="memail" >
+				<button onclick="getauth()" class="authbtn" disabled="disabled" type="button">인증하기</button>
 			</div>
 			
-			<button onclick="signup()" type="button"> 회원가입 완료 </button>
+			<div class="authbox">
+			
+			</div>
+			
+			<div class="checkconfirm"></div>
+			
+			<div class="title"> 프로필 </div>
+			<div class="pimgbox">
+				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.webp">
+				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
+			</div>
+			
+			<button class="signupbtn" onclick="signup()" type="button"> 회원가입 완료 </button>
 		</form>
 	</div>
 
-	<!-- 1. JQUERY (ajax 사용하기 위해) -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
-	<script src="/ten_needs/tenneeds/js/member/signup.js" type="text/javascript"></script>
+	<script src="/ten__needs/tenneeds/js/member/signup.js" type="text/javascript"></script>
 </body>
 </html>

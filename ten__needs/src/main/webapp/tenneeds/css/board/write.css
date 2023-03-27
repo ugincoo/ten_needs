@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+*{
+	font-family: "TheJamsil5Bold";
+}
+
+/*---------------------- 글쓰기 윗부분 h3 ------------------------------*/
+.wHead{ /*이벤트 공지 글쓰기 헤더 부분*/
+	margin-top: 10px ;
+	font-size: 43px;
+	color : #203725;
+	margin: 10px 0px;
+	border-bottom: 1px solid #638876 ;
+	padding : 10px 0px;
+}
+
+/*------------------------ 글쓰기 부분 css -------------------------*/
+.writecontent{
+	margin-top: 20px;
+}
+.writecontent h4{ /*실질적 글쓰는 구역의 h4*/
+	margin: 10px 0px;
+}
+
+.writeTitle{ /*제목 구역 h4, input*/
+	display: flex;
+		
+}
+
+.writeTitle h4{
+	margin-right: 20px;
+}
+
+.bTitle{ /*제목 input*/
+	width: 70%;
+	height: 30px;
+}
+
+/*----------------------- 글쓰기 아래부분 -------------------------*/
+.blbtn{ /*글쓰기 버튼 and 검색 버튼*/
+	background-color: #294B3A;
+	color : white;
+	font-size: 18px;
+	padding: 5px 8px;
+	border : none;
+	margin-top : 30px;
+	border-radius: 10px;
+	width : 100%;
+}
