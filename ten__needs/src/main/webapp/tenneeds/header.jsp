@@ -18,11 +18,11 @@
 
 </head>
 <body>
-<!-- 	<div class ="container">
+	<div class ="container">
 		<div style = "width : 100%; height: 50px;">
-			
+
 		</div>
-	</div> -->
+	</div>
 	
 	
 	<!-- 1. JQUERY (ajax 사용하기 위해) -->

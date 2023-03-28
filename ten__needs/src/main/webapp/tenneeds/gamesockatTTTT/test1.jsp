@@ -8,8 +8,28 @@
 </head>
 <body>
 	
-	<%@include file = "/tenneeds/header.jsp"%>
+	
 	<%@include file = "/tenneeds/gamesockatTTTT/canvasT.jsp"%>
-
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	<br/>
+	<%@include file = "/tenneeds/header.jsp"%>
 </body>
 </html>
