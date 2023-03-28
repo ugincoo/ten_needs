@@ -18,11 +18,11 @@
 
 </head>
 <body>
-	<div class ="container">
-		<div style = "width : 100%; height: 100px; background-color : green;">
-			헤더 들어갈 자리
+<!-- 	<div class ="container">
+		<div style = "width : 100%; height: 50px;">
+			
 		</div>
-	</div>
+	</div> -->
 	
 	
 	<!-- 1. JQUERY (ajax 사용하기 위해) -->
