@@ -164,10 +164,6 @@ const canvas = document.getElementById('canvas');
 
 
 
-	game();
-
-
-
 
 
 
