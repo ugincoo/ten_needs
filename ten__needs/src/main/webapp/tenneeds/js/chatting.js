@@ -3,7 +3,7 @@ console.log('작동 확인');
 let geme_chat = document.querySelector('.geme_chat');
 
 // sockat server 연결
-let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs//tenneeds/chatting/'+memberInfo.mid);
+let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs/tenneeds/chatting/'+memberInfo.mid);
 
 // open, message, close 작동 on
 chattingSockat.onopen = function(e){ inputChat(e); }
