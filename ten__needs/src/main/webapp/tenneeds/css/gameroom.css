@@ -68,15 +68,23 @@
    margin: 0 auto;
 }
 .alarmBox{  text-align: center; margin: 2% 0; }
-.sendWrap{ display: flex; justify-content: flex-end; align-items: center; }    
+.sendWrap{ display: flex; justify-content: flex-end; align-items: flex-end; }    
 .sDate{ margin-right: 1%; font-size: 10px; }
-.sContent{ max-width: 70%; word-break: break-all; }
-.receiveWrap{ display: flex; align-items: center; }
+.sContent{ 
+	max-width: 70%; word-break: break-all; 
+	padding: 2%  2%;	background-color: #E6D9CF;  
+	margin: 1% 0;
+}
+.receiveWrap{ display: flex; align-items: flex-end; }
 .rBox{ width: 89%; }
 .rImgBox{ width: 10%; }
 .rImg{ width: 100%; }
-.rContentDateBox{ display: flex; }
-.rContent{ margin-right: 1%; max-width: 70%; word-break: break-all;  }
+.rContentDateBox{ display: flex;	align-items: flex-end; }
+.rContent{ 
+	margin: 1% 1%; max-width: 70%; word-break: break-all;  
+	padding: 2%  2%;	background-color: #648977;  
+	margin: 1% 0;
+}
 .rDate{ font-size: 10px; } 
 .geme_chatbox input{
    width: 80%;

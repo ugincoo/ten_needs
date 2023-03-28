@@ -44,20 +44,7 @@
             <!-- 대화내용 표시 구역 -->
             <div class="geme_chat">
             	
-            	<div class="sendWrap">
-            		<div class="sDate"> 23-03-28 </div>
-            		<div class="sContent"> 안녕 </div>
-            	</div>
-            	<div class="receiveWrap">
-            		<div class="rImgBox"> <img class="rImg" alt="" src="/ten__needs/tenneeds/img/짱구.png"> </div>
-            		<div class="rBox">
-            			<div class="rName"> 태호 </div>
-            			<div class="rContentDateBox">
-            				<div class="rContent"> 하이 </div>
-            				<div class="rDate"> 23-03-28 </div>
-            			</div>
-            		</div>
-            	</div>
+
             </div>   
             <!-- 입력 / 전송버튼 -->
             <div class="geme_chatbox">

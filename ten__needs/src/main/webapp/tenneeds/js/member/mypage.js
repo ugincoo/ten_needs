@@ -2,7 +2,7 @@
 
 if( memberInfo == null ){ // --- memberInfo 빈 상태일 때, 객체로 받아지면 .mId 추가
 	alert( '[알림] 로그인된 회원만 이용 가능합니다.' )
-	location.href="/ten__needs/tenneeds/jsp/index.jsp"
+	location.href="/ten__needs/tenneeds/jsp/main.jsp"
 }
 
 // ------------------------ 회원 탈퇴 ------------------------
