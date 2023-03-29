@@ -12,9 +12,10 @@ create table member(
     mPhone varchar(13)
 );
 
-drop table if exists game;
-create table game(
+drop table if exists gameroom;
+create table gameroom(
 	gNo int auto_increment primary key,
+    gTitle varchar(30),	-- 23.03.29 추가(게임방 생성에 사용ㅋㅋ)
     gDate datetime default now()
 );
 
@@ -37,7 +38,7 @@ create table gamestatus(
     gNo int,
     rNo int,
     foreign key ( mNo ) references member ( mNo ) on delete set null,
-    foreign key ( gNo ) references game ( gNo ) on delete cascade,
+    foreign key ( gNo ) references gameroom ( gNo ) on delete cascade,
     foreign key ( rNo ) references racket ( rNo ) on delete set null
 );
 
@@ -62,7 +63,7 @@ create table reply(
 
 # test sql
 insert into member ( mId, mPw, mImg, mEmail, mPhone ) values( 'admin', 'admin', null, 'admin@naver.com', '01000000000');
-insert into game ( gDate ) values ( now() );
+insert into gameroom ( gTitle, gDate ) values ( "zz" , now() );
 insert into racket ( rName, rImg, rLevle, rSize_x, rSize_y ) values( '파리채', null, 3, 5, 5 );
 insert into racket ( rName, rImg, rLevle, rSize_x, rSize_y ) values( '모기채', null, 4, 6, 6 );
 insert into racket ( rName, rImg, rLevle, rSize_x, rSize_y ) values( '잡채', null, 2, 2, 2 );
@@ -81,7 +82,7 @@ insert into gamestatus (  gsAccute, gsResult, mNo, gNo, rNo ) values(  5, false,
 insert into gamestatus (  gsAccute, gsResult, mNo, gNo, rNo ) values(  5, false, 1, 5, 3 ); 
 insert into gamestatus (  gsAccute, gsResult, mNo, gNo, rNo ) values(  5, false, 1, 5, 3 ); 
 insert into gamestatus (  gsAccute, gsResult, mNo, gNo, rNo ) values(  5, true, 1, 5, 3 ); 
-select * from game;
+select * from gameroom;
 select * from gamestatus;
 
 
