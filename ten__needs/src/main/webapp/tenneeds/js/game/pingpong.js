@@ -1,3 +1,21 @@
+// 소켓 연결
+let gameSocket = null;
+if( memberInfo == null ){}
+else{
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
+
+	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어')}
+
+	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감')}
+
+	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
+
+	gameSocket.onmessage = (e)=>{ console.log()}
+}	
+
+
+
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
@@ -180,11 +198,11 @@ const ctx = canvas.getContext('2d');
        		// -player.height/2 < 충돌 지점 < player.height/2
 			collidePoint = collidePoint/(player.height/2);
 			
-			// 공이 패들의 상단에 닿을 때 공이 -45도 각도를 가지기를 원합니다.
+			// 공이 패들의 상단에 닿을 때 공이 -18도 각도를 가지기를 원합니다.
     	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
-   		    // 공이 패들 바닥에 닿을 때 공이 45도 기울기를 원합니다.
-       		// Math.PI/4 = 45도
-			let angleRad = collidePoint * Math.PI/4;
+   		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
+       		// Math.PI/10 = 18도
+			let angleRad = collidePoint * Math.PI/10;
 			
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
