@@ -13,6 +13,8 @@ public class PageDto {
 	
 	//!! : 실질적인 게시물 목록 
 	ArrayList<BoardDto> boardList; //출력할 데이터[게시물] 리스트
+	ArrayList<GameroomDto> gameList;
+	int type; // -- gameList 공용 사용을 위함
 	
 	//게시물용
 	public PageDto(int page, int startRow, int totalsize, int totalpage, int btnSize, int startBtn,
@@ -26,6 +28,21 @@ public class PageDto {
 		this.startBtn = startBtn;
 		this.endBtn = endBtn;
 		this.boardList = boardList;
+	}
+	
+	// 게임용
+	public PageDto(int page, int startRow, int totalsize, int totalpage, int btnSize, int startBtn,
+			int endBtn, ArrayList<GameroomDto> gameList, int type) {
+		super();
+		this.page = page;
+		this.startRow = startRow;
+		this.totalsize = totalsize;
+		this.totalpage = totalpage;
+		this.btnSize = btnSize;
+		this.startBtn = startBtn;
+		this.endBtn = endBtn;
+		this.gameList = gameList;
+		this.type = type;
 	}
 	
 
@@ -93,6 +110,21 @@ public class PageDto {
 		this.boardList = boardList;
 	}
 
+	public ArrayList<GameroomDto> getGameList() {
+		return gameList;
+	}
+
+	public void setGameList(ArrayList<GameroomDto> gameList) {
+		this.gameList = gameList;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	@Override
 	public String toString() {
@@ -100,6 +132,5 @@ public class PageDto {
 				+ totalpage + ", btnSize=" + btnSize + ", startBtn=" + startBtn + ", endBtn=" + endBtn + ", boardList="
 				+ boardList + "]";
 	}
-		
 	
 }

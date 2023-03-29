@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+*{
+	font-family: "TheJamsil5Bold";
+}
+
+/*---------------------------- game 위쪽 css  -------------------------*/
+
+.gametoptitle h3{ /*이벤트 공지 타이틀 부분*/
+	margin-top: 10px;
+	font-weight : 700;
+	font-size: 43px;
+	color : #203725;
+}
+
+.gametopetc{ /*글쓰기 버튼이 있는 구역 div*/
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+.blbtn{ /*글쓰기 버튼 and 검색 버튼*/
+	background-color: #294B3A;
+	color : white;
+	font-size: 18px;
+	padding: 5px 8px;
+	border : none;
+	border-radius: 10px;
+}
+
+/*------------------------- game 아래 검색창 부분 css  ----------------------*/
+.searchbox{ /*검색창 부분 구역*/
+	margin-top: 10px;
+}
+
+.searchbox .key{ /*검색 select 요소 부분*/
+	border : 1px solid #648977;
+	border-radius: 10px;
+	font-size: 16px;
+	padding: 5px;
+	margin-right: 5px;
+}
+
+.searchbox .keyword{ /*키워드 검색 input부분*/
+	border : 1px solid #648977;
+	border-radius: 10px;
+	font-size: 16px;
+	padding: 6px;
+	width: 300px;
+}
+
+/*------------------------- game 게시물 목록 출력 css  ----------------------*/
+
+.gameContent{ /*게시물 출력 부분*/	
+	margin-top : 20px;
+	border-top: 1px solid #203725;
+	padding: 20px;
+}
+
+.bTitle{/*게시물 제목 구역*/
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.bTitle a{ /*게시물 제목 부분*/
+	font-size: 24px;
+	font-weight: 300 !important;
+	margin-left: 10px;
+	
+}
+
+span{ /*관리자 프로필 옆의 이름과 작성일자*/
+	margin-left: 10px;
+}
+
+.bwritedate{ /*게시물 작성일*/
+	font-size: 12px;
+}
+
+/*--------------------------- game 페이지 버튼 css  -----------------------*/
+
+.pageBox{ /*페이지 버튼 구역*/
+	border-radius: 10px;
+}
+
+.pagebtn{ /*페이지 버튼 */
+	background-color: transparent;
+	color : #203725;
+	border: solid 1px #203725;
+	padding: 7px;
+	margin: 7px 3px;
+}
+
+/* --------------------------------------------------- 모달 배경 설정 */
+.modal_wrap{
+	background-color: rgba(160,160,160,50%);	
+	position: fixed;	z-index: 999;						
+	top: 0; 		left: 0;			
+	width: 100%; 	height: 100%;	
+	display: flex;	justify-content: center; 	align-items: center;
+	display: none;
+}
+
+/* --------------------------------------------------- 모달 상자 */
+.modal_box{
+	font-family: 'TheJamsil5Bold'; 
+	background-color: white;
+	width: 30%; 	padding: 3%;
+	border: 3px solid #203624;	border-radius: 15px;
+}
+.modal_title{ font-size: 35px; font-weight: 500; margin-bottom: 5%; } 
+.modal_content{ font-size: 21px;  }
+.gTitle{ width: 82%; }
+.modal_btns{
+	display: flex;   justify-content: space-between;	margin-top: 3%;
+}
+.modal_btns button{
+	color: white;		width: 48%;			height: 45px;
+	margin-top: 3%; 	border: none;
+	background-color: #E6D9CF;	border-radius: 15px;
+}
+
+

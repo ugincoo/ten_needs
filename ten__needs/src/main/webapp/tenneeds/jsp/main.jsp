@@ -16,7 +16,7 @@
           <div class="mainbox"> 
             
             <div>
-               <a href ="/ten__needs/tenneeds/jsp/gameroom.jsp"> <img class="mainball" src="/ten__needs/tenneeds/img/공.gif"></a>
+               <a href ="/ten__needs/tenneeds/jsp/game/gamelist.jsp"> <img class="mainball" src="/ten__needs/tenneeds/img/공.gif"></a>
             </div>
             
             <div class="maintitle">

@@ -7,8 +7,7 @@
 <title>Insert title here</title>
 
    <link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
-   
-
+ 
 </head>
 <body>
    <%@include file = "/tenneeds/header.jsp" %>
