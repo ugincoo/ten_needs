@@ -80,18 +80,92 @@ function drawNet(){
 	}
 }
 
-//공 그리기
+/*//공 그리기
 const ball = {
 	x : canvas.width/2,
 	y : canvas.height/2,
 	radius : 10,
 	color : "yellow"
+}*/
+
+/*drawCircle(ball.x, ball.y, ball.radius, ball.color);*/
+
+
+
+function render(){
+	drawRect(0, 0, 500, 800, "white"); //캔버스 지우기[기존 사각형 지우기]
+	//점수 판
+	document.querySelector('.player1Score').innerHTML = player1.score
+	document.querySelector('.player2Score').innerHTML = player2.score
+	drawNet();
+	
+	drawRect(player1.x, player1.y, player1.width, player1.heigth, player1.color);
+	drawRect(player2.x, player2.y, player2.width, player2.heigth, player2.color);
+	
+	drawCircle(ball.x, ball.y, ball.radius, ball.color);
 }
 
-drawCircle(ball.x, ball.y, ball.radius, ball.color);
+function game(){
+	render();
+}
 
-//점수 판
-document.querySelector('.player1Score').innerHTML = player1.score
-document.querySelector('.player2Score').innerHTML = player2.score
+const framePerSecond = 50; //초당 프레임 50
 
-//14.32초까지 봄
+setInterval(game, 1000/framePerSecond); //초당 50번 game()함수를 호출
+
+//공 움직이는 방법
+const ball = {
+	x : canvas.width/2,
+	y : canvas.height/2,
+	radius : 10,
+	speed : 5,
+	velocityX : 5,
+	velocityY : 5,
+	color : "yellow"
+}
+
+//공이 움직이는 것처럼 보이기 위해 업데이트하는 함수
+function update(){
+	/*ball.x += velocityX; //x축만큼 움직이는 정도
+	ball.y += velocityY; *///y축만큼 움직이는 정도
+	/*(velocityX+, velocitY+) => x와 y의 꼭짓점에서 균등하게 직진*/
+	/*if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0 ){
+		velocityY =- velocityY;
+	}*/
+	
+	//경기장 네트를 기준으로 누구 공인지 알아내는 삼항연산자
+	let player = (ball.y < canvas.height/2) ? player1 : player2
+	
+	//충돌 감지
+	if(collision(ball, player)){
+		
+		/* 충돌했을 때 0도로 충돌이 되고 패들의 기준으로 아래쪽에서 튕겼다면 +15도 위쪽에서 튕겼다면 -15도로 설정한다*/
+		ball.vervelocityX = ball.speed * cos(a); 
+		ball.vervelocityY = ball.speed * sin(a); 
+		
+		/* 패들의 중심부는 넓이의 1/2이다 */
+		/*  */
+		let colidpoint = ball.x - (player.x + player.width/2)/(player.width/2);
+		
+	}
+}
+
+/* x는 오른쪽에 갈수록 +, 왼쪽으로 갈수록 - y는 위로 갈 수록 - y는 아래로 갈수록 + */
+function collision(b, p){
+	/* 패들 player */
+	p.top = p.y;
+	p.bottom = p.y + p.height;
+	p.left = p.x;
+	p.rigth = p.x + p.width;
+	
+	/* 공 */
+	b.top = b.y - b.radius;
+	b.bottom = b.y + b.radius;
+	b.left = b.x - b.radius;
+	b.right = b.x + b.radius
+	
+	//충돌한 경우
+	return b.right > p.left && b.top < p.bottom && b.left < p.right && b.bottom > p.top	
+}
+
+
