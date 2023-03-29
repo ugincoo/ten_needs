@@ -1,25 +1,23 @@
 console.log('list js 열림');
 
-/* 현재 페이지, 검색, 전송타입 */
+// pageObject 객체 생성: 현재 페이지, 검색, 전송타입 설정
 let pageObject = {
 	page : 1,
 	key : "",
 	keyword : "",
-	type : 1, //1. 전체 출력 2. 개별 출력
+	type : 1, 		//1. 전체 출력(기본값), 2. 개별 출력
 }
+
 if(memberInfo == null){
-	getgame(1);
-	alert('[알림] 로그인 회원만 이용 가능합니다.')
-	
+	getgame(1);		alert('[알림] 로그인 회원만 이용 가능합니다.')
 }else {
 	document.querySelector('.gametopetc').innerHTML = `
 			<button onclick="openModal()" class = "blbtn writebtn" type = "button" >방만들기</button>
 			`
 }
 
-
 getgame(1)
-// 게시물 목록 출력
+// 게임방 리스트 출력
 function getgame(page){
 	pageObject.page = page; //페이지 변경
 	$.ajax({
@@ -32,25 +30,25 @@ function getgame(page){
 			
 			let html = '';
 			if(r.gameList != null){
-				console.log(r);	
+					console.log(r.gameList);	
 				r.gameList.forEach((o) => {
 				
 					html += `<div class = "gameContent">
 								<div>
-									<img class = "profile" src = "/ten__needs/tenneeds/jsp/game/bimg/admin.png"/>
-									<span>관리자</span>
+									<img class = "profile" src = "/ten__needs/tenneeds/jsp/board/bimg/admin.png"/>
+									<span>${o.mId}</span>
 									<span class = "bwritedate">${o.gDate}</span>
 								</div>
 								
 								<div class = "bTitle">
-									<a href = "/ten__needs/tenneeds/jsp/game/view.jsp?bno=${o.bno}">${o.gTitle}</a>
+									<a href = "/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${o.gNo}">${o.gTitle}</a>
 								</div>
 							</div>`
 				})
 			
 			}else{
 				html = `<div class = "gameContent">
-							공지사항/이벤트 게시물이 없습니다.
+							생성된 게임방이 없습니다.
 						</div>`
 			}	
 			document.querySelector('.gameTable').innerHTML = html;
@@ -80,7 +78,6 @@ function getgame(page){
 			html += `<button class = "pagebtn" onClick = "getgame(${r.totalpage})" type = "button"><i class="fas fa-angle-double-right"></i></button>`;
 			
 			document.querySelector('.pagebox').innerHTML = html;
-			
 			
 		}
 	})

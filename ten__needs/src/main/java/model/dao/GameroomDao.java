@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.dto.GameroomDto;
@@ -17,7 +18,6 @@ public class GameroomDao extends Dao {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getgTitle()); 	ps.setInt(2, dto.getmNo());
 			ps.executeUpdate();
-				System.out.println( ps.executeUpdate() );
 			return true;
 		} catch (Exception e) { System.out.println("예외발생:" + e); }
 		return false;
@@ -51,26 +51,48 @@ public class GameroomDao extends Dao {
 		ArrayList<GameroomDto> gamelist = new ArrayList<>();
 		
 		if(key.equals("") && keyword.equals("")) {
-			sql = "select * from gameroom order by gDate desc limit ?, 10";
+			sql = "select * from gameroom order by gDate desc limit ?, 10"; //--- SQL 정상 작동
 		}else {
 			System.out.println("키워드 있음");
 			sql = "select * from gameroom where "+key+" like \"%"+keyword+"%\" order by gDate desc limit ?, 10";
 		}
-		
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, startRow);
-			rs = ps.executeQuery();
+			ps.setInt(1, startRow);		rs = ps.executeQuery();
 			
-			while( rs.next() ) {
+			while( rs.next() ) { //--- 여기서 dto 한개만 출력됨
 				GameroomDto dto = new GameroomDto(
 						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)
 						);
+					
+				sql = "select mid from member where mno ="+rs.getInt(4);
+				ps = con.prepareStatement(sql); ResultSet rs2 = ps.executeQuery();
+				if( rs2.next() ) {
+					dto.setmId(rs2.getString(1));
+				}
+					// System.out.println(dto.toString()); //--- 확인 완료
 				gamelist.add(dto);
-				
 			}
 			return gamelist;
 		} catch(Exception e) { System.out.println("예외발생:" + e); }
 		return null;
 	}
+	
+	// 2-3. 게임방 개별 출력(입장)
+	public GameroomDto getGame( int gno ) {
+		String sql = "select * from gameroom where gno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, gno);		rs = ps.executeQuery();
+			
+			if( rs.next() ) {
+				GameroomDto dto = new GameroomDto(
+						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)
+						);
+				return dto;
+			}
+		} catch(Exception e) { System.err.println(e.getMessage()); }
+		return null;
+	}
+	
 }

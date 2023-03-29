@@ -130,7 +130,9 @@ public class PageDto {
 	public String toString() {
 		return "PageDto [page=" + page + ", startRow=" + startRow + ", totalsize=" + totalsize + ", totalpage="
 				+ totalpage + ", btnSize=" + btnSize + ", startBtn=" + startBtn + ", endBtn=" + endBtn + ", boardList="
-				+ boardList + "]";
+				+ boardList + ", gameList=" + gameList + ", type=" + type + "]";
 	}
+
+
 	
 }

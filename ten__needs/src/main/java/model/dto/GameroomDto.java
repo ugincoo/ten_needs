@@ -1,14 +1,17 @@
 package model.dto;
 
+import model.dao.GameroomDao;
+import model.dao.MemberDao;
+
 public class GameroomDto {
 	
 	// DB 필드
 	private int gNo;
 	private String gTitle;
 	private String gDate;
-	private int mNo;
-	
 	private String mId;
+	
+	private int mNo;
 	
 	// Empty
 	public GameroomDto() {
@@ -17,13 +20,14 @@ public class GameroomDto {
 	}
 	
 	// 등록용
-	public GameroomDto(String gTitle, int mNo) {
+	public GameroomDto(String gTitle, String mId) {
 		super();
 		this.gTitle = gTitle;
-		this.mNo = mNo;
+		this.mId = mId;
+		this.mNo = MemberDao.getInstance().getMno(mId);
 	}
 
-	// FULL (출력용)
+	// 출력용
 	public GameroomDto(int gNo, String gTitle, String gDate, int mNo) {
 		super();
 		this.gNo = gNo;
@@ -31,16 +35,28 @@ public class GameroomDto {
 		this.gDate = gDate;
 		this.mNo = mNo;
 	}
+	
+	
+
+	public GameroomDto(int gNo, String gTitle, String gDate, String mId, int mNo) {
+		super();
+		this.gNo = gNo;
+		this.gTitle = gTitle;
+		this.gDate = gDate;
+		this.mId = mId;
+		this.mNo = mNo;
+	}
 
 	@Override
 	public String toString() {
-		return "GameroomDto [gNo=" + gNo + ", gTitle=" + gTitle + ", gDate=" + gDate + ", mNo=" + mNo + "]";
+		return "GameroomDto [gNo=" + gNo + ", gTitle=" + gTitle + ", gDate=" + gDate + ", mNo=" + mNo + ", mId=" + mId
+				+ "]";
 	}
-
+	
 	public int getgNo() {
 		return gNo;
 	}
-
+	
 	public void setgNo(int gNo) {
 		this.gNo = gNo;
 	}

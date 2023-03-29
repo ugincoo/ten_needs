@@ -10,7 +10,14 @@
  
 </head>
 <body>
+
    <%@include file = "/tenneeds/header.jsp" %>
+   
+   <%	
+		String gNo = request.getParameter("gNo");
+	%>
+	
+   <input type = "hidden" type = "text" class = "gNo" value="<%=gNo%>">
    
    <div class="container gameback" >   
       	 <a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>

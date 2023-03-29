@@ -40,12 +40,14 @@ public class CreateGame extends HttpServlet {
 
 			//페이지 처리
 			int page = Integer.parseInt(request.getParameter("page"));
-			int startRow = (page-1)*10; //10개씩 출력
+				System.out.println( page );
+			int countPerPage = 10;
+			int startRow = (page-1)*countPerPage; //10개씩 출력
 
 			//게시물 수 구하기
 			int totalSize = GameroomDao.getInstance().getTotalSize(key, keyword);
 			//총 페이지
-			int totalpage = (totalSize%10 == 0) ? (totalSize/10) : (totalSize/10 +1);
+			int totalpage = (totalSize%countPerPage == 0) ? (totalSize/countPerPage) : (totalSize/countPerPage +1);
 			
 			//버튼 최대 개수 
 			int btnSize = 5;
@@ -57,12 +59,20 @@ public class CreateGame extends HttpServlet {
 			}
 			
 			ArrayList<GameroomDto> result = GameroomDao.getInstance().gameList(startRow, key, keyword);
-		
+				
+				// System.out.println( "result size:" + result.size() );
+			
 			PageDto pageDto = new PageDto(page, startRow, totalSize, totalpage, btnSize, startBtn, endBtn, result, 1); // 1: game에 사용
 			
 			String jsonArray = mapper.writeValueAsString(pageDto);
 			
-			response.getWriter().print(jsonArray);	
+			response.getWriter().print(jsonArray);
+		} else if( type == 2) {
+			int gno = Integer.parseInt(request.getParameter("gno"));
+			
+			GameroomDto result = GameroomDao.getInstance().getGame(gno);
+			String json = mapper.writeValueAsString(result);
+			response.getWriter().print(json);
 		}
 	}
 		
@@ -74,11 +84,10 @@ public class CreateGame extends HttpServlet {
 		
 		String gTitle = request.getParameter("gTitle");
 			System.out.println("gTitle:" + gTitle);
-		System.out.println( request.getParameter("mno") );
 		
-		int mno = Integer.parseInt(request.getParameter("mno"));
+		String mid = (String)request.getSession().getAttribute("login");
 		
-		GameroomDto dto = new GameroomDto( gTitle, mno );
+		GameroomDto dto = new GameroomDto( gTitle, mid );
 		boolean result = GameroomDao.getInstance().createGame(dto);
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().print(result);
