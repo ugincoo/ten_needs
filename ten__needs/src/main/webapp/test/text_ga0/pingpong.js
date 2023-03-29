@@ -38,12 +38,20 @@ const ctx = canvas.getContext('2d');
 		color : "white",
 	}
 	
+	// -------------------------------------------------------- 방향키 전역 변수
+	let rightPressed = false;	// 우키 상태
+	let leftPressed = false;	// 좌키 상태
+	let upPressed = false;		// 상키 상태
+	let downPressed = false;	// 하키 상태
+	// 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
+	
 	// 함수 정의
 	
 	// 네모(경기장) 그리기
 	function drawRect(x, y, w, h, color){
 		ctx.fillStyle = color;
 		ctx.fillRect(x, y, w, h);
+		
 	}
 	// 네트 그리기
 	function drawNet(){
@@ -68,6 +76,19 @@ const ctx = canvas.getContext('2d');
 	
 	// 반복으로 움직이게 보이는 함수
 	function render(){
+		if (rightPressed && user1.x < canvas.width - user1.width) {
+	      	user1.x += 7;
+	    } else if (leftPressed && user1.x > 0) {
+	      	user1.x -= 7;
+	    }
+	    
+	    if ( upPressed && user1.y > 0 ){
+		  	user1.y -= 7;
+		} else if ( downPressed && user1.y < canvas.height - user1.height ) {
+		  	user1.y += 7;
+		}
+	    
+	    
 		drawRect( 0, 0, canvas.width , canvas.height, "#203624");
 		
 		drawNet();
@@ -81,15 +102,34 @@ const ctx = canvas.getContext('2d');
 		drawCircle(ball.x, ball.y, ball.radius, ball.color);
 	}
 	
-	// 사용자 마우스 이벤트
-	canvas.addEventListener("mousemove", movePaddle);
-	
-	function movePaddle(evt){
-		let rect = canvas.getBoundingClientRect();
-		
-		user1.x = evt.clientX - rect.left - user1.width/2;
-	}
-	
+	//패들 방향키 조
+	document.addEventListener("keydown", keyDownHandler, false);
+	document.addEventListener("keyup", keyUpHandler, false);
+
+	function keyDownHandler(event) {
+	  if (event.key === "Right" || event.key === "ArrowRight") { // --- 아스키코드 적용해도 무방
+	    rightPressed = true;
+	  } else if (event.key === "Left" || event.key === "ArrowLeft") {
+	    leftPressed = true;
+	  } else if (event.key === "Up" || event.key === "ArrowUp") {
+	    upPressed = true;
+	  } else if (event.key === "Down" || event.key === "ArrowDown") {
+	    downPressed = true;
+	  }
+  }
+
+	function keyUpHandler(event) {
+		if (event.key === "Right" || event.key === "ArrowRight") {
+	    rightPressed = false;
+	  } else if (event.key === "Left" || event.key === "ArrowLeft") {
+	    leftPressed = false;
+	  } else if (event.key === "Up" || event.key === "ArrowUp") {
+	    upPressed = false;
+	  } else if (event.key === "Down" || event.key === "ArrowDown") {
+	    downPressed = false;
+	  }
+  }
+
 	function collision(b, p){
 		b.top = b.y - b.radius;
 		b.bottom = b.y + b.radius;
@@ -140,11 +180,11 @@ const ctx = canvas.getContext('2d');
        		// -player.height/2 < 충돌 지점 < player.height/2
 			collidePoint = collidePoint/(player.height/2);
 			
-			// 공이 패들의 상단에 닿을 때 공이 -45도 각도를 가지기를 원합니다.
+			// 공이 패들의 상단에 닿을 때 공이 -18도 각도를 가지기를 원합니다.
     	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
-   		    // 공이 패들 바닥에 닿을 때 공이 45도 기울기를 원합니다.
-       		// Math.PI/4 = 45도
-			let angleRad = collidePoint * Math.PI/4;
+   		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
+       		// Math.PI/10 = 18도
+			let angleRad = collidePoint * Math.PI/10;
 			
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
@@ -168,6 +208,7 @@ const ctx = canvas.getContext('2d');
 	}
 	
 	
+	
 	function game(){
 	    update();
 	    render();
@@ -178,3 +219,11 @@ const ctx = canvas.getContext('2d');
 	//call the game function 50 times every 1 Sec
 	let loop = setInterval(game,1000/framePerSecond);
 	
+
+
+
+
+
+
+
+
