@@ -24,7 +24,7 @@
 	border: 3px solid #203624;	border-radius: 15px;
 }
 .modal_title{ font-size: 35px; font-weight: 500; margin-bottom: 5%; } 
-.modal_content{ font-size: 21px;  }
+.modal_content{ font-size: 15px;  }
 .contentAddr{ margin-bottom: 2%; }
 .modal_btns{
 	display: flex;	justify-content: center;	margin-top: 3%;
