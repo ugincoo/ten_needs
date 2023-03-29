@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 사용자 정의 css -->
+<link rel = "stylesheet" href = "/ten__needs/tenneeds/css/game/pingpong.css">
 	
 </head>
 <body>

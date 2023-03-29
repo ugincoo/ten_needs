@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+body{
+	background-color : "#DBC889";
+}
+
+.game_wrap{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.gamereal{
+	text-align: center;
+}
