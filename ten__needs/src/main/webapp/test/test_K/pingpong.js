@@ -1,7 +1,41 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
-	// 상수 선언
+	
+const net = {
+		x : 0,
+		y : canvas.height/2 -2/2,
+		width : 10,
+		height : 2,
+		color : "white",
+	}
+
+	
+  
+  // 네모(경기장) 그리기
+	function drawRect(x, y, w, h, color){
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, w, h);
+		
+	}
+	// 네트 그리기
+	function drawNet(){
+		for(let i = 0; i<= canvas.width; i+=15){
+			drawRect(net.x+i, net.y, net.width, net.height, net.color);
+		}
+	}
+  
+  const ball = {
+		x : canvas.width/2,
+		y : canvas.height/2,
+		radius : 10,
+		speed : 5,
+		velocityX : 5,
+		velocityY : 5,
+		color : "yellow"
+	}
+	
+// 상수 선언
 	const user1 = {
 		x : canvas.width/2 - 100/2,
 		y : 0,
@@ -20,23 +54,9 @@ const ctx = canvas.getContext('2d');
 		score : 0
 	}
 	
-	const ball = {
-		x : canvas.width/2,
-		y : canvas.height/2,
-		radius : 10,
-		speed : 5,
-		velocityX : 5,
-		velocityY : 5,
-		color : "yellow"
-	}
 	
-	const net = {
-		x : 0,
-		y : canvas.height/2 -2/2,
-		width : 10,
-		height : 2,
-		color : "white",
-	}
+	
+	
 	
 	// -------------------------------------------------------- 방향키 전역 변수
 	let rightPressed = false;	// 우키 상태
@@ -47,18 +67,7 @@ const ctx = canvas.getContext('2d');
 	
 	// 함수 정의
 	
-	// 네모(경기장) 그리기
-	function drawRect(x, y, w, h, color){
-		ctx.fillStyle = color;
-		ctx.fillRect(x, y, w, h);
-		
-	}
-	// 네트 그리기
-	function drawNet(){
-		for(let i = 0; i<= canvas.width; i+=15){
-			drawRect(net.x+i, net.y, net.width, net.height, net.color);
-		}
-	}
+	
 	// 공 그리기
 	function drawCircle(x, y, r, color){
 		ctx.fillStyle = color;
@@ -75,7 +84,7 @@ const ctx = canvas.getContext('2d');
 	}
 	
 	// 반복으로 움직이게 보이는 함수
-	function render(){
+	/*function render(){
 		if (rightPressed && user1.x < canvas.width - user1.width) {
 	      	user1.x += 7;
 	    } else if (leftPressed && user1.x > 0) {
@@ -100,7 +109,7 @@ const ctx = canvas.getContext('2d');
 		drawRect(user2.x, user2.y, user2.width, user2.height, user2.color);
 		
 		drawCircle(ball.x, ball.y, ball.radius, ball.color);
-	}
+	}*/
 	
 	//패들 방향키 조
 	document.addEventListener("keydown", keyDownHandler, false);
@@ -211,7 +220,31 @@ const ctx = canvas.getContext('2d');
 	
 	function game(){
 	    update();
-	    render();
+	   	const background = new Image();
+		  background.src = 'background.jpeg';
+		  background.addEventListener('load', () => {
+		    ctx.drawImage(background,0,0);
+		    	if (rightPressed && user1.x < canvas.width - user1.width) {
+			      	user1.x += 7;
+			    } else if (leftPressed && user1.x > 0) {
+			      	user1.x -= 7;
+			    }
+			    
+			    if ( upPressed && user1.y > 0 ){
+				  	user1.y -= 7;
+				} else if ( downPressed && user1.y < canvas.height - user1.height ) {
+				  	user1.y += 7;
+				}
+		  		drawNet();
+				
+				drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");
+				drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");
+				
+				drawRect(user1.x, user1.y, user1.width, user1.height, user1.color);
+				drawRect(user2.x, user2.y, user2.width, user2.height, user2.color);
+				
+				drawCircle(ball.x, ball.y, ball.radius, ball.color);
+		  });
 	}
 	// number of frames per second
 	let framePerSecond = 50;

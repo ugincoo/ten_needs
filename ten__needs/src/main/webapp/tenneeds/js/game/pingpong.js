@@ -18,6 +18,8 @@ else{
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
+	
 	
 	// 상수 선언
 	const user1 = {
@@ -92,6 +94,7 @@ const ctx = canvas.getContext('2d');
 		ctx.font = "45px fantasy";
 		ctx.fillText(text, x, y);
 	}
+	
 	
 	// 반복으로 움직이게 보이는 함수
 	function render(){
@@ -240,16 +243,24 @@ const ctx = canvas.getContext('2d');
 	}
 	
 	
+	let count = 0;
 	
 	function game(){
-	    update();
-	    render();
+		if(count%1 == 0){
+			update();
+	    	render();	
+		}
+	    count++;
+	    
+	    // 애니메이션 효과를 효율적이적으로 만드는 함수 = setInterval 같은 역할
+	    requestAnimationFrame(game);
 	}
+	game();
 	// number of frames per second
-	let framePerSecond = 50;
+	//let framePerSecond = 50;
 	
 	//call the game function 50 times every 1 Sec
-	let loop = setInterval(game,1000/framePerSecond);
+	//let loop = setInterval(game,1000/framePerSecond);
 	
 
 
