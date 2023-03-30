@@ -17,7 +17,7 @@
 			<canvas class = "gamereal" id="canvas" width="600" height="800"></canvas>
 		</div>
 	</div>
-	
+	 
 	
 	
 	<script type="text/javascript" src="/ten__needs/tenneeds/js/game/pingpong.js"></script>

@@ -18,6 +18,8 @@ else{
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
+	
 	
 	// 상수 선언
 	const user1 = {
@@ -56,11 +58,12 @@ const ctx = canvas.getContext('2d');
 		color : "white",
 	}
 	
-	// -------------------------------------------------------- 방향키 전역 변수
+	// 방향키 전역 변수
 	let rightPressed = false;	// 우키 상태
 	let leftPressed = false;	// 좌키 상태
 	let upPressed = false;		// 상키 상태
 	let downPressed = false;	// 하키 상태
+	let spacePressed = false; //스페이스여부
 	// 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
 	
 	// 함수 정의
@@ -92,18 +95,22 @@ const ctx = canvas.getContext('2d');
 		ctx.fillText(text, x, y);
 	}
 	
+	
 	// 반복으로 움직이게 보이는 함수
 	function render(){
 		if (rightPressed && user1.x < canvas.width - user1.width) {
-	      	user1.x += 7;
+	      	user1.x += 8;
 	    } else if (leftPressed && user1.x > 0) {
-	      	user1.x -= 7;
+	      	user1.x -= 8;
 	    }
 	    
 	    if ( upPressed && user1.y > 0 ){
-		  	user1.y -= 7;
+		  	user1.y -= 8;
 		} else if ( downPressed && user1.y < canvas.height - user1.height ) {
-		  	user1.y += 7;
+		  	if(user1.y < canvas.height/2 - 20){ //상대편 네트보다 더 아래로 갈 수 없도록
+				user1.y += 8;
+			}
+			
 		}
 	    
 	    
@@ -133,7 +140,10 @@ const ctx = canvas.getContext('2d');
 	    upPressed = true;
 	  } else if (event.key === "Down" || event.key === "ArrowDown") {
 	    downPressed = true;
-	  }
+	  } else if (event.key === "" || event.keyCode === 32) {
+		user1.color = "red";
+	    spacePressed = true;
+	  } 
   }
 
 	function keyUpHandler(event) {
@@ -145,7 +155,10 @@ const ctx = canvas.getContext('2d');
 	    upPressed = false;
 	  } else if (event.key === "Down" || event.key === "ArrowDown") {
 	    downPressed = false;
-	  }
+	  } else if (event.key === "" || event.keyCode === 32) {
+		//3초 후에 spacePressed = false로 적용
+	    setTimeout(() => spacePressed = false, user1.color = "white", 3000); //정확함도를 낮추기 위해서
+	  } 
   }
 
 	function collision(b, p){
@@ -188,30 +201,34 @@ const ctx = canvas.getContext('2d');
 		  // 패들이 사용자 또는 com 패들을 쳤는지 확인합니다.
 		let player = (ball.y < canvas.height/2) ? user1 : user2;
 		
-		 // 공이 패들에 부딪힌 경우
-		if(collision(ball, player)){
-			
-			// 공이 패들에 닿는 위치를 확인합니다.
-			let collidePoint = ball.y - (player.y + player.height/2);
-			
-			// collidePoint의 값을 정규화합니다. -1과 1 사이의 숫자를 가져와야 합니다.
-       		// -player.height/2 < 충돌 지점 < player.height/2
-			collidePoint = collidePoint/(player.height/2);
-			
-			// 공이 패들의 상단에 닿을 때 공이 -18도 각도를 가지기를 원합니다.
-    	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
-   		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
-       		// Math.PI/10 = 18도
-			let angleRad = collidePoint * Math.PI/10;
-			
-			// X 및 Y 속도 방향 변경
-			let direction = (ball.x < canvas.width/2)? 1 : -1;
-			
-			ball.velocityX = direction * ball.speed * Math.cos(angleRad);
-			ball.velocityY = ball.speed * Math.sin(angleRad);
-			
-		 // 패들이 공을 칠 때마다 공의 속도를 높입니다.
-			ball.speed += 0.5;
+		
+		if(spacePressed){
+			 // 공이 패들에 부딪힌 경우
+			if(collision(ball, player)){
+				
+				// 공이 패들에 닿는 위치를 확인합니다.
+				let collidePoint = ball.y - (player.y + player.height/2);
+				
+				// collidePoint의 값을 정규화합니다. -1과 1 사이의 숫자를 가져와야 합니다.
+	       		// -player.height/2 < 충돌 지점 < player.height/2
+				collidePoint = collidePoint/(player.height/2);
+				
+				// 공이 패들의 상단에 닿을 때 공이 -18도 각도를 가지기를 원합니다.
+	    	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
+	   		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
+	       		// Math.PI/10 = 18도
+				let angleRad = collidePoint * Math.PI/10;
+				
+				// X 및 Y 속도 방향 변경
+				let direction = (ball.x < canvas.width/2)? 1 : -1;
+				
+				ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+				ball.velocityY = ball.speed * Math.sin(angleRad);
+				
+			 // 패들이 공을 칠 때마다 공의 속도를 높입니다.
+				ball.speed += 0.5;
+			}
+		
 		}
 		
 		
@@ -226,16 +243,24 @@ const ctx = canvas.getContext('2d');
 	}
 	
 	
+	let count = 0;
 	
 	function game(){
-	    update();
-	    render();
+		if(count%1 == 0){
+			update();
+	    	render();	
+		}
+	    count++;
+	    
+	    // 애니메이션 효과를 효율적이적으로 만드는 함수 = setInterval 같은 역할
+	    requestAnimationFrame(game);
 	}
+	game();
 	// number of frames per second
-	let framePerSecond = 50;
+	//let framePerSecond = 50;
 	
 	//call the game function 50 times every 1 Sec
-	let loop = setInterval(game,1000/framePerSecond);
+	//let loop = setInterval(game,1000/framePerSecond);
 	
 
 
