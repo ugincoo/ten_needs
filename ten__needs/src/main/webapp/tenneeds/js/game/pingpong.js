@@ -55,8 +55,11 @@ const ctx = canvas.getContext('2d');
 		y : canvas.height/2 -2/2,
 		width : 10,
 		height : 2,
-		color : "white",
+		color : "white"
 	}
+	
+
+	
 	
 	// 방향키 전역 변수
 	let rightPressed = false;	// 우키 상태
