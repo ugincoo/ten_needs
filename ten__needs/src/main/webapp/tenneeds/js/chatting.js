@@ -16,8 +16,8 @@ chattingSockat.onclose = function(e){ onClose(e); }
 
 function inputChat(e){
 		console.log(e); // --- 작동 확인
-	geme_chat.innerHTML += `<div class="alarmBox"> ${memberInfo.mid} 님이 접속하셨습니다. </div>`
-	
+	alert('게임방 접속');
+	geme_chat.innerHTML += `<div class="alarmBox"> ${memberInfo.mid} 님이 접속하셨습니다. </div>`	
 }
 
 function sendMessage(){

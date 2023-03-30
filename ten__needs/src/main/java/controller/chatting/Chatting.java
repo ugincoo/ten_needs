@@ -25,10 +25,15 @@ public class Chatting {
 	public void OnOpen( Session session, @PathParam("gNo") int gNo, @PathParam("mid") String mid ) throws Exception {
 			System.out.println("입장" + session);
 		
-		connectList.add( new ChatUserDto(session, mid, gNo) );
-		
-		OnMessage( session, "user" );
-		// 용도: user 식별
+		int count = 0; // --- 변수 추가(이유: gNO에 접속되어 있는 인원이 2명 넘지 않도록 제어하기 위함)
+		    for (ChatUserDto dto : connectList) {
+		        if (dto.getgNo() == gNo) { count++; }
+		    }
+		if (count >= 2) {
+			session.close();    return;
+		}
+		connectList.add(new ChatUserDto(session, mid, gNo));
+	    OnMessage(session, "user");
 	}
 	
 	// OnMessage Method
