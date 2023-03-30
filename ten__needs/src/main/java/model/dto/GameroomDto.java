@@ -12,6 +12,7 @@ public class GameroomDto {
 	private String mId;
 	
 	private int mNo;
+	private int limitCount;
 	
 	// Empty
 	public GameroomDto() {
@@ -36,8 +37,6 @@ public class GameroomDto {
 		this.mNo = mNo;
 	}
 	
-	
-
 	public GameroomDto(int gNo, String gTitle, String gDate, String mId, int mNo) {
 		super();
 		this.gNo = gNo;
@@ -92,7 +91,13 @@ public class GameroomDto {
 	public void setmId(String mId) {
 		this.mId = mId;
 	}
-	
-	
+
+	public int getLimitCount() {
+		return limitCount;
+	}
+
+	public void setLimitCount(int limitCount) {
+		this.limitCount = limitCount;
+	}
 	
 }

@@ -71,6 +71,6 @@
 
    </div>
    
-	<script src="/ten__needs/tenneeds/js/game/gameroom.js" type="text/javascript"> </script>
+	<script src="/ten__needs/tenneeds/js/chatting.js" type="text/javascript"> </script>
 </body>
 </html>

@@ -1,11 +1,8 @@
 console.log('작동 확인');
 
-// ------------------------------------------------------- sockat
 let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');
 let gNo = document.querySelector('.gNo').value;
-
-	console.log(gNo);
 // sockat server 연결
 let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
 
@@ -13,13 +10,14 @@ let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs/tenneeds
 chattingSockat.onopen = function(e){ inputChat(e); }
 chattingSockat.onmessage = function(e){ onMessage(e); }
 chattingSockat.onclose = function(e){ onClose(e); }
-
+// --------------------------------------------------------- 접속 확인
 function inputChat(e){
 		console.log(e); // --- 작동 확인
-	alert('게임방 접속');
-	geme_chat.innerHTML += `<div class="alarmBox"> ${memberInfo.mid} 님이 접속하셨습니다. </div>`	
+	geme_chat.innerHTML += `<div class="alarmBox"> ${memberInfo.mid} 님이 접속하셨습니다. </div>`
+	
 }
 
+// --------------------------------------------------------- 채팅 관련 메소드
 function sendMessage(){
 	
 	let chatContent = document.querySelector('.chatContent').value;
@@ -39,7 +37,7 @@ function onMessage( e ){
 	console.log( JSON.parse(e.data) );
 
 	let data = JSON.parse(e.data);
-	
+	// ----------------------------------------------------------- type1, type2, tpy3
 	if(  data.mId == memberInfo.mid ){
 		geme_chat.innerHTML += `
 								<div class="sendWrap">
@@ -70,8 +68,33 @@ function onMessage( e ){
 	geme_chat.scrollTop = geme_chat.scrollHeight;
 }
 
-function onClose( e ){
-	// 서버에서 메시지 작성해야함
+// --------------------------------------------------------- 게임 관련 메소드
+let clickCount = 0;
+function gamestart(){
+	let readyState = false;
+	clickCount++;
+	if( clickCount%2 != 0 ){ // 홀수: 레디ON
+		readyState = true;
+		chattingSockat.send( JSON.stringify(readyState) );
+		document.querySelector('.ready_state').innerHTML='READY';
+	}else if( clickCount%2 == 0 ){ // 짝수: 레디OFF
+		readyState = false;
+		document.querySelector('.ready_state').innerHTML='';
+	}
+
+	let startbtn = document.querySelector('startbtn');
+	console.log(startbtn)
+
 }
 
-// ------------------------------------------------------- 
+
+
+// --------------------------------------------------------- 연결 해제 메소드
+function onClose( e ){
+	// console.log(e);
+	if(e.currentTarget.readyState == 3){
+		// alert('[알림] 정원 초과')
+		location.href="/ten__needs/tenneeds/jsp/game/gamelist.jsp"
+		
+	}
+}

@@ -1,11 +1,11 @@
 package controller.chatting;
-
 import java.util.ArrayList;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
@@ -24,7 +24,7 @@ public class Chatting {
 	@OnOpen
 	public void OnOpen( Session session, @PathParam("gNo") int gNo, @PathParam("mid") String mid ) throws Exception {
 			System.out.println("입장" + session);
-		
+			
 		int count = 0; // --- 변수 추가(이유: gNO에 접속되어 있는 인원이 2명 넘지 않도록 제어하기 위함)
 		    for (ChatUserDto dto : connectList) {
 		        if (dto.getgNo() == gNo) { count++; }
@@ -56,7 +56,22 @@ public class Chatting {
 			}
 			json = mapper.writeValueAsString( messageList );
 		// ------------------ 메시지 ------------------	
+		} else if( msg.equals("true")){
+			for( ChatUserDto dto : connectList ) {
+				if (dto.getSession() == session) {
+				// dto.setreadyState(true);
+				dto.getSession().getBasicRemote().sendText("true");
+				}
+			}
+			
+		} else if(msg.equals("false") ) {
+			for( ChatUserDto dto : connectList ) {
+				if (dto.getSession() == session) {
+					dto.getSession().getBasicRemote().sendText("false");
+					}
+			}
 		} else {
+		
 			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
 			json = mapper.writeValueAsString(messageDto);
 			
