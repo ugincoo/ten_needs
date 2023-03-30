@@ -185,7 +185,7 @@ public class BoardDao extends Dao{
 	
 	//7. 댓글 출력
 	public ArrayList<ReplyDto> getReplyList(int bno){
-		String sql = "select reply.*, member.mid from reply natural join member where bno ="+bno;
+		String sql = "select reply.*, member.mid, member.mimg from reply natural join member where bno ="+bno;
 		ArrayList<ReplyDto> replyList = new ArrayList<>();
 		try {
 			ps = con.prepareStatement(sql);
@@ -199,7 +199,8 @@ public class BoardDao extends Dao{
 						rs.getString(3), 
 						rs.getInt(4), 
 						rs.getInt(5),
-						rs.getString(6));
+						rs.getString(6),
+						rs.getString(7));
 				
 				replyList.add(dto);
 			}

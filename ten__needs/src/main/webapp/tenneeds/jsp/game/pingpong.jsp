@@ -8,7 +8,7 @@
 
 <link href="/ten__needs/tenneeds/css/game/pingpong.css" rel="stylesheet">
 
-</head>
+</head> 
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>

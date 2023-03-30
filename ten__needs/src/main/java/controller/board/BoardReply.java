@@ -29,7 +29,7 @@ public class BoardReply extends HttpServlet {
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		
 		ArrayList<ReplyDto> result = BoardDao.getInstance().getReplyList(bno);
-		
+		System.out.println(result);
 		ObjectMapper mapper = new ObjectMapper();
 		
 		String jsonArray = mapper.writeValueAsString(result);
@@ -37,6 +37,7 @@ public class BoardReply extends HttpServlet {
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
+		System.out.println(jsonArray);
 		response.getWriter().print(jsonArray);
 		
 		

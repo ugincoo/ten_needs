@@ -13,7 +13,7 @@
 	%>
 	
 	<script type="text/javascript">
-		location.href="/tenneeds/jsp/main.jsp";
+		location.href="/ten__needs/tenneeds/jsp/main.jsp";
 	</script>
 
 </body>

@@ -1,6 +1,8 @@
 // 소켓 연결
 let gameSocket = null;
+
 if( memberInfo == null ){}
+
 else{
 	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
 
@@ -13,31 +15,40 @@ else{
 	gameSocket.onmessage = (e)=>{ console.log()}
 }	
 
-
-
+let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 	
-	
 	// 상수 선언
 	const user1 = {
+		mno : 1,
+		rano : 1,
 		x : canvas.width/2 - 100/2,
 		y : 0,
 		width : 100,
 		height : 10,
 		color : "white",
-		score : 0
+		score : 0,
+		win : 0,
+		smash : 0,
+		swing : 0,
+		result : -1
 	}
 	
 	const user2 = {
+		mno : 2,
 		x : canvas.width/2 - 100/2,
 		y : canvas.height - 10,
 		width : 100,
 		height : 10,
 		color : "#DBC889",
-		score : 0
+		score : 0,
+		win : 0,
+		smash : 0,
+		swing : 0,
+		result : -1
 	}
 	
 	const ball = {
@@ -193,18 +204,29 @@ const ctx = canvas.getContext('2d');
 		let computerLevel = 0.015;
 		user2.x += (ball.y - (user2.x + user2.width/2)) * computerLevel;
 		
-		// 공이 아래쪽 및 위쪽 벽과 충돌하면 y 속도를 반전시킵니다.
-		if(ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0){
-			ball.velocityX = -ball.velocityX;
-		}
 		
 		  // 패들이 사용자 또는 com 패들을 쳤는지 확인합니다.
 		let player = (ball.y < canvas.height/2) ? user1 : user2;
 		
 		
 		if(spacePressed){
+			if(player == user1){
+				user1.swing++;	
+			}else{
+				user2.swing++;	
+			}
+			
 			 // 공이 패들에 부딪힌 경우
 			if(collision(ball, player)){
+				if(player == user1){
+					user1.result = 1;
+					user2.result = 0;
+					user1.smash++;	
+				}else{
+					user1.result = 0; //지면 0
+					user2.result = 1; //이기면 1
+					user2.smash++;	
+				}
 				
 				// 공이 패들에 닿는 위치를 확인합니다.
 				let collidePoint = ball.y - (player.y + player.height/2);
@@ -213,11 +235,11 @@ const ctx = canvas.getContext('2d');
 	       		// -player.height/2 < 충돌 지점 < player.height/2
 				collidePoint = collidePoint/(player.height/2);
 				
-				// 공이 패들의 상단에 닿을 때 공이 -18도 각도를 가지기를 원합니다.
+				// 공이 패들의 상단에 닿을 때 공이 -50도 각도를 가지기를 원합니다.
 	    	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
-	   		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
-	       		// Math.PI/10 = 18도
-				let angleRad = collidePoint * Math.PI/10;
+	   		    // 공이 패들 바닥에 닿을 때 공이 50도 기울기를 원합니다.
+	       		// Math.PI/7 = 약 50도
+				let angleRad = collidePoint * Math.PI/7;
 				
 				// X 및 Y 속도 방향 변경
 				let direction = (ball.x < canvas.width/2)? 1 : -1;
@@ -234,14 +256,65 @@ const ctx = canvas.getContext('2d');
 		
     // 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
 		if(ball.y -ball.radius < 0){
-			user2.score++;
+			user2.score += 15;
+			if(user2.score >= 45){
+				alert('user2 ' + round +  "라운드 승!");
+				round++;
+				user2.score = 0;
+				user1.score = 0;
+				user2.win += 1;
+			}
+			checkRound();
 			resetBall();
+			
 		}else if(ball.y + ball.radius > canvas.height){
-			user1.score++;
+			user1.score += 15;
+			if(user1.score >= 45){
+				alert('user1 ' + round +  "라운드 승!");
+				round++;
+				user1.score = 0;
+				user2.score = 0;
+				user1.win++;
+			}
+			checkRound();
 			resetBall();
 		}
 	}
 	
+	//최종 라운드 체크
+	function checkRound(){
+		
+		if(user1.win >= 2 || user2.win >= 2){
+			
+			cancelAnimationFrame(game)
+			if(user1.win > user2.win){
+
+				alert('user1이 최종 승리')
+				
+			}else{
+
+				alert('user2이 최종 승리')
+			}
+			
+			let gameresult = {
+				player1 : user1.mno,
+				player2 : user2.mno,
+				
+			}
+			
+			console.log(gameresult)
+			
+			$.ajax({
+				url : "/ten__needs/game/result",
+				method : "post",
+				data : gameresult,
+				success : (r) => {
+					
+				}
+				
+			})
+		}
+	}
 	
 	let count = 0;
 	
