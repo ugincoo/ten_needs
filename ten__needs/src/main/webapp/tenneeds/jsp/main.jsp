@@ -9,7 +9,7 @@
 <link href="/ten__needs/tenneeds/css/main.css" rel="stylesheet">
 </head>
 <body>
-	<%--    <%@include file = "/tenneeds/header.jsp" %> --%>
+	<%@include file = "/tenneeds/header.jsp" %>
    <!--  메인 화면 -->
    <div class="container main">
       <div class="mainback">
@@ -27,12 +27,11 @@
           </div>
             <!-- 버튼 구역 -->
             <ul class="mainbtnbox">
-               <li><a href ="/ten__needs/tenneeds/jsp/member/login.jsp"> 로그인 </a></li>
-               <li><a href ="/ten__needs/tenneeds/jsp/member/mypage.jsp"> 마이페이지 </a></li>
-               <li><a href ="/ten__needs/tenneeds/jsp/board/list.jsp"> 공지사항 </a></li>
+               
             </ul>
       </div>
    </div>
 	
+	<script src="/ten__needs/tenneeds/js/main.js" type="text/javascript"></script>
 </body>
 </html>

@@ -19,9 +19,7 @@
 </head>
 <body>
 	<div class ="container">
-		<div style = "width : 100%; height: 50px;">
-
-		</div>
+	
 	</div>
 	
 	
