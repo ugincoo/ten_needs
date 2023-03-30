@@ -121,6 +121,12 @@ public class Chatting {
 			if( dto.getSession() == session ) {
 				connectList.remove(dto);
 				
+				String msg = "{\"type\":\"alarm\",\"data\":\""+dto.getmId()+"님이 나갔습니다.\"}";
+				// 형태: { "필드명" : "데이터", "필드명" : 데이터 }
+				// 해석: 큰따음표 사용을 위에 이스케이프 문자 사용
+				OnMessage( session, msg);
+				
+				// 모든 접속명단에게 연결 끊긴 클라이언트 소캣을 알림 [접속목록]
 				OnMessage( session, "user" );
 				break;
 			}

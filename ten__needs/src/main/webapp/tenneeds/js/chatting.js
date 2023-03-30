@@ -37,14 +37,15 @@ function sendMessage(){
 	
 	document.querySelector('.chatContent').value = '';
 }
-
+let countStart = 0;
 function onMessage( e ){
 	console.log(e); // --- 확인 완료
 	// console.log(e.data); // --- 확인 완료
 	// console.log( JSON.parse(e.data) ); // --- 확인 완료
 	 
 	let data = JSON.parse(e.data);
-
+	
+	
 	if( Array.isArray( data ) ){ // ------------- 상단 프로필 상태 출력
 		console.log(data);
 		let html = '';
@@ -67,8 +68,7 @@ function onMessage( e ){
 		               </div>
 						`
 			}
-			document.querySelector('.game_userbox').innerHTML = html;
-
+			document.querySelector('.game_userbox').innerHTML = html;		
 		})
 	} else if( JSON.parse(data.msg).type == "chat" ){ // ------------- 메시지 출력
 		if( data.mId == memberInfo.mid ){
@@ -98,16 +98,27 @@ function onMessage( e ){
 									</div>
 									`
 			} else if( JSON.parse(data.msg).type == "game" ){
+				
 				if( JSON.parse(data.msg).data ){
+					countStart++;
 					if( data.mId == memberInfo.mid ){
-						document.querySelector('.ready_stateUser1').innerHTML='READY';
+						document.querySelector('.ready_stateUser1').innerHTML='READY'; 
 					} else{ document.querySelector('.ready_stateUser2').innerHTML='READY'; }
 					
 				}
 				else{
+					 countStart--;
 					if( data.mId == memberInfo.mid ){
 						document.querySelector('.ready_stateUser1').innerHTML='';
-					} else{ document.querySelector('.ready_stateUser2').innerHTML=''; }
+					} else{ document.querySelector('.ready_stateUser2').innerHTML='';}
+				}
+				
+				console.log(countStart);
+				
+				if( countStart == 2 ){
+					setTimeout( ()=>{
+					   location.href = "/ten__needs/tenneeds/jsp/game/pingpong.jsp";
+					   }, 5000 )
 				}
 			}
 
@@ -128,27 +139,16 @@ function gamestart(){
 	
 	if( clickCount%2 != 0 ){ // 홀수: 레디ON
 		readyState = true;
-		// console.log(readyState);
-		// 
 	}else { // 짝수: 레디OFF
 		readyState = false;
-		// console.log(readyState);
-		// 
 	}
 	
 	connectServer("game", readyState);
-	
-	// let msgBox = {
-	//	type: 'game',
-	//	data: readyState
-	// }
-	// chattingSockat.send( JSON.stringify(msgBox) );
-
 }
 
 // --------------------------------------------------------- 연결 해제 메소드
 function onClose( e ){
-	// console.log(e);
+	console.log(e);
 	if(e.currentTarget.readyState == 3){
 		// alert('[알림] 정원 초과')
 		location.href="/ten__needs/tenneeds/jsp/game/gamelist.jsp"
