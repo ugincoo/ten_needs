@@ -30,12 +30,14 @@
                <div class="game_user">
                   <img src="/ten__needs/tenneeds/img/짱구.png" class="profile">
                   <div class="mid"> 닉네임 </div>
+                  <div class="ready_state">  </div>
                </div>
                
                <!-- 유저1명 박스 -->
                <div class="game_user">
                   <img src="/ten__needs/tenneeds/img/짱구.png" class="profile">
                   <div class="mid"> 닉네임 </div>
+                  <div class="ready_state">  </div>
                </div>
    
             </div>
@@ -56,12 +58,12 @@
          <div  class="game_rightbox">
             <div class="right_title"> 테니스장 </div>
             <img class="ex_img "src="/ten__needs/tenneeds/img/테니스장.jpg">
-            <button onclick="gamestart()" type="button" class="gamebtn startbtn"> 준비완료!  </button>
+            <button onclick="gamestart()" type="button" class="gamebtn startbtn" > 준비  </button>
          </div>
       </div>
 
    </div>
    
-	<script src="/ten__needs/tenneeds/js/chatting.js" type="text/javascript"> </script>
+	<script src="/ten__needs/tenneeds/js/game/gameroom.js" type="text/javascript"> </script>
 </body>
 </html>
