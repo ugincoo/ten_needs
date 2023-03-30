@@ -34,7 +34,6 @@ const ctx = canvas.getContext('2d');
 		win : 0,
 		smash : 0,
 		swing : 0,
-		result : -1
 	}
 	
 	const user2 = {
@@ -48,7 +47,6 @@ const ctx = canvas.getContext('2d');
 		win : 0,
 		smash : 0,
 		swing : 0,
-		result : -1
 	}
 	
 	const ball = {
@@ -169,6 +167,13 @@ const ctx = canvas.getContext('2d');
 	  } else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
 	    setTimeout(() => spacePressed = false, user1.color = "white", 3000); //정확함도를 낮추기 위해서
+	  	if(player == user1){
+				user1.swing++;
+				console.log(user1.swing)
+				
+		}else{
+				user2.swing++;	
+		}
 	  } 
   }
 
@@ -194,6 +199,8 @@ const ctx = canvas.getContext('2d');
 		ball.velocityY = -ball.velocityY;
 	}
 	
+	let player = null;
+	
 	// 업데이트 함수, 모든 계산을 수행하는 함수
 	function update(){
 		 // 공에는 속도가 있습니다.
@@ -206,15 +213,10 @@ const ctx = canvas.getContext('2d');
 		
 		
 		  // 패들이 사용자 또는 com 패들을 쳤는지 확인합니다.
-		let player = (ball.y < canvas.height/2) ? user1 : user2;
+		 player = (ball.y < canvas.height/2) ? user1 : user2;
 		
 		
 		if(spacePressed){
-			if(player == user1){
-				user1.swing++;	
-			}else{
-				user2.swing++;	
-			}
 			
 			 // 공이 패들에 부딪힌 경우
 			if(collision(ball, player)){
@@ -285,31 +287,47 @@ const ctx = canvas.getContext('2d');
 	function checkRound(){
 		
 		if(user1.win >= 2 || user2.win >= 2){
+			let winner = "";
+			let loser = "";
 			
+			let winnergsAccute = 0;
+			let losergsAccute = 0;
 			cancelAnimationFrame(game)
 			if(user1.win > user2.win){
-
+				winner = user1.mno;
+				loser = user2.mno;
+				
+				winnergsAccute = user1.smash/user1.swing;
+				losergsAccute = user2.smash/user2.swing;
 				alert('user1이 최종 승리')
 				
 			}else{
-
+				winner = user2.mno;
+				loser = user1.mno;
+				
+				winnergsAccute = user2.smash/user2.swing;
+				losergsAccute = user1.smash/user1.swing;
 				alert('user2이 최종 승리')
 			}
 			
 			let gameresult = {
-				player1 : user1.mno,
-				player2 : user2.mno,
-				
+				winner : winner,
+				loser : loser,
+				winnergsAccute : winnergsAccute, //정확도(이긴사람)
+				losergsAccute : losergsAccute //정확도(진사람)
 			}
-			
+			console.log(user1.swing)
+			console.log(user1.smash)
 			console.log(gameresult)
-			
+	
 			$.ajax({
 				url : "/ten__needs/game/result",
 				method : "post",
 				data : gameresult,
 				success : (r) => {
-					
+					if(r == 'true'){
+						location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
+					}
 				}
 				
 			})
