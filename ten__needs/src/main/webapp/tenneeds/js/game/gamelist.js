@@ -121,7 +121,6 @@ function createGame(){
 				alert('글쓰기 실패. 관리자에게 문의해주세요.')
 			}
 		}
-		
 	})
 }
 

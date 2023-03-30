@@ -1,9 +1,13 @@
 console.log('작동 확인');
 
+// ------------------------------------------------------- sockat
+let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');
+let gNo = document.querySelector('.gNo').value;
 
+	console.log(gNo);
 // sockat server 연결
-let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs/tenneeds/chatting/'+memberInfo.mid);
+let chattingSockat = new WebSocket('ws://192.168.17.134:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
 
 // open, message, close 작동 on
 chattingSockat.onopen = function(e){ inputChat(e); }
@@ -69,3 +73,5 @@ function onMessage( e ){
 function onClose( e ){
 	// 서버에서 메시지 작성해야함
 }
+
+// ------------------------------------------------------- 

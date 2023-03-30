@@ -29,6 +29,7 @@ public class ChatMessageDto {
 		
 		for( ChatUserDto dto : Chatting.connectList ) {
 			// ChatUserDto type의 인스턴스를 Chatting.connectList 인덱스 전체 회전
+			System.out.println(dto);
 			
 			if( dto.getSession() == session ) {
 				// 현재 dto와 들어온 session이 일치하다면
