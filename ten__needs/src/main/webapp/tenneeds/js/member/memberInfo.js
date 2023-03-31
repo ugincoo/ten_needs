@@ -17,3 +17,5 @@ function getlogin(){
 		}
 	})
 }
+
+console.log(memberInfo);

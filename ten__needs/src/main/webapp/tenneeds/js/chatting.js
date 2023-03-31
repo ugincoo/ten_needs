@@ -1,4 +1,5 @@
-console.log('작동 확인');
+	// console.log('chatting.js 작동 확인'); //--- 확인 완료
+//console.log(gameInfo);
 
 let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');

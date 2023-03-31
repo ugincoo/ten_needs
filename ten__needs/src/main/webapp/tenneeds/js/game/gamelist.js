@@ -26,14 +26,13 @@ function getgame(page){
 		method : "get",
 		data : pageObject,
 		success : (r) => {
-			
+				gameInfo = r;
 				console.log(r);
 			
 			let html = '';
 			if(r.gameList != null){
 					console.log(r.gameList);	
 				r.gameList.forEach((o) => {
-				
 					html += `<div class = "gameContent${o.gNo}" name="gameContent" id="gameContent">
 								<div>
 									<span>${o.mId}</span>
@@ -82,7 +81,6 @@ function getgame(page){
 		}
 	})
 }
-
 
 //2. 키워드 검색
 function gameSearch(){
