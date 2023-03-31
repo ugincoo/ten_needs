@@ -102,9 +102,10 @@ function setSearch(){
 }
 
 // 4, 게임 방만들기
-/* 게시글 쓰기 */
 function createGame(){
-	let gTitle = document.querySelector('.gTitle').value;
+	let gTitle = document.querySelector('.gcTitle').value;
+		
+		console.log(gTitle);
 		
 		// console.log( memberInfo.mno ); // -- 확인완료
 		

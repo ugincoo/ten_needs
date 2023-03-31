@@ -52,7 +52,7 @@
 		<div class="modal_box">
 			<h3 class="modal_title"> 게임방 생성  </h3>
 			<div class="modal_content">
-				제목: <input type="text" class="gTitle">
+				제목: <input type="text" class="gcTitle">
 			</div>
 			<div class="modal_btns">
 				<button onclick="createGame()" class="modla_cancle" type="button"> 확인 </button>
