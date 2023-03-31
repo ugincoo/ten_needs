@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.dao.GameDao;
+import model.dto.GameResultDto;
 
 
 @WebServlet("/game/result")
@@ -39,9 +40,13 @@ public class GameResult extends HttpServlet {
 		double losergsAccute = Double.parseDouble(request.getParameter("losergsAccute"));
 		
 		System.out.println(winnergsAccute);
-		//boolean result = GameDao.getInstance().endGame(winner);
+		
+		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute);
+		
+		//boolean result = GameDao.getInstance().endGame(dto);
 		
 		//response.getWriter().print(result);
+		response.getWriter().print(true);
 		
 	}
 
