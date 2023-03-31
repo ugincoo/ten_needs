@@ -15,6 +15,7 @@ else{
 	gameSocket.onmessage = (e)=>{ console.log()}
 }	
 
+
 let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
 
 const canvas = document.getElementById('canvas');
