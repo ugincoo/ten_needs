@@ -1,22 +1,3 @@
-
-// 소켓 연결
-let gameSocket = null;
-
-if( memberInfo == null ){}
-
-else{
-	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
-
-	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어')}
-
-	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감')}
-
-	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
-
-	gameSocket.onmessage = (e)=>{ console.log()}
-}	
-
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
@@ -38,7 +19,6 @@ const user1 = {
 		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
 	}
 }
-
 // user2 이미지
 const user2Image = new Image();
 user2Image.src = "mUser1.png"
@@ -317,9 +297,3 @@ function game(){
     user2.draw();	// 유저 2 그리기
 }
 game();
-
-
-
-
-
-

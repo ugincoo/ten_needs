@@ -73,13 +73,14 @@ function getReplyList(){
 		method : "get",
 		data : {"bno" : bno},
 		success : (r) => {
+			console.log(r);
 			let html = ``;
 			if(r != null){
 				r.forEach((o) => {
 					console.log(o)
 					html += `<div class = "replyOne">
 								<div class = "replyTopContent">
-									<img class = "replyProfile" src = "/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg}" />
+									<img class = "replyProfile" src = "/ten__needs/tenneeds/jsp/member/mimg/${ o.mimg == null ? 'default.webp' : o.mimg }" />
 									<span class = "replyName">${o.mId}</span>
 									<span class = "replyDate">${o.reDate}</span>
 									<div clsss = "replyBtns">${

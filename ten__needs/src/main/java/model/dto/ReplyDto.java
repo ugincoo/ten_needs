@@ -12,6 +12,7 @@ public class ReplyDto {
 
     //추가 필드
     private String mId;
+    private String mimg;
 
     
     
@@ -20,7 +21,7 @@ public class ReplyDto {
 	}
 	
 	
-	public ReplyDto(int reNo, String reContent, String reDate, int bNo, int mNo, String mId) {
+	public ReplyDto(int reNo, String reContent, String reDate, int bNo, int mNo, String mId, String mimg) {
 		super();
 		this.reNo = reNo;
 		this.reContent = reContent;
@@ -28,6 +29,8 @@ public class ReplyDto {
 		this.bNo = bNo;
 		this.mNo = mNo;
 		this.mId = mId;
+		
+		this.mimg = mimg;
 		
 		Date date = new Date();
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -123,10 +126,21 @@ public class ReplyDto {
 		this.mId = mId;
 	}
 
+	
+	public String getMimg() {
+		return mimg;
+	}
+
+
+	public void setMimg(String mimg) {
+		this.mimg = mimg;
+	}
+
+
 	@Override
 	public String toString() {
 		return "ReplyDto [reNo=" + reNo + ", reContent=" + reContent + ", reDate=" + reDate + ", bNo=" + bNo + ", mNo="
-				+ mNo + ", mId=" + mId + "]";
+				+ mNo + ", mId=" + mId + ", mimg=" + mimg + "]";
 	}
 	
 	

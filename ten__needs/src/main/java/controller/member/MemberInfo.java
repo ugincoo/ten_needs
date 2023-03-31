@@ -46,7 +46,7 @@ public class MemberInfo extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String uploadpath = request.getSession().getServletContext().getRealPath("tenneeds/jsp/member/mimg");
 		MultipartRequest multi = new MultipartRequest(request, uploadpath, 1024*1024*10, "UTF-8" , new DefaultFileRenamePolicy() );
-		
+		System.out.println(uploadpath);
 		String mid = multi.getParameter("mid");
 		String mpw = multi.getParameter("mpw");
 		String mphone = multi.getParameter("mphone");
