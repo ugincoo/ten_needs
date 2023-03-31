@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href = "/ten__needs/tenneeds/css/game/gamelist.css" rel = "stylesheet">
+	   <link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
+	s
 </head>
 <body>
 	<!-- 헤더 정보 -->
@@ -13,6 +15,8 @@
 	
 	<!-- 이벤트/공지사항 커뮤니티 -->
 	<div class = "container">
+		<a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
+		
 		<div class ="gamebox">
 			<div class = "gametoptitle"> <!-- 맨위 타이틀 부분 -->
 				<h3>게임 대기실</h3>
