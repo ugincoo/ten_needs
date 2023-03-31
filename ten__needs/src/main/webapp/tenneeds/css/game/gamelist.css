@@ -120,4 +120,14 @@ span{ /*관리자 프로필 옆의 이름과 작성일자*/
 	background-color: #E6D9CF;	border-radius: 15px;
 }
 
-
+/*메인 이동 버튼*/
+.gomain{
+   background-color: #648977;
+   border: none;
+   border-radius: 5px;
+   padding: 5px 5px;
+   margin : 10px 10px;
+   color : white;
+   font-size : 12px;
+   text-align: left;
+}
