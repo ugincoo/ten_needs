@@ -10,7 +10,7 @@ public class GameDao extends Dao{
 	
 	//게임 승리시 게임 종료 -> 데이터 넣기(승리자)
 	public boolean endGame(GameResultDto dto) {
-		String sql = "update into gamestatus set gResult = 1, gsAccute = ? where mNo = " + dto.getWinnerMno();
+		String sql = "update into gamestatus set gsResult = true, gsAccute = ? where mNo = " + dto.getWinnerMno();
 		
 		try {
 			ps = con.prepareStatement(sql);
@@ -21,7 +21,7 @@ public class GameDao extends Dao{
 			
 			if(count == 1) {
 				//게임 승리자의 gResult의 값을 1로 바꿔준다.
-				sql = "update into gamestatus set gResult = 1, gsAccute = ? where mNo = " + dto.getLoserMno();
+				sql = "update into gamestatus set gsAccute = ? where mNo = " + dto.getLoserMno();
 				
 				ps.setDouble(1, dto.getLoserAccute());
 				
