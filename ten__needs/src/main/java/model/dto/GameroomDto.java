@@ -1,6 +1,5 @@
 package model.dto;
 
-import model.dao.GameroomDao;
 import model.dao.MemberDao;
 
 public class GameroomDto {
