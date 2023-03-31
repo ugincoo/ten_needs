@@ -25,8 +25,6 @@
       <!-- 방 번호 / 방제목  -->
       <div class="gametitle_box"> 
       
-         <div class="gno<%=gNo%>"> 방번호 : 1 </div>
-         <div class="gtitle<%=gNo%>"> 방 제목 :  테니스게임~~~~~하실분~~ </div>
       </div>
       <!-- 게임대기실 -->
       <div class="gamebox">

@@ -1,6 +1,11 @@
 package model.dao;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import model.dto.RacketDto;
 
@@ -25,28 +30,29 @@ public class GameDao extends Dao {
 	}
 	
 	//게임 승리시 게임 종료 -> 데이터 넣기(승리자)
-		public boolean endGame(int winner) {
-			String sql = "update into game set winner = ";
+	public boolean endGame(int winner) {
+		String sql = "update into game set winner = ";
 			
-			try {
-				ps = con.prepareStatement(sql);
+		try {
+			ps = con.prepareStatement(sql);
 				
-				ps.setInt(1, winner);
+			ps.setInt(1, winner);
 				
-				int count =  ps.executeUpdate();
+			int count =  ps.executeUpdate();
 				
-				if(count == 1) {
-					//게임 승리자의 gResult의 값을 1로 바꿔준다.
-					sql = "update into gamestatus set gResult = 1 where mNo = " + winner;
+			if(count == 1) {
+				//게임 승리자의 gResult의 값을 1로 바꿔준다.
+				sql = "update into gamestatus set gResult = 1 where mNo = " + winner;
 					
-					ps.executeUpdate();
+				ps.executeUpdate();
 					
-					return true;
-				}
-			}catch(Exception e) {
-				System.err.println(e.getMessage());
+				return true;
 			}
-			return false;
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
 		}
+		return false;
+	}
 
+		
 }

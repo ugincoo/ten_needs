@@ -12,8 +12,11 @@ public class GameroomDao extends Dao {
 	public static GameroomDao getInstance() { return dao; }
 	
 	// 1. 게임방 생성
-	public boolean createGame( GameroomDto dto ) {
+	public synchronized boolean createGame( GameroomDto dto ) {
 		String sql = "insert into gameroom( gTitle, mno ) values(?,?)";
+		// --- 1. 방을 생성해라
+		// --- 2. 가장 최근에 생성된 방 정보를 가져온다.
+		// --- 3. 이거를 DTO넣고, 반환한다
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getgTitle()); 	ps.setInt(2, dto.getmNo());
@@ -24,7 +27,7 @@ public class GameroomDao extends Dao {
 	}
 	
 	// 2-1. 게시물 구하기
-	public int getTotalSize(String key, String keyword) {
+	public synchronized int getTotalSize(String key, String keyword) {
 		String sql;
 		
 		if(key.equals("") && keyword.equals("")) {
@@ -46,7 +49,7 @@ public class GameroomDao extends Dao {
 	}
 	
 	// 2-2. 게임방 출력
-	public ArrayList<GameroomDto> gameList(int startRow, String key, String keyword){
+	public synchronized ArrayList<GameroomDto> gameList(int startRow, String key, String keyword){
 		String sql;
 		ArrayList<GameroomDto> gamelist = new ArrayList<>();
 		
@@ -79,7 +82,7 @@ public class GameroomDao extends Dao {
 	}
 	
 	// 2-3. 게임방 개별 출력(입장)
-	public GameroomDto getGame( int gno ) {
+	public synchronized GameroomDto getGame( int gno ) {
 		String sql = "select * from gameroom where gno = ?";
 		try {
 			ps = con.prepareStatement(sql);
@@ -93,6 +96,17 @@ public class GameroomDao extends Dao {
 			}
 		} catch(Exception e) { System.err.println(e.getMessage()); }
 		return null;
+	}
+	
+	// 3. 게임방 삭제
+	// 회원 탈퇴
+	public synchronized  boolean onDelete( int gNo ) {
+		String sql = "delete from gameroom where gNo ="+gNo;
+		try {
+			ps = con.prepareStatement(sql);	
+			if( ps.executeUpdate() == 1 ) { return true; } // --- 확인 필요
+		} catch (Exception e) { System.out.println(e); }
+		return false;
 	}
 	
 }

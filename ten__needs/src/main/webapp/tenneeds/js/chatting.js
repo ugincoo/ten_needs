@@ -157,4 +157,22 @@ function onClose( e ){
 	}
 }
 
+// ---------------------------------------------------------- 게임 정보 호출 메소드
+getGame();
+function getGame( ){
+	$.ajax({
+		url : '/ten__needs/tenneeds/creategame',
+		method : "get",
+		data : { "type": 2, "gno": gNo },
+		success : (r) => {
+				console.log(r.gNo);
+				console.log(r.gTitle);
+				gametitle_box.innerHTML += `
+											<div class="gno"> ${ r.gNo } </div>
+			        						 <div class="gtitle"> ${ r.gTitle } </div>
+											`
+				}
+		})
+}
+
 

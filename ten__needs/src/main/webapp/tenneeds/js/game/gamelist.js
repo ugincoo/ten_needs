@@ -17,7 +17,9 @@ if(memberInfo == null){
 			`
 }
 
+let gameInfo = [];
 getgame(1)
+
 // 게임방 리스트 출력
 function getgame(page){
 	pageObject.page = page; //페이지 변경
@@ -26,8 +28,8 @@ function getgame(page){
 		method : "get",
 		data : pageObject,
 		success : (r) => {
-				gameInfo = r;
-				console.log(r);
+				gameInfo.push(r);
+				console.log(gameInfo);
 			
 			let html = '';
 			if(r.gameList != null){
@@ -39,7 +41,7 @@ function getgame(page){
 									<span class = "bwritedate">${o.gDate}</span>
 								</div>
 								
-								<div class = "gTitle">
+								<div onclick="sendTitle(${o.gTitle})" class = "gTitle">
 									<a href = "/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${o.gNo}">${o.gTitle}</a>
 								</div>
 							</div>`
@@ -114,6 +116,7 @@ function createGame(){
 		method : "post",
 		data : { "gTitle" : gTitle, "mno": memberInfo.mno },
 		success : (r) =>{
+			console.log(r);
 			if(r == 'true'){
 				alert('방생성 성공')
 				location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
@@ -123,5 +126,3 @@ function createGame(){
 		}
 	})
 }
-
-

@@ -11,6 +11,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.dao.GameroomDao;
 import model.dto.ChatMessageDto;
 import model.dto.ChatUserDto;
 
@@ -114,7 +115,7 @@ public class Chatting {
 	
 	// onClose Method
 	@OnClose
-	public void onClose( Session session ) throws Exception {
+	public void onClose( Session session, @PathParam("gNo") int gNo, @PathParam("mid") String mid ) throws Exception {
 		
 		for( ChatUserDto dto : connectList ) {
 			
@@ -131,5 +132,15 @@ public class Chatting {
 				break;
 			}
 		}
+		
+		int count = 0; // --- 변수 추가(이유: gNO에 접속되어 있는 인원이 2명 넘지 않도록 제어하기 위함)
+		for (ChatUserDto dto : connectList) {
+		        if (dto.getgNo() == gNo) { count++; }
+		    }
+		if (count == 0) {
+			GameroomDao.getInstance().onDelete(gNo);
+			session.close();    return;
+		}
+
 	}
 }
