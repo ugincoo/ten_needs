@@ -21,6 +21,53 @@ body{
 	top: 0;
     height: 100%;
 }
+
 #canvas{
      background-color: #203624;
 }
+
+.ppro{ /*게임 참여자 공통 프로필 스타일*/
+	width :80%;
+	height: 20%;
+	margin: 0 auto;
+}
+
+.ppro img{ /*라켓 이미지*/
+	width: 80px;
+	height: 80px;	
+	border : 1px #203624 solid;
+}
+
+
+.plyaer1profile{ /*playe1 프로필 */
+	display: flex;
+	justify-content: flex-start;
+}
+
+
+.plyaer2sprofile{/*playe2 프로필 */
+	display: flex;
+	justify-content: flex-end;
+}
+
+.pinfo{
+	width: 25%;
+	background-color: white;
+	border: none;
+	border-radius: 20px;
+	padding: 10px 5px;
+	margin: 5px 0px;
+	display: flex;
+}
+
+
+.prm{ /*라켓 이*/
+	font-size: 21px;
+	font-weight: 500;
+}
+
+.username{/*유저 이름*/
+	font-size: 36px;
+	font-weight: 800;
+}
+
