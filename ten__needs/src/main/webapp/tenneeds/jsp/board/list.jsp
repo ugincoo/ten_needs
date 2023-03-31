@@ -8,11 +8,13 @@
 
 <!-- 사용자 정의 css -->
 <link href = "/ten__needs/tenneeds/css/board/list.css" rel = "stylesheet">
+<link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
 
 </head>
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>
+	 <a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
 	
 	<!-- 이벤트/공지사항 커뮤니티 -->
 	<div class = "container">
