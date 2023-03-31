@@ -15,7 +15,7 @@ else{
 	gameSocket.onmessage = (e)=>{ console.log()}
 }	
 
-
+// 라켓정보 설정 및 출력
 $.ajax({
 	url : "/ten__needs/game/result",
 	method : "get",
@@ -83,22 +83,18 @@ const user2 = {
 		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
 	}
 }
-// 경기장 네트
-const net = {
+// 경기장 
+// 경기장 이미지
+const stadiumImage = new Image();
+stadiumImage.src = "background.jpg"
+const stadium = {
 	x : 0,
-	y : canvas.height/2 -2/2,
-	width : 10,
-	height : 2,
-	color : "white"
-}
-function drawRect(x, y, w, h, color){
-	ctx.fillStyle = color;
-	ctx.fillRect(x, y, w, h);
-	
-}
-function drawNet(){
-	for(let i = 0; i<= canvas.width; i+=15){
-		drawRect(net.x+i, net.y, net.width, net.height, net.color);
+	y : 0, 
+	width : 1179,
+	height : 800,
+	draw(){
+		ctx.fillRect(this.x , this.y, this.width, this.height);
+		ctx.drawImage(stadiumImage, this.x , this.y, canvas.width, canvas.height);
 	}
 }
 // 공 
@@ -251,7 +247,7 @@ function game(){
     requestAnimationFrame(game);
    
     ctx.clearRect(0, 0, canvas.width, canvas.height);	 // 캔버스 지워주기
-    drawNet();	// 네트 그려주기
+    stadium.draw(); // 경기장 
     drawCircle(ball.x, ball.y, ball.radius, ball.color);	// 공 그려주기
     drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");	// 유저1 스코어
 	drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");	// 유저2 스코어

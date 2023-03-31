@@ -18,7 +18,7 @@ public class Dao {
 			
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tenneeds",
 					"root", 
-					"1234");
+					"kimy172418");
 			
 			System.out.println("연동 성공");
 			
