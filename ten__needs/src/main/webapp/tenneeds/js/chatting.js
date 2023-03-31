@@ -55,7 +55,7 @@ function onMessage( e ){
 			if( d.mId == memberInfo.mid ){
 				html +=`
 						<div class="game_user1" id="game_user" name="game_user">
-		                  <img src="/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg==null ? 'default.png' : memberInfo.mimg}" class="profileUser1" id="profile" name="profile">
+		                  <img src="/ten__needs/tenneeds/jsp/member/mimg/${d.mImg==null ? 'default.png' : d.mImg}" class="profileUser1" id="profile" name="profile">
 		                  <div class="midUser1" id="mid" name="mid"> ${d.mId} </div>
 		                  <div class="ready_stateUser1" id="ready_state" name="ready_state"> </div>
 		               </div>
@@ -63,7 +63,7 @@ function onMessage( e ){
 			} else{
 				html += `
 						<div class="game_user2" id="game_user" name="game_user">
-		                  <img src="/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg==null ? 'default.png' : memberInfo.mimg}" class="profileUser2" id="profile" name="profile">
+		                  <img src="/ten__needs/tenneeds/jsp/member/mimg/${d.mImg==null ? 'default.png' : d.mImg}" class="profileUser2" id="profile" name="profile">
 		                  <div class="midUser2" id="mid" name="mid"> ${d.mId} </div>
 		                  <div class="ready_stateUser2" id="ready_state" name="ready_state">  </div>
 		               </div>
