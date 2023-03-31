@@ -51,7 +51,7 @@
 
 /*------------------------- game 게시물 목록 출력 css  ----------------------*/
 
-.gameContent{ /*게시물 출력 부분*/	
+#gameContent{ /*게시물 출력 부분*/	
 	margin-top : 20px;
 	border-top: 1px solid #203725;
 	padding: 20px;

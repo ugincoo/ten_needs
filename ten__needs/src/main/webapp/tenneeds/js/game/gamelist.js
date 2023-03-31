@@ -33,7 +33,7 @@ function getgame(page){
 					console.log(r.gameList);	
 				r.gameList.forEach((o) => {
 				
-					html += `<div class = "gameContent">
+					html += `<div class = "gameContent${o.gNo}" name="gameContent" id="gameContent">
 								<div>
 									<img class = "profile" src = "/ten__needs/tenneeds/jsp/board/bimg/admin.png"/>
 									<span>${o.mId}</span>

@@ -7,7 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
+	<%@ include file = "/tenneeds/header.jsp" %>
+	
 	<%
 		request.getSession().setAttribute("login", null );
 	%>

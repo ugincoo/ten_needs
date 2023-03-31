@@ -7,6 +7,7 @@ public class ChatUserDto {
 	Session session;
 	String mId;
 	int gNo;
+	boolean readyState;
 	
 	public ChatUserDto() {
 		super();
@@ -18,6 +19,15 @@ public class ChatUserDto {
 		this.session = session;
 		this.mId = mId;
 		this.gNo = gNo;
+	}
+	
+	// FUll
+	public ChatUserDto(Session session, String mId, int gNo, boolean readyState) {
+		super();
+		this.session = session;
+		this.mId = mId;
+		this.gNo = gNo;
+		this.readyState = readyState;
 	}
 
 	@Override
@@ -48,8 +58,14 @@ public class ChatUserDto {
 	public void setgNo(int gNo) {
 		this.gNo = gNo;
 	}
-	
-	
-	
+
+	public boolean isreadyState() {
+		return readyState;
+	}
+
+	public void setreadyState(boolean readyState) {
+		this.readyState = readyState;
+	}
+
 }
 
