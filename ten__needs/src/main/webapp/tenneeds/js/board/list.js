@@ -15,6 +15,11 @@ if(memberInfo == null){
 		<a href = "write.jsp">
 			<button class = "blbtn writebtn" type = "button" >글쓰기</button>
 		</a>`
+} else{
+		document.querySelector('.boardtopetc').innerHTML = `
+		<a href = "/ten__needs/tenneeds/jsp/map.jsp">
+			<button class = "blbtn writebtn" type = "button" >테니스장 지도보기</button>
+		</a>`
 }
 
 getBoard(1)

@@ -43,14 +43,19 @@
    display: flex;
     justify-content: space-evenly;
 }
-.game_user{
+#game_user{
    /* border: 1px solid #DBC8B9; */
    border-radius: 5px;
    padding: 15px 20px;
    color : #333333;
 }
-
-.mid{
+#profile {
+    width: 70px;
+    height: 70px;
+    border: solid 1px #e8e8e8;
+    border-radius: 50%;
+}
+#mid{
    margin-top: 10px;
    text-align: center;
 }

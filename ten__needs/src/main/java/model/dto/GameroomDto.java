@@ -12,7 +12,6 @@ public class GameroomDto {
 	private String mId;
 	
 	private int mNo;
-	private int limitCount;
 	
 	// Empty
 	public GameroomDto() {
@@ -90,14 +89,6 @@ public class GameroomDto {
 
 	public void setmId(String mId) {
 		this.mId = mId;
-	}
-
-	public int getLimitCount() {
-		return limitCount;
-	}
-
-	public void setLimitCount(int limitCount) {
-		this.limitCount = limitCount;
 	}
 	
 }

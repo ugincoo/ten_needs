@@ -9,7 +9,8 @@ let pageObject = {
 }
 
 if(memberInfo == null){
-	getgame(1);		alert('[알림] 로그인 회원만 이용 가능합니다.')
+	alert('[알림] 로그인 회원만 이용 가능합니다.')
+	location.href="/ten__needs/tenneeds/jsp/main.jsp"
 }else {
 	document.querySelector('.gametopetc').innerHTML = `
 			<button onclick="openModal()" class = "blbtn writebtn" type = "button" >방만들기</button>

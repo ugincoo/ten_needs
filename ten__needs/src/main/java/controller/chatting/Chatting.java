@@ -20,8 +20,8 @@ public class Chatting {
 	// 접속자 저장
 	public static ArrayList< ChatUserDto > connectList = new ArrayList<>();
 	
-	// onOpen Method
-	@OnOpen
+	
+	@OnOpen // onOpen Method
 	public void OnOpen( Session session, @PathParam("gNo") int gNo, @PathParam("mid") String mid ) throws Exception {
 			System.out.println("입장" + session);
 			
@@ -32,8 +32,10 @@ public class Chatting {
 		if (count >= 2) {
 			session.close();    return;
 		}
-		connectList.add(new ChatUserDto(session, mid, gNo));
+		
+		connectList.add(new ChatUserDto(session, mid, gNo, false));
 	    OnMessage(session, "user");
+	    
 	}
 	
 	// OnMessage Method
@@ -44,34 +46,55 @@ public class Chatting {
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		
-		// ------------------ 접속자 ------------------
-		if( msg.equals("user")) {
-			
+		if(msg.contains("user")) { // --- 접속자 정보 (전체한테 뿌려지는지 확인해야함)
+			System.out.println( "user확인" );
 			ArrayList<ChatMessageDto> messageList = new ArrayList<>();
-			// messageList 생성
+			
+			int senderGno = 0;
+			for (ChatUserDto dto : connectList) { //--- 코드 추가: gNO 
+	            if (dto.getSession() == session) {
+	                senderGno = dto.getgNo();	break;
+	            }
+			}
 			for( ChatUserDto dto : connectList ) {
-			// ChatUserDto type의 인스턴스를 connectList 전체 인덱스 회전
+				if (dto.getgNo() == senderGno) {
 				messageList.add( new ChatMessageDto(dto.getSession(), msg) );
-				// 수행동작: messageList에 user정보와 메시지 정보 저장
+				}
 			}
 			json = mapper.writeValueAsString( messageList );
-		// ------------------ 메시지 ------------------	
-		} else if( msg.equals("true")){
+			
+			
 			for( ChatUserDto dto : connectList ) {
-				if (dto.getSession() == session) {
-				// dto.setreadyState(true);
-				dto.getSession().getBasicRemote().sendText("true");
+				if (dto.getgNo() == senderGno) {
+				dto.getSession().getBasicRemote().sendText(json);
+				}
+			}
+		} else if( msg.contains("game")) { // --- 게임 레디
+			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
+			json = mapper.writeValueAsString(messageDto);
+			
+			for( ChatUserDto dto : connectList ) {
+				if( dto.getSession() == session ) {
+					if( msg.contains("true") ) {
+						dto.setreadyState(true);
+					} else {
+						dto.setreadyState(false);
+					} break;
 				}
 			}
 			
-		} else if(msg.equals("false") ) {
+			int senderGno = 0;
+			for (ChatUserDto dto : connectList) { //--- 코드 추가: gNO 
+	            if (dto.getSession() == session) {
+	                senderGno = dto.getgNo();	break;
+	            }
+			}
 			for( ChatUserDto dto : connectList ) {
-				if (dto.getSession() == session) {
-					dto.getSession().getBasicRemote().sendText("false");
+					if (dto.getgNo() == senderGno) {
+						dto.getSession().getBasicRemote().sendText(json);
 					}
 			}
-		} else {
-		
+		} else if( msg.contains("chat") || msg.contains("alarm") ) { // --- 메시지 전송
 			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
 			json = mapper.writeValueAsString(messageDto);
 			
@@ -86,7 +109,7 @@ public class Chatting {
 				dto.getSession().getBasicRemote().sendText(json);
 				 }
 			}
-		}	
+		}
 	}
 	
 	// onClose Method
@@ -98,6 +121,12 @@ public class Chatting {
 			if( dto.getSession() == session ) {
 				connectList.remove(dto);
 				
+				String msg = "{\"type\":\"alarm\",\"data\":\""+dto.getmId()+"님이 나갔습니다.\"}";
+				// 형태: { "필드명" : "데이터", "필드명" : 데이터 }
+				// 해석: 큰따음표 사용을 위에 이스케이프 문자 사용
+				OnMessage( session, msg);
+				
+				// 모든 접속명단에게 연결 끊긴 클라이언트 소캣을 알림 [접속목록]
 				OnMessage( session, "user" );
 				break;
 			}

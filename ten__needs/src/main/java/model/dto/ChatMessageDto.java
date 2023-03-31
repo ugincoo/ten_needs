@@ -16,6 +16,9 @@ public class ChatMessageDto {
 	private String date;
 	private String time;
 	
+	// 필드 추가
+	private boolean readyState;
+	
 	// Empty 생성자
 	public ChatMessageDto() {
 		super();
@@ -37,25 +40,29 @@ public class ChatMessageDto {
 				this.mImg = MemberDao.getInstance().getMember(this.mId).getMimg(); // --- 이미지 이름 입력
 				this.date = new SimpleDateFormat("yyyy-MM-dd").format( new Date() );
 				this.time = new SimpleDateFormat("aa hh:mm").format( new Date() );
+				this.readyState = dto.isreadyState();
 			}
 		}
 	}
 	
 	// Full 생성자
-	public ChatMessageDto(String mId, String mImg, String msg, String date, String time) {
+	public ChatMessageDto(String mId, String mImg, String msg, String date, String time, boolean readyState) {
 		super();
 		this.mId = mId;
 		this.mImg = mImg;
 		this.msg = msg;
 		this.date = date;
 		this.time = time;
+		this.readyState = readyState;
 	}
+
 
 	@Override
 	public String toString() {
 		return "ChatMessageDto [mId=" + mId + ", mImg=" + mImg + ", msg=" + msg + ", date=" + date + ", time=" + time
 				+ "]";
 	}
+
 
 	public String getmId() {
 		return mId;
@@ -96,4 +103,13 @@ public class ChatMessageDto {
 	public void setTime(String time) {
 		this.time = time;
 	}
+
+	public boolean isReadyState() {
+		return readyState;
+	}
+
+	public void setReadyState(boolean readyState) {
+		this.readyState = readyState;
+	}
+	
 }
