@@ -44,7 +44,7 @@
 			
 			<div class="title"> 프로필 </div>
 			<div class="pimgbox">
-				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.webp">
+				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.png">
 				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
 			</div>
 			

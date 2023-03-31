@@ -1,4 +1,3 @@
-
 // 소켓 연결
 let gameSocket = null;
 
@@ -17,6 +16,30 @@ else{
 }	
 
 
+$.ajax({
+	url : "/ten__needs/game/result",
+	method : "get",
+	data : {"type" : 1},
+	success : (r) => {
+		console.log(r); 
+		
+		let playerRacket1 = Math.floor(Math.random()*(r.length));
+		let playerRacket2 = Math.floor(Math.random()*(r.length)); 
+		
+		console.log(playerRacket1 + " : " + r[playerRacket1].rImg)
+		console.log(playerRacket2 + " : " + r[playerRacket2].rImg)
+		
+		if(r != null){
+			document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket1].rImg}`;
+			document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket2].rImg}`;
+			
+			document.querySelector('.player1racketnm').innerHTML = r[playerRacket1].rName
+			document.querySelector('.player2racketnm').innerHTML = r[playerRacket2].rName 
+		}
+	}
+})
+
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
@@ -25,6 +48,7 @@ const ctx = canvas.getContext('2d');
 const user1Image = new Image();
 user1Image.src = "wUser1.png"
 const user1 = {
+	mno : 1,
 	x : canvas.width/2 - 100/2,
 	y : 0,
 	width : 80,
@@ -33,6 +57,7 @@ const user1 = {
 	win : 0,
 	smash : 0,
 	swing : 0,
+	rno : 0,
 	draw(){
 		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
@@ -43,6 +68,7 @@ const user1 = {
 const user2Image = new Image();
 user2Image.src = "mUser1.png"
 const user2 = {
+	mno : 1,
 	x : canvas.width/2 - 100/2,
 	y : canvas.height - 80,
 	width : 80,
@@ -51,6 +77,7 @@ const user2 = {
 	win : 0,
 	smash : 0,
 	swing : 0,
+	rno : 0,
 	draw(){
 		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
@@ -172,23 +199,23 @@ let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
  //최종 라운드 체크
 function checkRound(){
 	if(user1.win >= 2 || user2.win >= 2){
-		let winner = "";
-		let loser = "";
+		let playerWin = "";
+		let playerLose = "";
 		
 		let winnergsAccute = 0;
 		let losergsAccute = 0;
 		cancelAnimationFrame(game)
 		if(user1.win > user2.win){
-			winner = user1.mno;
-			loser = user2.mno;
+			playerWin = user1.mno;
+			playerLose = user2.mno;
 			
 			winnergsAccute = user1.smash/user1.swing;
 			losergsAccute = user2.smash/user2.swing;
 			alert('user1이 최종 승리')
 			
 		}else{
-			winner = user2.mno;
-			loser = user1.mno;
+			playerWin = user2.mno;
+			playerLose = user1.mno;
 			
 			winnergsAccute = user2.smash/user2.swing;
 			losergsAccute = user1.smash/user1.swing;
@@ -196,11 +223,12 @@ function checkRound(){
 		}
 		
 		let gameresult = {
-			winner : winner,
-			loser : loser,
+			winner : playerWin,
+			loser : playerLose,
 			winnergsAccute : winnergsAccute, //정확도(이긴사람)
 			losergsAccute : losergsAccute //정확도(진사람)
 		}
+		
 		console.log(user1.swing)
 		console.log(user1.smash)
 		console.log(gameresult)
