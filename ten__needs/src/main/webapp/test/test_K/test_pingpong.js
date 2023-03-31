@@ -11,6 +11,9 @@ const user1 = {
 	width : 80,
 	height : 80,
 	score : 0,
+	win : 0,
+	smash : 0,
+	swing : 0,
 	draw(){
 		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
@@ -25,6 +28,9 @@ const user2 = {
 	width : 80,
 	height : 80,
 	score : 0 ,
+	win : 0,
+	smash : 0,
+	swing : 0,
 	draw(){
 		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
@@ -79,6 +85,7 @@ let upPressed = false;		// 상키 상태
 let downPressed = false;	// 하키 상태
 let spacePressed = false; //스페이스여부
 // 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
+let player = null;
 
 //패들 방향키 조
 document.addEventListener("keydown", keyDownHandler, false);
@@ -110,6 +117,12 @@ function keyUpHandler(event) {
 	} else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
 	    setTimeout(() => spacePressed = false, user1.color = "white", 3000); //정확함도를 낮추기 위해서
+		if(player == user1){
+				user1.swing++;
+				console.log(user1.swing)
+		}else{
+				user2.swing++;	
+		}
 	} 
 }
 // 공과 플레이어 충돌
@@ -134,7 +147,57 @@ function resetBall(){
 	ball.speed = 5;
 	ball.velocityY = -ball.velocityY;
 }
- 
+
+let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
+ //최종 라운드 체크
+function checkRound(){
+	if(user1.win >= 2 || user2.win >= 2){
+		let winner = "";
+		let loser = "";
+		
+		let winnergsAccute = 0;
+		let losergsAccute = 0;
+		cancelAnimationFrame(game)
+		if(user1.win > user2.win){
+			winner = user1.mno;
+			loser = user2.mno;
+			
+			winnergsAccute = user1.smash/user1.swing;
+			losergsAccute = user2.smash/user2.swing;
+			alert('user1이 최종 승리')
+			
+		}else{
+			winner = user2.mno;
+			loser = user1.mno;
+			
+			winnergsAccute = user2.smash/user2.swing;
+			losergsAccute = user1.smash/user1.swing;
+			alert('user2이 최종 승리')
+		}
+		
+		let gameresult = {
+			winner : winner,
+			loser : loser,
+			winnergsAccute : winnergsAccute, //정확도(이긴사람)
+			losergsAccute : losergsAccute //정확도(진사람)
+		}
+		console.log(user1.swing)
+		console.log(user1.smash)
+		console.log(gameresult)
+
+		$.ajax({
+			url : "/ten__needs/game/result",
+			method : "post",
+			data : gameresult,
+			success : (r) => {
+				if(r == 'true'){
+					location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
+				}
+			}
+			
+		})
+	}
+}
 // 1초 반복 실행
 function game(){
     requestAnimationFrame(game);
@@ -164,11 +227,21 @@ function game(){
 	user2.x += (ball.y - (user2.x + user2.width/2)) * computerLevel; // 추후 라켓에 따른 레벨 변경
 	
 	// 패들이 user1 또는 user2 쳤는지 확인합니다.
-	let player = (ball.y < canvas.height/2) ? user1 : user2;
+	player = (ball.y < canvas.height/2) ? user1 : user2;
 	
 	if(spacePressed){
 		 // 공이 패들에 부딪힌 경우
 		if(collision(ball, player)){
+			if(player == user1){
+					user1.result = 1;
+					user2.result = 0;
+					user1.smash++;	
+				}else{
+					user1.result = 0; //지면 0
+					user2.result = 1; //이기면 1
+					user2.smash++;	
+				}
+				
 			
 			// 공이 패들에 닿는 위치를 확인합니다.
 			let collidePoint = ball.y - (player.y + player.height/2);
@@ -181,7 +254,7 @@ function game(){
     	    // 공이 패들의 중앙에 닿을 때 공이 0도 각도를 가지기를 원합니다.
    		    // 공이 패들 바닥에 닿을 때 공이 18도 기울기를 원합니다.
        		// Math.PI/10 = 18도
-			let angleRad = collidePoint * Math.PI/10;
+			let angleRad = collidePoint * Math.PI/7;
 			
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
@@ -194,12 +267,29 @@ function game(){
 		}
 	}
 	
-	// 플레이어의 점수 변경
+	// 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
 	if(ball.y -ball.radius < 0){
-		user2.score++;
+		user2.score += 15;
+		if(user2.score >= 45){
+			alert('user2 ' + round +  "라운드 승!");
+			round++;
+			user2.score = 0;
+			user1.score = 0;
+			user2.win += 1;
+		}
+		checkRound();
 		resetBall();
+		
 	}else if(ball.y + ball.radius > canvas.height){
-		user1.score++;
+		user1.score += 15;
+		if(user1.score >= 45){
+			alert('user1 ' + round +  "라운드 승!");
+			round++;
+			user1.score = 0;
+			user2.score = 0;
+			user1.win++;
+		}
+		checkRound();
 		resetBall();
 	}
     
