@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href = "/ten__needs/tenneeds/css/game/gamelist.css" rel = "stylesheet">
-	   <link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
 </head>
 <body>
 	<!-- 헤더 정보 -->

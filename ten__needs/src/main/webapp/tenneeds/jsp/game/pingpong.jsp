@@ -12,6 +12,7 @@
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>
+	
 	<div class ="sticky-wrap">
 		<div class = "game_wrap">
 			<canvas class = "gamereal" id="canvas" width="600" height="800"></canvas>
