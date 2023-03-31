@@ -33,13 +33,13 @@
 			<!-- 검색하는 창 -->
 			<div class = "searchbox" style ="display: flex; justify-content: center">
 				<select class = "key"> <!-- key입력 -->
-					<option value = "bTitle">제목</option>
-					<option value = "bContent">아이디</option>
+					<option value = "gTitle">제목</option>
+					<option value = "gContent">아이디</option>
 				</select>
 				<div>
 					<input class = "keyword" type = "text" placeholder="키워드 검색">
-					<button class = "blbtn" onClick = "gameSearch()">검색</button>
-					<button class = "blbtn" onClick = "setSearch()">검색초기화</button>
+					<button class = "glbtn" onClick = "gameSearch()">검색</button>
+					<button class = "glbtn" onClick = "setSearch()">검색초기화</button>
 				</div>
 			</div>
 		</div>

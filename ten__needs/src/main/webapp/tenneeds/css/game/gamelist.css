@@ -19,7 +19,7 @@
 	justify-content: flex-end;
 	align-items: flex-end;
 }
-.blbtn{ /*글쓰기 버튼 and 검색 버튼*/
+.glbtn{ /*글쓰기 버튼 and 검색 버튼*/
 	background-color: #294B3A;
 	color : white;
 	font-size: 18px;
@@ -57,12 +57,12 @@
 	padding: 20px;
 }
 
-.bTitle{/*게시물 제목 구역*/
+.gTitle{/*게시물 제목 구역*/
 	margin-top: 20px;
 	margin-bottom: 10px;
 }
 
-.bTitle a{ /*게시물 제목 부분*/
+.gTitle a{ /*게시물 제목 부분*/
 	font-size: 24px;
 	font-weight: 300 !important;
 	margin-left: 10px;

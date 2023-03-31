@@ -13,7 +13,7 @@ if(memberInfo == null){
 	location.href="/ten__needs/tenneeds/jsp/main.jsp"
 }else {
 	document.querySelector('.gametopetc').innerHTML = `
-			<button onclick="openModal()" class = "blbtn writebtn" type = "button" >방만들기</button>
+			<button onclick="openModal()" class = "glbtn writebtn" type = "button" >방만들기</button>
 			`
 }
 
@@ -36,12 +36,11 @@ function getgame(page){
 				
 					html += `<div class = "gameContent${o.gNo}" name="gameContent" id="gameContent">
 								<div>
-									<img class = "profile" src = "/ten__needs/tenneeds/jsp/board/bimg/admin.png"/>
 									<span>${o.mId}</span>
 									<span class = "bwritedate">${o.gDate}</span>
 								</div>
 								
-								<div class = "bTitle">
+								<div class = "gTitle">
 									<a href = "/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${o.gNo}">${o.gTitle}</a>
 								</div>
 							</div>`
@@ -89,7 +88,8 @@ function getgame(page){
 function gameSearch(){
 	pageObject.key = document.querySelector('.key').value;
 	pageObject.keyword = document.querySelector('.keyword').value;
-	
+	console.log(pageObject.key);
+	console.log(pageObject.keyword);
 	getgame(1);
 }
 
