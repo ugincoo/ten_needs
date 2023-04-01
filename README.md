@@ -18,7 +18,7 @@ tenNeeds(project3)
 
 
 #### 4.개발 전체 일정
-![tenNeeds_WBS](https://user-images.githubusercontent.com/119651889/227172244-d6ce74f5-1a4b-4371-b839-4024c5ef3853.png)
+![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292343-38b83459-9fe8-4d9c-b87e-496f6fb7c423.png)
 
 #### 5. 사용한 스킬 및 외부라이브러리
 JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome 
