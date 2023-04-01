@@ -24,7 +24,8 @@ tenNeeds(project3)
 JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome 
 
 #### 6. mySQL ER diagram
-![image](https://user-images.githubusercontent.com/119651889/227860825-073b312c-2547-4c2f-a9d1-ab4e35eb6be9.png)
+![image](https://user-images.githubusercontent.com/119651889/229287219-8e486d4f-338c-4fd6-acbb-a90c3fb69fec.png)
+
 
 
 #### 7. MVC Structure
