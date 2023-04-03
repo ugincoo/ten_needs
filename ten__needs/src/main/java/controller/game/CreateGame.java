@@ -88,10 +88,13 @@ public class CreateGame extends HttpServlet {
 		String mid = (String)request.getSession().getAttribute("login");
 		
 		GameroomDto dto = new GameroomDto( gTitle, mid );
-		boolean result = GameroomDao.getInstance().createGame(dto);
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().print(result);
+		GameroomDto result = GameroomDao.getInstance().createGame(dto);
 		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(result);
+		
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().print(json);
 	}
 
 
