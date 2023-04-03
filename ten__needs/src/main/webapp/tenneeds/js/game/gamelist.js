@@ -116,13 +116,20 @@ function createGame(){
 		method : "post",
 		data : { "gTitle" : gTitle, "mno": memberInfo.mno },
 		success : (r) =>{
+			let data = JSON.parse(r);
 			console.log(r);
-			if(r == 'true'){
+			console.log(data);
+			if( data.gNo != null ){
+				location.href = `/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${data.gNo}`;
+			} else{
+				alert('글쓰기 실패. 관리자에게 문의해주세요.');
+			}
+			/*if(r == 'true'){
 				alert('방생성 성공')
 				location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
 			}else{
 				alert('글쓰기 실패. 관리자에게 문의해주세요.')
-			}
+			}*/
 		}
 	})
 }

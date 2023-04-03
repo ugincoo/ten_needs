@@ -2,7 +2,7 @@
 tenNeeds(project3)
 
 #### 1. 주제
-쇼핑몰 홈페이지 구현
+테니스 웹(미니게임, 채팅, 근처 체육시설 정보 제공 서비스)
 
 #### 2. 주제 선정 이유
 1) MVC 패턴 학습
@@ -18,16 +18,19 @@ tenNeeds(project3)
 
 
 #### 4.개발 전체 일정
-![tenNeeds_WBS](https://user-images.githubusercontent.com/119651889/227172244-d6ce74f5-1a4b-4371-b839-4024c5ef3853.png)
+![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292513-9761368f-0ca5-40ca-b470-8546b6e30b22.gif)
 
 #### 5. 사용한 스킬 및 외부라이브러리
-JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome 
+JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summernote
 
 #### 6. mySQL ER diagram
-![image](https://user-images.githubusercontent.com/119651889/227860825-073b312c-2547-4c2f-a9d1-ab4e35eb6be9.png)
+![image](https://user-images.githubusercontent.com/119651889/229287219-8e486d4f-338c-4fd6-acbb-a90c3fb69fec.png)
+
 
 
 #### 7. MVC Structure
+![Control_Structure_tenneeds](https://user-images.githubusercontent.com/119651889/229290818-75dd1d43-42c6-4acb-b154-639ffb148730.png)
+
 
 #### 8. Front-End Structure [ layout ]
 
