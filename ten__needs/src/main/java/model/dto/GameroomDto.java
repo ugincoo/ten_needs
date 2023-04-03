@@ -18,7 +18,7 @@ public class GameroomDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	// 등록용
+	// 등록용 [게임방 입장]
 	public GameroomDto(String gTitle, String mId) {
 		super();
 		this.gTitle = gTitle;

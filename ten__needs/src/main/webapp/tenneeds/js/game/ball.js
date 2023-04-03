@@ -26,34 +26,19 @@ else{
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
-	
-	// gameSocket(User 정보)
-	// gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
-	// gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
-	// gameSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
-	// gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
-	// gameSocket.onmessage = (e)=>{ballMessage(e);}
+
 }	
 
-/* 확인
-const ball = {
-	x : canvas.width/2,
-	y : canvas.height/2,
-	radius : 10,
-	speed : 5,
-	velocityX : 5,
-	velocityY : 5,
-	color : "yellow"
-}
-function drawCircle(x, y, r, color){
-	ctx.fillStyle = color;
-	ctx.beginPath();
-	ctx.arc(x, y, r, 0, Math.PI*2, false);
-	ctx.closePath();
-	ctx.fill();
+let ball = {
+	x: 0,
+	y: 0,
+	radius: 0,
+	speed: 0,
+	velocityX: 0,
+	velocityY: 0,
+	color: null
 }
 
-*/
 
 function ballOpen(e){
 	console.log( 'ballOpen 확인');
@@ -61,10 +46,33 @@ function ballOpen(e){
 
 // 메시지 받는 창구
 function ballMessage( e ){
-	console.log(e);
+	console.log(e); //--- 확인 완료
 	
 	let data = JSON.parse(e.data);
+	console.log(data);
+	
+	if( data.ballState === 0 ){
+		console.log('작동확인');
+		ball = {
+			x : data.x/2,
+			y : data.y/2,
+			radius : data.radius,
+			speed : data.speed,
+			velocityX : data.velocityX,
+			velocityY : data.velocityY,
+			color : data.color
+		}
+		drawCircle( ball.x, ball.y, ball.radius, ball.color )
+	}
+	
+}
 
+function drawCircle(x, y, r, color){
+	ctx.fillStyle = color;
+	ctx.beginPath();
+	ctx.arc(x, y, r, 0, Math.PI*2, false);
+	ctx.closePath();
+	ctx.fill();
 }
 
 // 메시지 보내는 창구
