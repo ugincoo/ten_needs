@@ -90,8 +90,14 @@ let player = null;
 
 // 게임 사용자 정의	
 // user1 이미지
-const user1Image = new Image();
-user1Image.src = "wUser1.png"
+const user1Image = new Array(3);
+user1Image[0] = new Image();
+user1Image[0].src = "wUser1.png"
+user1Image[1] = new Image();
+user1Image[1].src = "wUser2.png"
+user1Image[2] = new Image();
+user1Image[2].src = "wUser3.png"
+let imageno = 0;
 const user1 = {
 	mno : user1Mno,
 	x : canvas.width/2 - 100/2,
@@ -104,7 +110,8 @@ const user1 = {
 	swing : 0,
 	rno : 0,
 	draw(){
-		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
+		let no = imageno;
+		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
 	}
 }
 
@@ -179,7 +186,11 @@ function keyDownHandler(event) {
 	    downPressed = true;
 	} else if (event.key === "" || event.keyCode === 32) {
 	    spacePressed = true;
-	    user1.draw()
+	    if(user1.x > canvas.width/2 - 100/2 ){
+			imageno = 1;
+		}else{
+			imageno = 2;
+		}
 	} 
 }
 
@@ -194,7 +205,7 @@ function keyUpHandler(event) {
 	    downPressed = false;
 	} else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
-	    setTimeout(() => spacePressed = false, user1.color = "white", 3000); //정확함도를 낮추기 위해서
+	    setTimeout(() => spacePressed = false, imageno = 0, 3000); //정확함도를 낮추기 위해서
 		if(player == user1){
 				user1.swing++;
 				console.log(user1.swing)
