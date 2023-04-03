@@ -1,3 +1,4 @@
+<%@page import="model.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +14,23 @@
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>
 	
+	<%
+		String user1Mid = request.getParameter("user1");
+		String user2Mid = request.getParameter("user2");
+		
+		
+		int user1Mno = MemberDao.getInstance().getMno(request.getParameter("user1"));
+		int user2Mno = MemberDao.getInstance().getMno(request.getParameter("user2"));
+		
+		int gNo = Integer.parseInt(request.getParameter("gNo"));
+	%>
+	
+	<input type = "hidden" type = "text" class = "user1Mid" value="<%=user1Mid%>">
+	<input type = "hidden" type = "text" class = "user2Mid" value="<%=user2Mid%>">
+	<input type = "hidden" type = "text" class = "user1Mno" value="<%=user1Mno%>">
+	<input type = "hidden" type = "text" class = "user2Mno" value="<%=user2Mno%>">
+	<input type = "hidden" type = "text" class = "gNo" value="<%=gNo%>">
+	
 	<div class ="sticky-wrap">
 	
 		<div class = "ppro plyaer1profile">
@@ -21,7 +39,7 @@
 				<div style = "margin-left: 20px">
 					<span class = "prm player1racketnm"></span>
 					<br/>
-					<span class = "username player1Name">김주디</span>
+					<span class = "username player1Name"><%=user1Mid%></span>
 				</div>
 			</div>
 		</div>
@@ -36,7 +54,7 @@
 				<div style = "margin-left: 20px">
 					<span class = "prm player2racketnm"></span>
 					<br/>
-					<span class = "username aplayer2Name">최닉</span>
+					<span class = "username player2Name"><%=user2Mid%></span>
 				</div>
 			</div>
 		</div>

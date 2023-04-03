@@ -5,7 +5,7 @@ let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');
 let gNo = document.querySelector('.gNo').value;
 // sockat server 연결
-let chattingSockat = new WebSocket('ws://localhost:8089/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
+let chattingSockat = new WebSocket('ws://localhost:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
 
 // open, message, close 작동 on
 chattingSockat.onopen = function(e){ inputChat(e); }
@@ -38,13 +38,20 @@ function sendMessage(){
 	
 	document.querySelector('.chatContent').value = '';
 }
+
 let countStart = 0;
+let info = null;
+
 function onMessage( e ){
 	console.log(e); // --- 확인 완료
 	// console.log(e.data); // --- 확인 완료
 	// console.log( JSON.parse(e.data) ); // --- 확인 완료
 	 
 	let data = JSON.parse(e.data);
+	
+	if(data.length >= 2){
+		info = data;
+	}
 	
 	
 	if( Array.isArray( data ) ){ // ------------- 상단 프로필 상태 출력
@@ -115,10 +122,14 @@ function onMessage( e ){
 				}
 				
 				console.log(countStart);
+				console.log(gNo);
+				
+				console.log(info[0])
+				console.log(info[1])
 				
 				if( countStart == 2 ){
 					setTimeout( ()=>{
-					   location.href = "/ten__needs/tenneeds/jsp/game/pingpong.jsp";
+					   location.href = `/ten__needs/tenneeds/jsp/game/pingpong.jsp?gNo=${gNo}&user1=${info[0].mId}&user2=${info[1].mId}`;
 					   }, 5000 )
 				}
 			}

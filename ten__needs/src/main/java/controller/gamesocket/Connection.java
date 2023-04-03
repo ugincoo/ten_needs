@@ -8,6 +8,8 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import model.dao.MemberDao;
+
 @ServerEndpoint("/game/{gno}/{user1}/{user2}")
 public class Connection {
 	
@@ -32,4 +34,5 @@ public class Connection {
 	public void msgServer( Session session , String msg ) throws Exception {
 		System.out.println( session );
 	}
+	
 }
