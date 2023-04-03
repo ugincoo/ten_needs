@@ -59,7 +59,6 @@ const user1 = {
 	swing : 0,
 	rno : 0,
 	draw(){
-		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
 	}
 }
@@ -79,7 +78,6 @@ const user2 = {
 	swing : 0,
 	rno : 0,
 	draw(){
-		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
 	}
 }
@@ -145,6 +143,7 @@ function keyDownHandler(event) {
 	    downPressed = true;
 	} else if (event.key === "" || event.keyCode === 32) {
 	    spacePressed = true;
+	    user1.draw()
 	} 
 }
 

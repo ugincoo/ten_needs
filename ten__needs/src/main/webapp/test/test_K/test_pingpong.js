@@ -1,5 +1,5 @@
 // 소켓 연결
-let gameSocket = null;
+/*let gameSocket = null;
 
 if( memberInfo == null ){}
 
@@ -13,7 +13,7 @@ else{
 	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
 
 	gameSocket.onmessage = (e)=>{ console.log()}
-}
+}*/
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
@@ -21,6 +21,8 @@ const ctx = canvas.getContext('2d');
 // user1 이미지
 const user1Image = new Image();
 user1Image.src = "wUser1.png"
+const user1Image2 = new Image();
+user1Image2.src = "wUser2.png"
 const user1 = {
 	x : canvas.width/2 - 100/2,
 	y : 0,
@@ -31,10 +33,17 @@ const user1 = {
 	smash : 0,
 	swing : 0,
 	draw(){
-		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
+	},
+	draw2(){
+		ctx.drawImage(user1Image2, this.x , this.y, this.width, this.height);
 	}
+	
 }
+function drawUser(){
+	ctx.drawImage(user1Image, this.x , this.y, this.width, this.height);
+}
+
 // user2 이미지
 const user2Image = new Image();
 user2Image.src = "mUser1.png"
@@ -48,7 +57,6 @@ const user2 = {
 	smash : 0,
 	swing : 0,
 	draw(){
-		ctx.fillRect(this.x , this.y, this.width, this.height);
 		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
 	}
 }
@@ -115,7 +123,6 @@ let downPressed = false;	// 하키 상태
 let spacePressed = false; //스페이스여부
 // 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
 let player = null;
-
 //패들 방향키 조
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -145,7 +152,7 @@ function keyUpHandler(event) {
 	    downPressed = false;
 	} else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
-	    setTimeout(() => spacePressed = false, user1.color = "white", 3000); //정확함도를 낮추기 위해서
+	    setTimeout(() => spacePressed = false, user1.draw2(), 3000); //정확함도를 낮추기 위해서
 		if(player == user1){
 				user1.swing++;
 				console.log(user1.swing)
