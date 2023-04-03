@@ -94,7 +94,7 @@ public class MemberDao extends Dao {
 		return "false";
 	}
 	
-	// 회원정보
+	// 회원정보(아이디로)
 	public MemberDto getMember( String mid ) {
 		String sql = "select * from member where mId = ? ";
 		try {
@@ -108,6 +108,22 @@ public class MemberDao extends Dao {
 		}catch (Exception e) { System.out.println(e); }
 		return null;
 	}
+	
+	// 회원정보(멤버번호로)
+		public MemberDto getMember( int mno ) {
+			String sql = "select * from member where mno = ? ";
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, mno);
+				rs = ps.executeQuery();
+				if( rs.next() ) {
+					MemberDto dto = new MemberDto( rs.getInt(1), rs.getString(2), null, rs.getString(4), rs.getString(5), rs.getString(6));
+					return dto;
+				}
+			}catch (Exception e) { System.out.println(e); }
+			return null;
+		}
+	
 	
 	// 회원정보 수정
 	public boolean update ( String mid , String mpw , String newmpw , String mphone , String memail , String mImg ) {
