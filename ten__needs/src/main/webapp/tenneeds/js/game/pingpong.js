@@ -1,3 +1,19 @@
+
+//게임방 번호
+let gNo = document.querySelector('.gNo').value;
+console.log(gNo)
+
+//플레이어들의 mid
+let user1Mid = document.querySelector('.user1Mid').value;
+let user2Mid = document.querySelector('.user2Mid').value;
+console.log(user1Mid)
+console.log(user2Mid)
+//플레이어들의 mno
+let user1Mno = document.querySelector('.user1Mno').value;
+let user2Mno = document.querySelector('.user2Mno').value;
+console.log(user1Mno)
+console.log(user2Mno)
+
 // 소켓 연결
 let gameSocket = null;
 
@@ -6,49 +22,78 @@ if( memberInfo == null ){}
 else{
 	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
 
-	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어')}
+	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
 
 	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감')}
 
 	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
 
-	gameSocket.onmessage = (e)=>{ console.log()}
+	gameSocket.onmessage = (e)=>{receiveMoveMessage(e);}
 }	
 
-// 라켓정보 설정 및 출력
-$.ajax({
-	url : "/ten__needs/game/result",
-	method : "get",
-	data : {"type" : 1},
-	success : (r) => {
-		console.log(r); 
-		
-		let playerRacket1 = Math.floor(Math.random()*(r.length));
-		let playerRacket2 = Math.floor(Math.random()*(r.length)); 
-		
-		console.log(playerRacket1 + " : " + r[playerRacket1].rImg)
-		console.log(playerRacket2 + " : " + r[playerRacket2].rImg)
-		
-		if(r != null){
-			document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket1].rImg}`;
-			document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket2].rImg}`;
+//서버 들어왔을때 라켓의 정보를 DB에서 가져와서 랜덤을 돌린다.
+function onOpne(e){
+	// 라켓정보 설정 및 출력
+	$.ajax({
+		url : "/ten__needs/game/result",
+		method : "get",
+		data : {"type" : 1},
+		success : (r) => {
+			console.log(r); 
 			
-			document.querySelector('.player1racketnm').innerHTML = r[playerRacket1].rName
-			document.querySelector('.player2racketnm').innerHTML = r[playerRacket2].rName 
+			let playerRacket1 = Math.floor(Math.random()*(r.length));
+			let playerRacket2 = Math.floor(Math.random()*(r.length)); 
+			
+			console.log(playerRacket1 + " : " + r[playerRacket1].rImg)
+			console.log(playerRacket2 + " : " + r[playerRacket2].rImg)
+			
+			if(r != null){
+				document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket1].rImg}`;
+				document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket2].rImg}`;
+				
+				document.querySelector('.player1racketnm').innerHTML = r[playerRacket1].rName
+				document.querySelector('.player2racketnm').innerHTML = r[playerRacket2].rName 
+				
+			}
 		}
-	}
-})
+	})
 
+}
+//움직였을때의 서버에게 메시지(움직임정보) 보내
+function sendMoveMessage(moveinfo, player){
+	
+}
+
+//서버로부터 상대방의 움직임 정보를 받기
+function receiveMoveMessage(e){
+	console.log(e.data);
+	
+	let moveData = JSON.parse(e.data);
+	console.log(moveData);
+	
+	
+}
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 	
+	
+// 방향키 전역 변수
+let rightPressed = false;	// 우키 상태
+let leftPressed = false;	// 좌키 상태
+let upPressed = false;		// 상키 상태
+let downPressed = false;	// 하키 상태
+let spacePressed = false; //스페이스여부
+// 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
+let player = null;
+
+
 // 게임 사용자 정의	
 // user1 이미지
 const user1Image = new Image();
 user1Image.src = "wUser1.png"
 const user1 = {
-	mno : 1,
+	mno : user1Mno,
 	x : canvas.width/2 - 100/2,
 	y : 0,
 	width : 80,
@@ -68,7 +113,7 @@ const user1 = {
 const user2Image = new Image();
 user2Image.src = "mUser1.png"
 const user2 = {
-	mno : 1,
+	mno : user2Mno,
 	x : canvas.width/2 - 100/2,
 	y : canvas.height - 80,
 	width : 80,
@@ -120,15 +165,6 @@ function drawText(text, x, y, color){
 	ctx.font = "45px fantasy";
 	ctx.fillText(text, x, y);
 }
-
-// 방향키 전역 변수
-let rightPressed = false;	// 우키 상태
-let leftPressed = false;	// 좌키 상태
-let upPressed = false;		// 상키 상태
-let downPressed = false;	// 하키 상태
-let spacePressed = false; //스페이스여부
-// 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
-let player = null;
 
 //패들 방향키 조
 document.addEventListener("keydown", keyDownHandler, false);
@@ -253,7 +289,9 @@ function game(){
 	drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");	// 유저2 스코어
     
     // 플레어이 움직임
-    if (rightPressed && user1.x < canvas.width - user1.width) { user1.x += 8;} 
+    if (rightPressed && user1.x < canvas.width - user1.width) { 
+		user1.x += 8;
+	} 
     else if (leftPressed && user1.x > 0) { user1.x -= 8; }
     
     if (upPressed && user1.y > 0){ user1.y -= 8;} 
