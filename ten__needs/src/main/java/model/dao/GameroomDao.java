@@ -12,7 +12,7 @@ public class GameroomDao extends Dao {
 	public static GameroomDao getInstance() { return dao; }
 	
 	// 1. 게임방 생성
-	public synchronized boolean createGame( GameroomDto dto ) {
+	public synchronized GameroomDto createGame( GameroomDto dto ) {
 		String sql = "insert into gameroom( gTitle, mno ) values(?,?)";
 		// --- 1. 방을 생성해라
 		// --- 2. 가장 최근에 생성된 방 정보를 가져온다.
@@ -20,10 +20,17 @@ public class GameroomDao extends Dao {
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getgTitle()); 	ps.setInt(2, dto.getmNo());
-			ps.executeUpdate();
-			return true;
+			
+			if( ps.executeUpdate() == 1 ) {
+				sql = "select g.*, m.mid from gameroom g natural join member m where mno = "+ dto.getmNo() +" order by gdate desc limit 1";
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if( rs.next() ) {
+					return new GameroomDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getInt(4));
+				}
+			}
 		} catch (Exception e) { System.out.println("예외발생:" + e); }
-		return false;
+		return null;
 	}
 	
 	// 2-1. 게시물 구하기
