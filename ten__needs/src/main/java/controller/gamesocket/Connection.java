@@ -31,7 +31,7 @@ public class Connection {
 		MemberDto player2 = MemberDao.getInstance().getMember(user2);
 		
 		connectPlayerList.add(new GameUserDto(session, player1.getMno(), 0, 0, 0, false, 0, 0, 0));
-		connectPlayerList.add(new GameUserDto(session, player2.getMno(), 0, 0, 0, false, 0, 0, 0));
+
 		
 		System.out.println(connectPlayerList);
 		

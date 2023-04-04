@@ -63,6 +63,6 @@
 	 
 	
 	
-	<script type="text/javascript" src="/ten__needs/tenneeds/js/game/ball.js"></script> 
+	<script type="text/javascript" src="/ten__needs/tenneeds/js/game/pingpong.js"></script> 
 </body>
 </html>

@@ -15,12 +15,21 @@ console.log(user1Mno)
 console.log(user2Mno)
 
 // 소켓 연결
+let ballSocket = null;
 let gameSocket = null;
 
 if( memberInfo == null ){}
 
 else{
-	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
+	// ballSocket 
+	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
+	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
+	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
+	ballSocket.onmessage = (e)=>{ballMessage(e);}
+	
+	// gameSocket
+	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
 
@@ -29,6 +38,60 @@ else{
 	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
 
 	gameSocket.onmessage = (e)=>{onMessage(e);}
+}
+
+let ball = {
+	x: 0,
+	y: 0,
+	radius: 0,
+	speed: 0,
+	velocityX: 0,
+	velocityY: 0,
+	color: null
+}
+
+function ballOpen(e){
+	console.log( 'ballOpen 확인');
+}
+
+// 메시지 받는 창구
+function ballMessage( e ){
+	console.log(e); //--- 확인 완료
+	
+	let data = JSON.parse(e.data);
+	console.log(data);
+	
+	if( data.ballState === 0 ){
+		console.log('작동확인');
+		ball = {
+			x : data.x/2,
+			y : data.y/2,
+			radius : data.radius,
+			speed : data.speed,
+			velocityX : data.velocityX,
+			velocityY : data.velocityY,
+			color : data.color
+		}
+		drawCircle( ball.x, ball.y, ball.radius, ball.color )
+	}
+	
+}
+
+function drawCircle(x, y, r, color){
+	ctx.fillStyle = color;
+	ctx.beginPath();
+	ctx.arc(x, y, r, 0, Math.PI*2, false);
+	ctx.closePath();
+	ctx.fill();
+}
+
+// 메시지 보내는 창구
+function connectServer( type, data ){
+	let msgBox = {
+		type: type,
+		data: data
+	}
+	ballSocket.send( JSON.stringify(msgBox) );
 }	
 
 //서버 들어왔을때 라켓의 정보를 DB에서 가져와서 랜덤을 돌린다.
@@ -148,23 +211,7 @@ const stadium = {
 		ctx.drawImage(stadiumImage, this.x , this.y, canvas.width, canvas.height);
 	}
 }
-// 공 
-const ball = {
-	x : canvas.width/2,
-	y : canvas.height/2,
-	radius : 10,
-	speed : 5,
-	velocityX : 5,
-	velocityY : 5,
-	color : "yellow"
-}
-function drawCircle(x, y, r, color){
-	ctx.fillStyle = color;
-	ctx.beginPath();
-	ctx.arc(x, y, r, 0, Math.PI*2, false);
-	ctx.closePath();
-	ctx.fill();
-}
+
 // 글쓰기
 function drawText(text, x, y, color){
 	ctx.fillStyle = color;

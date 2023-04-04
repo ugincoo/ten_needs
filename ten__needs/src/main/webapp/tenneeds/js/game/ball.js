@@ -16,6 +16,7 @@ console.log(user2Mno)
 
 // 소켓 연결
 let gameSocket = null;
+let gameocket = null;
 
 if( memberInfo == null ){}
 
@@ -26,7 +27,12 @@ else{
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
-
+	
+	gameocket = new WebSocket('ws://localhost:8089/ten__needs/user/'+gNo+'/'+memberInfo.mno);
+	gameocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
+	gameocket.onclose = (e)=>{ console.log('서버소켓 나감');}
+	gameocket.onerror = (e)=>{ console.log('서버소켓 오류');}
+	gameocket.onmessage = (e)=>{ballMessage(e);}
 }	
 
 let ball = {
