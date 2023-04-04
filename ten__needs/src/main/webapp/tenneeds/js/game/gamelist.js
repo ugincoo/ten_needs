@@ -41,7 +41,7 @@ function getgame(page){
 									<span class = "bwritedate">${o.gDate}</span>
 								</div>
 								
-								<div onclick="sendTitle(${o.gTitle})" class = "gTitle">
+								<div class = "gTitle">
 									<a href = "/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${o.gNo}">${o.gTitle}</a>
 								</div>
 							</div>`

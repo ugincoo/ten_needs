@@ -130,7 +130,4 @@ public class GameUserDto {
 		return "GameUserDto [mno=" + mno + ", x=" + x + ", y=" + y + ", score=" + score + ", gameResult=" + gameResult
 				+ ", smash=" + smash + ", swing=" + swing + ", rno=" + rno + "]";
 	}
-	
-	
-	
 }
