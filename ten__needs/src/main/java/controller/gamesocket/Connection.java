@@ -33,6 +33,8 @@ public class Connection {
 		connectPlayerList.add(new GameUserDto(session, player1.getMno(), 0, 0, 0, false, 0, 0, 0));
 		connectPlayerList.add(new GameUserDto(session, player2.getMno(), 0, 0, 0, false, 0, 0, 0));
 		
+		System.out.println(connectPlayerList);
+		
 		msgServer(session, "userlist"); //접속했을때 해당 플레이어(2명 모두)의 정보를 보내주기 위해
 		
 	}
