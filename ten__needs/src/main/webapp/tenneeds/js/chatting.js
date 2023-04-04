@@ -5,7 +5,7 @@ let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');
 let gNo = document.querySelector('.gNo').value;
 // sockat server 연결
-let chattingSockat = new WebSocket('ws://localhost:8089/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
+let chattingSockat = new WebSocket('ws://localhost:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
 
 // open, message, close 작동 on
 chattingSockat.onopen = function(e){ inputChat(e); }

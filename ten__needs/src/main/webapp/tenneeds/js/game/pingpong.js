@@ -22,16 +22,16 @@ if( memberInfo == null ){}
 
 else{
 	// ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
-	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
+	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
 	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감')}
 
@@ -39,6 +39,7 @@ else{
 
 	gameSocket.onmessage = (e)=>{onMessage(e);}
 }
+
 
 let ball = {
 	x: 0,
@@ -94,46 +95,99 @@ function connectServer( type, data ){
 	ballSocket.send( JSON.stringify(msgBox) );
 }	
 
-//서버 들어왔을때 라켓의 정보를 DB에서 가져와서 랜덤을 돌린다.
 function onOpne(e){
-	// 라켓정보 설정 및 출력
-	$.ajax({
-		url : "/ten__needs/game/result",
-		method : "get",
-		data : {"type" : 1},
-		success : (r) => {
-			console.log(r); 
-			
-			let playerRacket1 = Math.floor(Math.random()*(r.length));
-			let playerRacket2 = Math.floor(Math.random()*(r.length)); 
-			
-			console.log(playerRacket1 + " : " + r[playerRacket1].rImg)
-			console.log(playerRacket2 + " : " + r[playerRacket2].rImg)
-			
-			if(r != null){
-				document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket1].rImg}`;
-				document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r[playerRacket2].rImg}`;
-				
-				document.querySelector('.player1racketnm').innerHTML = r[playerRacket1].rName
-				document.querySelector('.player2racketnm').innerHTML = r[playerRacket2].rName 
-				
-			}
-		}
-	})
 
 }
-//움직였을때의 서버에게 메시지(움직임정보) 보내
-function sendMessage(moveinfo, player){
+
+//움직였을때의 서버에게 메시지(움직임정보) 보내 & 처음 접속했을때
+function sendMessage(type, info){
 	
 }
+
+let startCheck = 0; //2여야 게임이 시작할 수 있음 => 플레이어 정보를 하나 가져올때마다 ++할 예정이기 때문
 
 //서버로부터 상대방의 움직임 정보를 받기
 function onMessage(e){
 	console.log(e)
 	console.log(e.data);
 	
-	let moveData = JSON.parse(e.data);
-	console.log(moveData);
+	let userData = JSON.parse(e.data);
+	console.log(userData)
+	
+	if(startCheck < 2){
+		if(startCheck == 0){
+			user1 = {
+				mno : userData.mno,
+				x : userData.x,
+				y : userData.y,
+				width : userData.width,
+				height : userData.height,
+				score : userData.score,
+				win : userData.gameResult,
+				smash : userData.smash,
+				swing : userData.swing,
+				rno : userData.rno
+			}
+			// 라켓정보 설정 및 출력
+			$.ajax({
+				url : "/ten__needs/game/result",
+				method : "get",
+				data : {"type" : 1, "rno" : user1.rno},
+				success : (r) => {
+					console.log(r); 
+					
+					console.log(r + " : " + r.rImg)
+					
+					if(r != null){
+						document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+						
+						document.querySelector('.player1racketnm').innerHTML = r.rName 
+					
+						
+					}
+				}
+			})
+	
+			console.log("user1" + user1)
+		}else if(startCheck == 1){
+			user2 = {
+				mno : userData.mno,
+				x : userData.x,
+				y : userData.y,
+				width : userData.width,
+				height : userData.height,
+				score : userData.score,
+				win : userData.gameResult,
+				smash : userData.smash,
+				swing : userData.swing,
+				rno : userData.user2Rno
+			}
+			// 라켓정보 설정 및 출력
+			$.ajax({
+				url : "/ten__needs/game/result",
+				method : "get",
+				data : {"type" : 1, "rno" : user2.rno},
+				success : (r) => {
+					console.log(r); 
+					
+					console.log(r + " : " + r.rImg)
+					
+					if(r != null){
+						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+						
+						document.querySelector('.player2racketnm').innerHTML = r.rName 
+					
+						
+					}
+				}
+			})
+			
+			console.log("user2" + user2)
+		}
+		
+	}
+	startCheck++;
+	
 	
 	
 }
@@ -154,7 +208,7 @@ let player = null;
 
 // 게임 사용자 정의	
 // user1 이미지
-const user1Image = new Array(3);
+let user1Image = new Array(3);
 user1Image[0] = new Image();
 user1Image[0].src = "wUser1.png"
 user1Image[1] = new Image();
@@ -162,7 +216,7 @@ user1Image[1].src = "wUser2.png"
 user1Image[2] = new Image();
 user1Image[2].src = "wUser3.png"
 let imageno = 0;
-const user1 = {
+let user1 = {
 	mno : user1Mno,
 	x : canvas.width/2 - 100/2,
 	y : 0,
@@ -180,9 +234,9 @@ const user1 = {
 }
 
 // user2 이미지
-const user2Image = new Image();
+let user2Image = new Image();
 user2Image.src = "mUser1.png"
-const user2 = {
+let user2 = {
 	mno : user2Mno,
 	x : canvas.width/2 - 100/2,
 	y : canvas.height - 80,
@@ -436,4 +490,5 @@ function game(){
     user1.draw();	// 유저 1 그리기
     user2.draw();	// 유저 2 그리기
 }
+
 game();

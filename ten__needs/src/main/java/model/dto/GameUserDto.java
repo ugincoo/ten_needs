@@ -4,11 +4,13 @@ import javax.websocket.Session;
 
 public class GameUserDto {
 	private Session session; //소켓
-	
+	private int gno;
 	private int mno; //회원번호
 	private int x; //x좌표
 	private int y; //y좌표
 	private int score ; //점수 
+	private int width ;
+	private int heigth;
 	private boolean gameResult; //게임 결과(이기면 1 지면 2)
 	private int smash; //스매시횟수 
 	private int swing; //스윙 횟수
@@ -19,20 +21,64 @@ public class GameUserDto {
 	public GameUserDto() {
 		super();
 	}
+	
+	
 
-
-	public GameUserDto(Session session, int mno, int x, int y, int score, boolean gameResult, int smash, int swing, int rno) {
+	public GameUserDto(Session session, int gno, int mno) {
 		super();
 		this.session = session;
+		this.gno = gno;
 		this.mno = mno;
+	}
+
+	
+
+
+	public GameUserDto(int x, int y, int score, int width, int heigth, boolean gameResult, int smash, int swing,
+			int rno) {
+		super();
 		this.x = x;
 		this.y = y;
 		this.score = score;
+		this.width = width;
+		this.heigth = heigth;
 		this.gameResult = gameResult;
 		this.smash = smash;
 		this.swing = swing;
 		this.rno = rno;
 	}
+
+
+
+	public GameUserDto(Session session, int gno, int mno, int x, int y, int score, int width, int heigth,
+			boolean gameResult, int smash, int swing, int rno) {
+		super();
+		this.session = session;
+		this.gno = gno;
+		this.mno = mno;
+		this.x = x;
+		this.y = y;
+		this.score = score;
+		this.width = width;
+		this.heigth = heigth;
+		this.gameResult = gameResult;
+		this.smash = smash;
+		this.swing = swing;
+		this.rno = rno;
+	}
+
+
+
+	public int getGno() {
+		return gno;
+	}
+
+
+
+	public void setGno(int gno) {
+		this.gno = gno;
+	}
+
 
 
 	public Session getSession() {
@@ -125,9 +171,40 @@ public class GameUserDto {
 	}
 
 
+
+	public int getWidth() {
+		return width;
+	}
+
+
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+
+
+	public int getHeigth() {
+		return heigth;
+	}
+
+
+
+	public void setHeigth(int heigth) {
+		this.heigth = heigth;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "GameUserDto [mno=" + mno + ", x=" + x + ", y=" + y + ", score=" + score + ", gameResult=" + gameResult
+		return "GameUserDto [session=" + session + ", gno=" + gno + ", mno=" + mno + ", x=" + x + ", y=" + y
+				+ ", score=" + score + ", width=" + width + ", heigth=" + heigth + ", gameResult=" + gameResult
 				+ ", smash=" + smash + ", swing=" + swing + ", rno=" + rno + "]";
 	}
+
+
+
+	
+	
 }
