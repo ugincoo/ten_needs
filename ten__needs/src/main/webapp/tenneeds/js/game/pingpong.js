@@ -104,8 +104,6 @@ function sendMessage(type, info){
 	
 }
 
-let startCheck = 0; //2여야 게임이 시작할 수 있음 => 플레이어 정보를 하나 가져올때마다 ++할 예정이기 때문
-
 //서버로부터 상대방의 움직임 정보를 받기
 function onMessage(e){
 	console.log(e)
@@ -114,9 +112,8 @@ function onMessage(e){
 	let userData = JSON.parse(e.data);
 	console.log(userData)
 	
-	if(startCheck < 2){
-		if(startCheck == 0){
-			user1 = {
+	if(userData.mno == memberInfo.mno){
+		user1 = {
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
@@ -149,8 +146,8 @@ function onMessage(e){
 			})
 	
 			console.log("user1" + user1)
-		}else if(startCheck == 1){
-			user2 = {
+	}else{
+		user1 = {
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
@@ -160,35 +157,30 @@ function onMessage(e){
 				win : userData.gameResult,
 				smash : userData.smash,
 				swing : userData.swing,
-				rno : userData.user2Rno
+				rno : userData.rno
 			}
 			// 라켓정보 설정 및 출력
 			$.ajax({
 				url : "/ten__needs/game/result",
 				method : "get",
-				data : {"type" : 1, "rno" : user2.rno},
+				data : {"type" : 1, "rno" : userData.rno},
 				success : (r) => {
 					console.log(r); 
 					
 					console.log(r + " : " + r.rImg)
 					
 					if(r != null){
-						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+						document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
-						document.querySelector('.player2racketnm').innerHTML = r.rName 
+						document.querySelector('.player1racketnm').innerHTML = r.rName 
 					
 						
 					}
 				}
 			})
-			
-			console.log("user2" + user2)
-		}
-		
+	
+			console.log("user1" + user1)
 	}
-	startCheck++;
-	
-	
 	
 }
 

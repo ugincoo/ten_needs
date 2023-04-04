@@ -94,12 +94,13 @@ public class Connection {
 			}
 			
 			json = mapper.writeValueAsString(dto);
-			
+			System.out.println(connectPlayerList);
 			for(GameUserDto userDto : connectPlayerList) {
 				if(userDto.getGno() == checkGno) {
 					userDto.getSession().getBasicRemote().sendText(json);
 				}
 			}
+		
 			
 		}
 	}
