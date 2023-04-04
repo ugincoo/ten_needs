@@ -20,7 +20,7 @@ let gameSocket = null;
 if( memberInfo == null ){}
 
 else{
-	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+1+'/'+memberInfo.mno+'/'+2);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
 
@@ -28,7 +28,7 @@ else{
 
 	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
 
-	gameSocket.onmessage = (e)=>{receiveMoveMessage(e);}
+	gameSocket.onmessage = (e)=>{onMessage(e);}
 }	
 
 //서버 들어왔을때 라켓의 정보를 DB에서 가져와서 랜덤을 돌린다.
@@ -60,12 +60,13 @@ function onOpne(e){
 
 }
 //움직였을때의 서버에게 메시지(움직임정보) 보내
-function sendMoveMessage(moveinfo, player){
+function sendMessage(moveinfo, player){
 	
 }
 
 //서버로부터 상대방의 움직임 정보를 받기
-function receiveMoveMessage(e){
+function onMessage(e){
+	console.log(e)
 	console.log(e.data);
 	
 	let moveData = JSON.parse(e.data);
