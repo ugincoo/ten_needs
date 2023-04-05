@@ -117,12 +117,12 @@ function onMessage(e){
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
-				width : userData.width,
-				height : userData.height,
-				score : userData.score,
-				win : userData.gameResult,
-				smash : userData.smash,
-				swing : userData.swing,
+				width : 80,
+				height : 80,
+				score : 0,
+				win : false,
+				smash : 0,
+				swing : 0,
 				rno : userData.rno,
 				draw(){
 					let no = imageno;
@@ -157,12 +157,12 @@ function onMessage(e){
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
-				width : userData.width,
-				height : userData.height,
+				width : 80,
+				height : 80,
 				score : userData.score,
-				win : userData.gameResult,
-				smash : userData.smash,
-				swing : userData.swing,
+				win : false,
+				smash : 0,
+				swing : 0,
 				rno : userData.rno,
 				draw(){
 					let no = imageno;
@@ -183,7 +183,7 @@ function onMessage(e){
 					if(r != null){
 						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
-						document.querySelector('.player2racketnm').innerHTML = r.rName 
+						document.querySelector('.player2racketnm').innerHTML = r.rName
 					
 						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
 						

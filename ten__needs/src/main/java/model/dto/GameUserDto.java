@@ -18,10 +18,9 @@ public class GameUserDto {
 
 	
 	
-	public GameUserDto(Session session, int type, int gno, int mno) {
+	public GameUserDto(Session session, int gno, int mno) {
 		super();
 		this.session = session;
-		this.type = type;
 		this.gno = gno;
 		this.mno = mno;
 	}
