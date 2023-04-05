@@ -16,7 +16,7 @@ import model.dao.MemberDao;
 import model.dto.GameUserDto;
 import model.dto.MemberDto;
 
-@ServerEndpoint("/game/{gno}/{user1}/{user2}")
+@ServerEndpoint("/game/{gNo}/{mno}")
 public class Connection {
 	
 	//해당 게임 화면에 들어온 플레이어 저장하는 리스트	

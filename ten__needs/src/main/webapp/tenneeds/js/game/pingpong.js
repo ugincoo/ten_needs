@@ -21,6 +21,7 @@ let gameSocket = null;
 if( memberInfo == null ){}
 
 else{
+	
 	// ballSocket 
 	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
@@ -29,7 +30,7 @@ else{
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
+	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
 
@@ -40,6 +41,7 @@ else{
 	gameSocket.onmessage = (e)=>{onMessage(e);}
 }
 
+// ------------------------------------------------------------------------------ ballSocket (생성)
 let ball = {
 	x: 0,
 	y: 0,
@@ -50,11 +52,9 @@ let ball = {
 	color: null
 }
 
-function ballOpen(e){
-	console.log( 'ballOpen 확인');
-}
+function ballOpen(e){ console.log( 'ballOpen 확인'); }
 
-// 메시지 받는 창구
+// ----------------------------------- ballSocket 메시지 받는 창구 -----------------------------------
 function ballMessage( e ){
 	console.log(e); //--- 확인 완료
 	
@@ -74,7 +74,6 @@ function ballMessage( e ){
 		}
 		drawCircle( ball.x, ball.y, ball.radius, ball.color )
 	}
-	
 }
 
 function drawCircle(x, y, r, color){
@@ -85,14 +84,17 @@ function drawCircle(x, y, r, color){
 	ctx.fill();
 }
 
-// 메시지 보내는 창구
+// ----------------------------------- ballSocket 메시지 보내는 창구 -----------------------------------
 function connectServer( type, data ){
 	let msgBox = {
 		type: type,
 		data: data
 	}
+		console.log(msgBox);
 	ballSocket.send( JSON.stringify(msgBox) );
 }	
+
+// ------------------------------------------------------------------------------ ballSocket End
 
 //서버 들어왔을때 라켓의 정보를 DB에서 가져와서 랜덤을 돌린다.
 function onOpne(e){
@@ -277,6 +279,7 @@ function collision(b, p){
 	return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
 }
 // COM 또는 USER가 득점하면 공을 재설정합니다.
+
 function resetBall(){
 	ball.x = canvas.width/2;
 	ball.y = canvas.height/2;
@@ -284,6 +287,7 @@ function resetBall(){
 	ball.speed = 5;
 	ball.velocityY = -ball.velocityY;
 }
+
 
 let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
  //최종 라운드 체크
@@ -372,17 +376,6 @@ function game(){
 	if(spacePressed){
 		 // 공이 패들에 부딪힌 경우
 		if(collision(ball, player)){
-			if(player == user1){
-					user1.result = 1;
-					user2.result = 0;
-					user1.smash++;	
-				}else{
-					user1.result = 0; //지면 0
-					user2.result = 1; //이기면 1
-					user2.smash++;	
-				}
-				
-			
 			// 공이 패들에 닿는 위치를 확인합니다.
 			let collidePoint = ball.y - (player.y + player.height/2);
 			
@@ -399,11 +392,30 @@ function game(){
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
 			
+			updateBall = {
+				x : ball.x,
+				y : ball.y,
+				radius : ball.radius,
+				speed : ball.speed,
+				velocityX: direction * ball.speed * Math.cos(angleRad),
+				velocityY: ball.speed * Math.sin(angleRad)
+			}
+			
+			/*
 			ball.velocityX = direction * ball.speed * Math.cos(angleRad);
 			ball.velocityY = ball.speed * Math.sin(angleRad);
+			*/
 			
-		 // 패들이 공을 칠 때마다 공의 속도를 높입니다.
+		 	// 패들이 공을 칠 때마다 공의 속도를 높입니다.
 			ball.speed += 0.5;
+			
+			if(player == user1){
+				user1.smash++;
+				connectServer( "player1", updateBall );
+			}else{
+				user2.smash++;
+				connectServer( "player2", updateBall );
+			}
 		}
 	}
 	
@@ -418,6 +430,7 @@ function game(){
 			user2.win += 1;
 		}
 		checkRound();
+		connectServer( "player1ResetBall", null );
 		resetBall();
 		
 	}else if(ball.y + ball.radius > canvas.height){
@@ -430,6 +443,7 @@ function game(){
 			user1.win++;
 		}
 		checkRound();
+		connectServer( "player2ResetBall", null );
 		resetBall();
 	}
     

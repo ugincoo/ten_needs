@@ -10,11 +10,12 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.json.JSONArray;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dto.BallDto;
 import model.dto.GameUserBallTestDto;
-import model.dto.GameUserDto;
 
 @ServerEndpoint("/ball/{gno}/{mno}")
 public class BallConnection {
@@ -33,7 +34,7 @@ public class BallConnection {
 		if( count >= 2 ) { session.close(); return; }
 		
 		connectList.add( new GameUserBallTestDto(session, mno, gno) );
-		msgServer( session, "ballStart" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
+		msgServer( session, "startBall" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
 	
 	}
 	
@@ -50,15 +51,16 @@ public class BallConnection {
 	@OnMessage
 	public void msgServer( Session session , String msg ) throws Exception {
 		System.out.println( session );
-		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		
-		if( msg.contains("ballStart")){
+		BallDto balldto;
+		
+		if( msg.contains("startBall")){
 			System.out.println( "유저 정상 입장 / 볼 생성" );
 			
 			// 입장 확인 후 공 생성
-			BallDto balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow", 0);
+			balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow", 0);
 			json = mapper.writeValueAsString(balldto);
 			
 			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
@@ -72,7 +74,31 @@ public class BallConnection {
 					dto.getSession().getBasicRemote().sendText(json);
 				}
 			}
+		} else if( msg.contains("player1") ){
+			
+			
+			
+			
+			/*
+			// JSON 문자열			
+			String ballJson = msg;
+			// ObjectMapper를 사용하여 JSON 문자열을 DTO 객체로 변환
+			ObjectMapper objectMapper = new ObjectMapper();
+			balldto = objectMapper.readValue(ballJson, BallDto.class);
+
+			// DTO 객체에 값을 설정한 후 사용
+			System.out.println(balldto.getX());  // 10
+			System.out.println(balldto.getY());
+			*/
+			
+		} else if( msg.contains("player2") ){
+				System.out.println( msg );
+		} else if( msg.contains("player1ResetBall")) {
+			System.out.println("play1리셋볼");
+		} else if( msg.contains("player2ResetBall")) {
+			System.out.println( "play2리셋볼" );
 		}
 		
 	}
+	
 }
