@@ -58,7 +58,8 @@ public class BallDto {
 		@Override
 		public String toString() {
 			return "BallDto [x=" + x + ", y=" + y + ", radius=" + radius + ", speed=" + speed + ", velocityX="
-					+ velocityX + ", velocityY=" + velocityY + ", color=" + color + "]";
+					+ velocityX + ", velocityY=" + velocityY + ", color=" + color + ", ballState=" + ballState
+					+ ", msg=" + msg + "]";
 		}
 
 		public int getX() {

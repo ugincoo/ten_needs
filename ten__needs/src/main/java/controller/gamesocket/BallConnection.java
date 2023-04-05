@@ -12,10 +12,13 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONArray;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dto.BallDto;
 import model.dto.GameUserBallTestDto;
+import model.dto.MsgBoxDto;
 
 @ServerEndpoint("/ball/{gno}/{mno}")
 public class BallConnection {
@@ -51,6 +54,7 @@ public class BallConnection {
 	@OnMessage
 	public void msgServer( Session session , String msg ) throws Exception {
 		System.out.println( session );
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		
@@ -74,31 +78,109 @@ public class BallConnection {
 					dto.getSession().getBasicRemote().sendText(json);
 				}
 			}
-		} else if( msg.contains("player1") ){
+		}else if( msg.contains("player1TouchBall") ){
+				// System.out.println(msg); //--- 확인 완료
+			JsonNode msgNode = mapper.readTree(msg);
+			// 목적: msg 문자열을 JsonNode 객체 msgNode로 파싱 작업
 			
+			BallDto updateBall = new BallDto();
+			// 목적: update용 BallDto 객체 updateBall 생성
 			
+			// updateBall 필드 msgNode에서 가져온 값으로 초기화 작업
+			updateBall.setX((int)msgNode.get("data").get("x").asDouble());
+			updateBall.setY((int)msgNode.get("data").get("y").asDouble());
+			updateBall.setRadius((int)msgNode.get("data").get("radius").asDouble());
+			updateBall.setSpeed((int)msgNode.get("data").get("speed").asDouble());
+			updateBall.setVelocityX((int)msgNode.get("data").get("velocityX").asDouble());
+			updateBall.setVelocityY((int)msgNode.get("data").get("velocityY").asDouble());
+			updateBall.setColor("yellow");
+			updateBall.setBallState(1);
 			
+			// balldto 업데이트 작업
+			balldto = new BallDto( updateBall.getX(), updateBall.getY(), updateBall.getRadius(),
+									updateBall.getSpeed(), updateBall.getVelocityX(), updateBall.getVelocityY(),
+									updateBall.getColor(), updateBall.getBallState());
 			
-			/*
-			// JSON 문자열			
-			String ballJson = msg;
-			// ObjectMapper를 사용하여 JSON 문자열을 DTO 객체로 변환
-			ObjectMapper objectMapper = new ObjectMapper();
-			balldto = objectMapper.readValue(ballJson, BallDto.class);
+				// System.out.println( updateBall.toString() ); //--- 확인 완료
+			json = mapper.writeValueAsString(balldto);
+			
+			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
+			for( GameUserBallTestDto dto: connectList ) {
+				if( dto.getSession() == session ) {
+					senderGno = dto.getGno(); break;
+				}
+			}
+			for( GameUserBallTestDto dto : connectList ) {
+				if( dto.getGno() == senderGno ) {
+					dto.getSession().getBasicRemote().sendText(json);
+				}
+			}
+	    } else if (msg.contains("player2TouchBall")) {
+	    	System.out.println(msg);
+			JsonNode msgNode = mapper.readTree(msg);
 
-			// DTO 객체에 값을 설정한 후 사용
-			System.out.println(balldto.getX());  // 10
-			System.out.println(balldto.getY());
-			*/
+			BallDto updateBall = new BallDto();
+			updateBall.setX((int)msgNode.get("data").get("x").asDouble());
+			updateBall.setY((int)msgNode.get("data").get("y").asDouble());
+			updateBall.setRadius((int)msgNode.get("data").get("radius").asDouble());
+			updateBall.setSpeed((int)msgNode.get("data").get("speed").asDouble());
+			updateBall.setVelocityX((int)msgNode.get("data").get("velocityX").asDouble());
+			updateBall.setVelocityY((int)msgNode.get("data").get("velocityY").asDouble());
+			updateBall.setColor("yellow");
+			updateBall.setBallState(2);
 			
-		} else if( msg.contains("player2") ){
-				System.out.println( msg );
-		} else if( msg.contains("player1ResetBall")) {
-			System.out.println("play1리셋볼");
-		} else if( msg.contains("player2ResetBall")) {
-			System.out.println( "play2리셋볼" );
-		}
-		
+			balldto = new BallDto( updateBall.getX(), updateBall.getY(), updateBall.getRadius(),
+									updateBall.getSpeed(), updateBall.getVelocityX(), updateBall.getVelocityY(),
+									updateBall.getColor(), updateBall.getBallState());
+			
+			json = mapper.writeValueAsString(balldto);
+			
+			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
+			for( GameUserBallTestDto dto: connectList ) {
+				if( dto.getSession() == session ) {
+					senderGno = dto.getGno(); break;
+				}
+			}
+			for( GameUserBallTestDto dto : connectList ) {
+				if( dto.getGno() == senderGno ) {
+					dto.getSession().getBasicRemote().sendText(json);
+				}
+			}
+	    } else if (msg.contains("player1ResetBall")) {
+	        System.out.println("player1ResetBall");
+
+	     	balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow", 3); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
+	     	json = mapper.writeValueAsString(balldto);
+	     			
+	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
+	     	for( GameUserBallTestDto dto: connectList ) {
+	     		if( dto.getSession() == session ) {
+	     			senderGno = dto.getGno(); break;
+	     			}
+	     	}
+	     	for( GameUserBallTestDto dto : connectList ) {
+	     		if( dto.getGno() == senderGno ) {
+	     			dto.getSession().getBasicRemote().sendText(json);
+	     		}
+	     	}	        
+	    } else if (msg.contains("player2ResetBall")) {
+	        System.out.println("player2ResetBall");
+	        
+	     	balldto = new BallDto(300, 400, 10, 5, 5, -5, "yellow", 4); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
+	     	json = mapper.writeValueAsString(balldto);
+	     			
+	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
+	     	for( GameUserBallTestDto dto: connectList ) {
+	     		if( dto.getSession() == session ) {
+	     			senderGno = dto.getGno(); break;
+	     			}
+	     	}
+	     	for( GameUserBallTestDto dto : connectList ) {
+	     		if( dto.getGno() == senderGno ) {
+	     			dto.getSession().getBasicRemote().sendText(json);
+	     		}
+	     	}	 
+	    }
 	}
 	
 }
