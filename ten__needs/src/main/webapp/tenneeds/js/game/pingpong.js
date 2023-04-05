@@ -123,13 +123,18 @@ function onMessage(e){
 				win : userData.gameResult,
 				smash : userData.smash,
 				swing : userData.swing,
-				rno : userData.rno
+				rno : userData.rno,
+				draw(){
+					let no = imageno;
+					ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);	
+				}
 			}
 			// 라켓정보 설정 및 출력
 			$.ajax({
 				url : "/ten__needs/game/result",
 				method : "get",
-				data : {"type" : 1, "rno" : user1.rno},
+				data : {"type" : 1, "rno" : userData.rno},
+				async : false,
 				success : (r) => {
 					console.log(r); 
 					
@@ -138,16 +143,17 @@ function onMessage(e){
 					if(r != null){
 						document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
-						document.querySelector('.player1racketnm').innerHTML = r.rName 
+						document.querySelector('.player1racketnm').innerHTML = r.rName
 					
-						
+						document.querySelector('.player1Name').innerHTML = memberInfo.mid
 					}
 				}
 			})
 	
 			console.log("user1" + user1)
 	}else{
-		user1 = {
+			
+		user2 = {
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
@@ -157,29 +163,35 @@ function onMessage(e){
 				win : userData.gameResult,
 				smash : userData.smash,
 				swing : userData.swing,
-				rno : userData.rno
+				rno : userData.rno,
+				draw(){
+					let no = imageno;
+					ctx.drawImage(user2Image[no], this.x , this.y, this.width, this.height);
+				}			
 			}
 			// 라켓정보 설정 및 출력
 			$.ajax({
 				url : "/ten__needs/game/result",
 				method : "get",
 				data : {"type" : 1, "rno" : userData.rno},
+				async : false,
 				success : (r) => {
 					console.log(r); 
 					
 					console.log(r + " : " + r.rImg)
 					
 					if(r != null){
-						document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
-						document.querySelector('.player1racketnm').innerHTML = r.rName 
+						document.querySelector('.player2racketnm').innerHTML = r.rName 
 					
+						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
 						
 					}
 				}
 			})
 	
-			console.log("user1" + user1)
+			console.log("user2" + user2)
 	}
 	
 }
@@ -478,9 +490,12 @@ function game(){
 		checkRound();
 		resetBall();
 	}
+	
+    if(user1.mno != 0 && user2.mno != 0){
+		//user1.draw();	// 유저 1 그리기
+   		 //user2.draw();	// 유저 2 그리기
+	}
     
-    user1.draw();	// 유저 1 그리기
-    user2.draw();	// 유저 2 그리기
 }
 
 game();

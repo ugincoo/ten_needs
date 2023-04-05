@@ -39,7 +39,7 @@
 				<div style = "margin-left: 20px">
 					<span class = "prm player1racketnm"></span>
 					<br/>
-					<span class = "username player1Name"><%=user1Mid%></span>
+					<span class = "username player1Name"></span>
 				</div>
 			</div>
 		</div>
@@ -50,11 +50,11 @@
 		
 		<div class = "ppro plyaer2sprofile">
 			<div class = "pinfo player2Div">
-				<img class = "profile player2racket"  src = "/ten__needs/tenneeds/jsp/game/img/rimg/tennisstick.png">
+				<img class = "profile player2racket">
 				<div style = "margin-left: 20px">
 					<span class = "prm player2racketnm"></span>
 					<br/>
-					<span class = "username player2Name"><%=user2Mid%></span>
+					<span class = "username player2Name"></span>
 				</div>
 			</div>
 		</div>

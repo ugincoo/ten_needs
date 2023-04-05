@@ -11,6 +11,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.result.IntegerValueFactory;
 
 import model.dao.GameDao;
 import model.dao.MemberDao;
@@ -20,89 +21,77 @@ import model.dto.RacketDto;
 
 @ServerEndpoint("/game/{gNo}/{mno}")
 public class Connection {
-	
-	//해당 게임 화면에 들어온 플레이어 저장하는 리스트	
+
+	// 해당 게임 화면에 들어온 플레이어 저장하는 리스트
 	public static ArrayList<GameUserDto> connectPlayerList = new ArrayList<>();
-	
-	
+
+	// 라켓 정보(모든 라켓 정보 가져오기
+	public static ArrayList<RacketDto> raketList = GameDao.getInstans().getRacketList();
+
 	@OnOpen
-	public void enterServer( Session session , @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
-		System.out.println("게임방 들어옴 : " + gno +  " : " + mno );
+	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
+		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
+
 		GameUserDto dto = new GameUserDto(session, gno, mno);
 		int count = 0;
-		for(GameUserDto userdto : connectPlayerList) {
-			if(userdto.getGno() == dto.getGno()) {
+		for (GameUserDto userdto : connectPlayerList) {
+			if (userdto.getGno() == dto.getGno()) {
 				count++;
 			}
 		}
-		if(count < 2) {
+		if (count <= 2) {
 			connectPlayerList.add(dto);
-			if(count == 1) {
-				msgServer(session, "userin");
+			if (count == 1) {
+				msgServer(null, gno + "");
 			}
-		}else {
-			msgServer(session, "dontin");
+		} else {
+			// session.close();
 		}
-	
+
 	}
-	
+
 	@OnClose
-	public void outServer( Session session ) throws Exception {
-		System.out.println( session );
+	public void outServer(Session session) throws Exception {
+		System.out.println(session);
 	}
-	
+
 	@OnError
-	public void errorServer( Session session , Throwable e ) throws Exception {
-		System.out.println( session );
+	public void errorServer(Session session, Throwable e) throws Exception {
+		System.out.println(session);
 	}
-	
+
 	@OnMessage
-	public void msgServer( Session session , String msg ) throws Exception {
+	public void msgServer(Session session, String msg) throws Exception {
 		
-		ObjectMapper mapper = new ObjectMapper();
-		String json = null;
+		 ObjectMapper mapper = new ObjectMapper(); String json = null;
+		  
+		 System.out.println(raketList.size());
+		 
+		 int pickRno = (int)(Math.random()*raketList.size())+1;
+		 
+		 System.out.println(pickRno);
+		 
+		 System.out.println(GameDao.getInstans().getRacket(pickRno));
+		 
+		 System.out.println(connectPlayerList);
+		 
+		 GameUserDto userDto = new GameUserDto(250, 0, 0, 80, 80, false, 0, 0,
+		 pickRno);
+		 
+		 int gno = Integer.parseInt(msg);
+		 for(GameUserDto dto : connectPlayerList) { 
+			 if(dto.getGno() == gno) {
+				 	userDto.setRno(pickRno); 
+				 	userDto.setGno(dto.getGno()); 
+				 	userDto.setMno(dto.getMno());
+					 System.out.println(userDto); 
+					 json = mapper.writeValueAsString(userDto); 
+					 dto.getSession().getBasicRemote().sendText(json);
+			 } 
+		 }
+		 
 		
-		//라켓 정보(모든 라켓 정보 가져오기
-		ArrayList<RacketDto> raketList = GameDao.getInstans().getRacketList();
-		
-		System.out.println(raketList.size());
-		
-		int pickRno = (int)(Math.random()*raketList.size())+1;
-		
-		System.out.println(pickRno);
-		
-		System.out.println(GameDao.getInstans().getRacket(pickRno));
-		
-		if(msg.contains("userin")) { //접속했을 때 해당 플레이어의 정보를 자바스크립트에 넘겨준다.
-			System.out.println("player정보를 보내려고 합니다.");
-			
-			
-			GameUserDto dto = new GameUserDto(250, 0, 0, 80, 80, false, 0, 0, pickRno);
-			System.out.println(dto);
-			
-			int checkGno = 0;
-			
-			for(GameUserDto userDto : connectPlayerList) { //해당 gno를 찾기 위해!
-				if(userDto.getSession() == session) {
-					checkGno = userDto.getGno();
-					dto.setGno(checkGno);
-					dto.setSession(session);
-					dto.setMno(userDto.getMno());
-					System.out.println(dto);
-					break;
-				}
-			}
-			
-			json = mapper.writeValueAsString(dto);
-			System.out.println(connectPlayerList);
-			for(GameUserDto userDto : connectPlayerList) {
-				if(userDto.getGno() == checkGno) {
-					userDto.getSession().getBasicRemote().sendText(json);
-				}
-			}
-		
-			
-		}
+
 	}
-	
+
 }

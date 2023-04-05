@@ -3,6 +3,7 @@ package model.dto;
 import javax.websocket.Session;
 
 public class GameUserDto {
+	
 	private Session session; //소켓
 	private int gno;
 	private int mno; //회원번호
