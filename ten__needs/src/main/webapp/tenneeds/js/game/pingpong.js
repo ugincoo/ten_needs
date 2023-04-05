@@ -103,7 +103,53 @@ function onOpne(e){
 function sendMessage(type, info){
 	
 }
+// 게임 사용자 정의	
+// user1 이미지
+let user1Image = new Array(3);
+user1Image[0] = new Image();
+user1Image[0].src = "wUser1.png"
+user1Image[1] = new Image();
+user1Image[1].src = "wUser2.png"
+user1Image[2] = new Image();
+user1Image[2].src = "wUser3.png"
+let imageno = 0;
+let user1 = {
+	mno : 0,
+	x : 0,
+	y : 0,
+	width : 80,
+	height : 80,
+	score : 0,
+	win : 0,
+	smash : 0,
+	swing : 0,
+	rno : 0,
+	draw(){
+		let no = imageno;
+		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
+	}
+}
 
+// user2 이미지
+let user2Image = new Array(3);
+user2Image[0] = new Image();
+user2Image[0].src = "mUser1.png"
+let user2 = {
+	mno : 0,
+	x : 0,
+	y : 0,
+	width : 80,
+	height : 80,
+	score : 0 ,
+	win : 0,
+	smash : 0,
+	swing : 0,
+	rno : 0,
+	draw(){
+		let no = imageno;
+		ctx.drawImage(user2Image[no], this.x , this.y, this.width, this.height);
+	}
+}
 //서버로부터 상대방의 움직임 정보를 받기
 function onMessage(e){
 	console.log(e)
@@ -117,12 +163,12 @@ function onMessage(e){
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
-				width : userData.width,
-				height : userData.height,
-				score : userData.score,
-				win : userData.gameResult,
-				smash : userData.smash,
-				swing : userData.swing,
+				width : 80,
+				height : 80,
+				score : 0,
+				win : false,
+				smash : 0,
+				swing : 0,
 				rno : userData.rno,
 				draw(){
 					let no = imageno;
@@ -157,12 +203,12 @@ function onMessage(e){
 				mno : userData.mno,
 				x : userData.x,
 				y : userData.y,
-				width : userData.width,
-				height : userData.height,
+				width : 80,
+				height : 80,
 				score : userData.score,
-				win : userData.gameResult,
-				smash : userData.smash,
-				swing : userData.swing,
+				win : false,
+				smash : 0,
+				swing : 0,
 				rno : userData.rno,
 				draw(){
 					let no = imageno;
@@ -183,7 +229,7 @@ function onMessage(e){
 					if(r != null){
 						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
-						document.querySelector('.player2racketnm').innerHTML = r.rName 
+						document.querySelector('.player2racketnm').innerHTML = r.rName
 					
 						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
 						
@@ -210,51 +256,7 @@ let spacePressed = false; //스페이스여부
 let player = null;
 
 
-// 게임 사용자 정의	
-// user1 이미지
-let user1Image = new Array(3);
-user1Image[0] = new Image();
-user1Image[0].src = "wUser1.png"
-user1Image[1] = new Image();
-user1Image[1].src = "wUser2.png"
-user1Image[2] = new Image();
-user1Image[2].src = "wUser3.png"
-let imageno = 0;
-let user1 = {
-	mno : user1Mno,
-	x : canvas.width/2 - 100/2,
-	y : 0,
-	width : 80,
-	height : 80,
-	score : 0,
-	win : 0,
-	smash : 0,
-	swing : 0,
-	rno : 0,
-	draw(){
-		let no = imageno;
-		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
-	}
-}
 
-// user2 이미지
-let user2Image = new Image();
-user2Image.src = "mUser1.png"
-let user2 = {
-	mno : user2Mno,
-	x : canvas.width/2 - 100/2,
-	y : canvas.height - 80,
-	width : 80,
-	height : 80,
-	score : 0 ,
-	win : 0,
-	smash : 0,
-	swing : 0,
-	rno : 0,
-	draw(){
-		ctx.drawImage(user2Image, this.x , this.y, this.width, this.height);
-	}
-}
 // 경기장 
 // 경기장 이미지
 const stadiumImage = new Image();
@@ -492,8 +494,8 @@ function game(){
 	}
 	
     if(user1.mno != 0 && user2.mno != 0){
-		//user1.draw();	// 유저 1 그리기
-   		 //user2.draw();	// 유저 2 그리기
+		user1.draw();	// 유저 1 그리기
+   		user2.draw();	// 유저 2 그리기
 	}
     
 }

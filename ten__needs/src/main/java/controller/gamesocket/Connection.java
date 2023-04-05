@@ -32,7 +32,7 @@ public class Connection {
 	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
 		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
 
-		GameUserDto dto = new GameUserDto(session, gno, mno, 1);
+		GameUserDto dto = new GameUserDto(session, 1, gno, mno);
 		
 		int count = 0;
 		for (GameUserDto userdto : connectPlayerList) {
@@ -43,7 +43,7 @@ public class Connection {
 		if (count <= 2) {
 			connectPlayerList.add(dto);
 			if (count == 1) {
-				msgServer(null, dto);
+				msgServer(null, ""+gno+"");
 			}
 		} else {
 			// session.close();
@@ -62,31 +62,36 @@ public class Connection {
 	}
 
 	@OnMessage
-	public void msgServer(Session session, GameUserDto msgDto) throws Exception {
+	public void msgServer(Session session, String gno) throws Exception {
 		
 		 ObjectMapper mapper = new ObjectMapper(); String json = null;
-		  
-		 if(msgDto.getType() == 1) { //접속
-			 System.out.println(raketList.size());
+		 int checkGno = Integer.parseInt(gno); 
+		 
+		 for(GameUserDto Typedto : connectPlayerList) {
 			 
-			 System.out.println(connectPlayerList);
-			 
-			 GameUserDto userDto = new GameUserDto(250, 0);
-			 
-			 
-			 for(GameUserDto dto : connectPlayerList) { 
-				 if(dto.getGno() == msgDto.getGno()) {
-					 	userDto.setRno((int)(Math.random()*raketList.size())+1); 
-					 	userDto.setGno(dto.getGno()); 
-					 	userDto.setMno(dto.getMno());
-						 System.out.println(userDto); 
-						 json = mapper.writeValueAsString(userDto); 
-						 dto.getSession().getBasicRemote().sendText(json);
-				 } 
+			 if(Typedto.getType() == 1 ) { //접속
+				 System.out.println(raketList.size());
+				 
+				 System.out.println(connectPlayerList);
+				 
+				 GameUserDto userDto = new GameUserDto(250, 0);
+				 userDto.setMno(Typedto.getMno());
+				 
+				 for(GameUserDto dto : connectPlayerList) { 
+					 if(dto.getGno() == checkGno ) {
+						 	userDto.setRno((int)(Math.random()*raketList.size())+1); 
+						 	userDto.setGno(dto.getGno()); 
+							System.out.println(userDto); 
+							json = mapper.writeValueAsString(userDto); 
+							dto.getSession().getBasicRemote().sendText(json);
+					} 
+					
+				 }
+			 }else if(Typedto.getType() == 2 ) { //움직임
+				 
 			 }
-		 }else if(msgDto.getType() == 2) { //움직임
-			 
-		 }
+		
+		}
 	}
 
 }
