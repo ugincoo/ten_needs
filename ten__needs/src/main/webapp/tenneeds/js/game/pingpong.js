@@ -236,7 +236,7 @@ function onMessage(e){
 						
 		}else{
 			user2.x += userData.x;
-			user2.y += userData.y;
+			user2.y -= userData.y;
 			user2.draw();
 		}
 	}
