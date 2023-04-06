@@ -5,15 +5,20 @@ let gametitle_box = document.querySelector('.gametitle_box');
 let geme_chat = document.querySelector('.geme_chat');
 let gNo = document.querySelector('.gNo').value;
 // sockat server 연결
-let chattingSockat = new WebSocket('ws://localhost:8089/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);
+let chattingSockat = null;
 
-// open, message, close 작동 on
-chattingSockat.onopen = function(e){ inputChat(e); }
-chattingSockat.onmessage = function(e){ onMessage(e); }
-chattingSockat.onclose = function(e){ onClose(e); }
+if( memberInfo.mid == null ){
+	alert('로그인필요');
+}else{
+	chattingSockat = new WebSocket('ws://localhost:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);	
+	// open, message, close 작동 on
+	chattingSockat.onopen = function(e){ inputChat(e); }
+	chattingSockat.onmessage = function(e){ onMessage(e); }
+	chattingSockat.onclose = function(e){ onClose(e);}
+}
 // --------------------------------------------------------- 접속 확인
 function inputChat(e){
-		// console.log(e); // --- 작동 확인
+		console.log(e); // --- 작동 확인
 	
 	connectServer( "alarm", memberInfo.mid );
 	
@@ -44,7 +49,7 @@ let info = null;
 
 function onMessage( e ){
 	console.log(e); // --- 확인 완료
-	// console.log(e.data); // --- 확인 완료
+	//console.log(e.data); // --- 확인 완료
 	// console.log( JSON.parse(e.data) ); // --- 확인 완료
 	 
 	let data = JSON.parse(e.data);
@@ -105,7 +110,13 @@ function onMessage( e ){
 										<span> ${data.mId}님이 입장하셨습니다. </span>
 									</div>
 									`
-			} else if( JSON.parse(data.msg).type == "game" ){
+			} else if( JSON.parse(data.msg).type == 'out' ){ // ------------- 사용자 나감 알람 출력
+				geme_chat.innerHTML += `
+									<div class="alarm">
+										<span> ${data.mId}님이 퇴장하셨습니다. </span>
+									</div>
+									`
+			}  else if( JSON.parse(data.msg).type == "game" ){
 				
 				if( JSON.parse(data.msg).data ){
 					countStart++;
@@ -185,5 +196,3 @@ function getGame( ){
 				}
 		})
 }
-
-
