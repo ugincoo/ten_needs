@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import model.dto.RacketDto;
 
@@ -50,8 +51,8 @@ public class GameDao extends Dao {
 	}
 	
 	//라켓의 정보를 가지고 온다[모든 라켓을 가지고온다.]
-	public ArrayList<RacketDto> getRacketList(){
-		ArrayList<RacketDto> racketList = new ArrayList<>();
+	public Vector<RacketDto> getRacketList(){
+		Vector<RacketDto> racketList = new Vector<>();
 		
 		String sql = "select * from racket";
 		

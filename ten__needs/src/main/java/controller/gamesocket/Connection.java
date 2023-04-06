@@ -2,6 +2,7 @@ package controller.gamesocket;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.jws.soap.SOAPBinding;
 import javax.websocket.OnClose;
@@ -22,18 +23,21 @@ import model.dto.RacketDto;
 public class Connection {
 
 	// 해당 게임 화면에 들어온 플레이어 저장하는 리스트
-	public static ArrayList<GameUserDto> connectPlayerList = new ArrayList<>();
+	public static Vector<GameUserDto> connectPlayerList = new Vector<>();
 
 	// 라켓 정보(모든 라켓 정보 가져오기
-	public static ArrayList<RacketDto> raketList = GameDao.getInstans().getRacketList();
+	public static Vector<RacketDto> raketList = GameDao.getInstans().getRacketList();
 
 	@OnOpen
 	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
 		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
 
-		int rno = (int)(Math.random()*raketList.size())+1;
+		 int rno = (int)(Math.random()*raketList.size())+1;
+		 
+		GameUserDto dto = new GameUserDto(session, 1, gno, mno);
+		dto.setRno(rno);
 		
-		GameUserDto dto = new GameUserDto(session, 1, gno, mno, rno);
+		connectPlayerList.add(dto);
 		
 		int count = 0;
 		for (GameUserDto userdto : connectPlayerList) {
@@ -44,11 +48,8 @@ public class Connection {
 		System.out.println(dto);
 		System.out.println(count);
 		
-		if (count <= 2) {
-			connectPlayerList.add(dto);
-			if (count == 1) {
-				msgServer(null, ""+gno+"");
-			}
+		if (count == 2) {
+			msgServer(null, ""+gno+"");
 		} else {
 			// session.close();
 		}
@@ -57,7 +58,12 @@ public class Connection {
 
 	@OnClose
 	public void outServer(Session session) throws Exception {
-		System.out.println(session);
+		for(GameUserDto dto : connectPlayerList) {
+			if(dto.getSession() == session) {
+				connectPlayerList.remove(dto);
+			}
+			
+		}
 	}
 
 	@OnError
@@ -70,12 +76,12 @@ public class Connection {
 		
 		 ObjectMapper mapper = new ObjectMapper(); 
 		 String json = null;
-		 StringTokenizer st = new StringTokenizer(msg, " ");
+
+		 System.out.println(msg);
 		 
-		 int count = st.countTokens();
-		 
-		 if(count == 1) {
-			 int checkGno = Integer.parseInt(st.nextToken());
+		 if(!msg.contains("{")) {
+			 
+			 int checkGno = Integer.parseInt(msg);
 			 
 			 for(GameUserDto Typedto : connectPlayerList) {
 				 
@@ -86,25 +92,31 @@ public class Connection {
 					 GameUserDto userDto = new GameUserDto(250, 0);
 					 
 					 userDto.setMno(Typedto.getMno());
+					 userDto.setRno(Typedto.getRno());
 					 
-					 for(GameUserDto dto : connectPlayerList) { 
+					 for(GameUserDto dto : connectPlayerList) {
 						 if(dto.getGno() == checkGno ) {
-							 	userDto.setGno(dto.getGno()); 
-								System.out.println("for문 : " + userDto); 
-								json = mapper.writeValueAsString(userDto); 
-								dto.getSession().getBasicRemote().sendText(json);
+							userDto.setType(dto.getType());
+						 	userDto.setGno(dto.getGno()); 
+							System.out.println("for문 : " + userDto); 
+							json = mapper.writeValueAsString(userDto); 
+							dto.getSession().getBasicRemote().sendText(json);
 						} 
 						
 					 }
 				 }
 			 }
-		}else if(count >= 2) { //움직임 공치기
-			int type = Integer.parseInt(st.nextToken());
-			
-			if(type == 2) { //움직임
-				System.out.println("움직였다.");
-			}else if(type == 3) { //공치기 
-				System.out.println("공쳤다.");
+		}else { //움직였을때 보내는 데이터
+			GameUserDto dto = mapper.readValue(msg, GameUserDto.class);
+			System.out.println(dto);
+			for(GameUserDto userdto : connectPlayerList) {
+				if(dto.getGno() == userdto.getGno()) {
+					dto.setRno(userdto.getRno());
+				
+					System.out.println("보내야하는 데이터 : " + dto);
+					json = mapper.writeValueAsString(dto);
+					userdto.getSession().getBasicRemote().sendText(json);
+				}
 			}
 		}
 	}
