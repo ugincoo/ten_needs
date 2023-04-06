@@ -28,13 +28,15 @@ public class GameResult extends HttpServlet {
 	//게임에 필요한 정보를 가져오는
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int type = Integer.parseInt(request.getParameter("type"));
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		
 		System.out.println(type);
 		if(type == 1) { //라켓의 정보를 가져오는
-			ArrayList<RacketDto> racketList = GameDao.getInstans().getRacketList();
+			RacketDto dto = GameDao.getInstans().getRacket(rno);
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
-			String jsonArray = mapper.writeValueAsString(racketList);
+			String jsonArray = mapper.writeValueAsString(dto);
 			
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("application/json");

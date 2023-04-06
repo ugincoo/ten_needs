@@ -1,6 +1,8 @@
 package controller.gamesocket;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -12,61 +14,110 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.dao.MemberDao;
+import model.dao.GameDao;
 import model.dto.GameUserDto;
-import model.dto.MemberDto;
+import model.dto.RacketDto;
 
 @ServerEndpoint("/game/{gNo}/{mno}")
 public class Connection {
-	
-	//해당 게임 화면에 들어온 플레이어 저장하는 리스트	
-	public static ArrayList<GameUserDto> connectPlayerList = new ArrayList<>();
-	
-	@OnOpen
-	public void enterServer( Session session , @PathParam("gno") int gno , @PathParam("user1") int user1 , @PathParam("user2") int user2 ) throws Exception {
-		System.out.println( session );
-		System.out.println(gno +" , "+ user1 +" , "+  user2 );
-		
-		MemberDto player1 = MemberDao.getInstance().getMember(user1);
-		MemberDto player2 = MemberDao.getInstance().getMember(user2);
-		
-		connectPlayerList.add(new GameUserDto(session, player1.getMno(), 0, 0, 0, false, 0, 0, 0));
 
+	// 해당 게임 화면에 들어온 플레이어 저장하는 리스트
+	public static Vector<GameUserDto> connectPlayerList = new Vector<>();
+
+	// 라켓 정보(모든 라켓 정보 가져오기
+	public static Vector<RacketDto> raketList = GameDao.getInstans().getRacketList();
+
+	@OnOpen
+	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
+		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
+
+		 int rno = (int)(Math.random()*raketList.size())+1;
+		 
+		GameUserDto dto = new GameUserDto(session, 1, gno, mno);
+		dto.setRno(rno);
 		
-		System.out.println(connectPlayerList);
+		connectPlayerList.add(dto);
 		
-		msgServer(session, "userlist"); //접속했을때 해당 플레이어(2명 모두)의 정보를 보내주기 위해
+		int count = 0;
+		for (GameUserDto userdto : connectPlayerList) {
+			if (userdto.getGno() == dto.getGno()) {
+				count++;
+			}
+		}
+		System.out.println(dto);
+		System.out.println(count);
 		
+		if (count == 2) {
+			msgServer(null, ""+gno+"");
+		} else {
+			// session.close();
+		}
+
 	}
-	
+
 	@OnClose
-	public void outServer( Session session ) throws Exception {
-		System.out.println( session );
-	}
-	
-	@OnError
-	public void errorServer( Session session , Throwable e ) throws Exception {
-		System.out.println( session );
-	}
-	
-	@OnMessage
-	public void msgServer( Session session , String msg ) throws Exception {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		String json = null;
-		
-		if(msg.contains("userlist")) { //접속했을 때 해당 플레이어의 정보를 자바스크립트에 넘겨준다.
-			System.out.println("player정보를 보내려고 합니다.");
-			
-			json = mapper.writeValueAsString(connectPlayerList);
-			
-		}
-		
-		
+	public void outServer(Session session) throws Exception {
 		for(GameUserDto dto : connectPlayerList) {
-			dto.getSession().getBasicRemote().sendText(json);
-			System.out.println(dto.toString());
+			if(dto.getSession() == session) {
+				connectPlayerList.remove(dto);
+			}
+			
 		}
 	}
-	
+
+	@OnError
+	public void errorServer(Session session, Throwable e) throws Exception {
+		System.out.println(session);
+	}
+
+	@OnMessage
+	public void msgServer(Session session, String msg) throws Exception {
+		
+		 ObjectMapper mapper = new ObjectMapper(); 
+		 String json = null;
+
+		 System.out.println(msg);
+		 
+		 if(!msg.contains("{")) {
+			 
+			 int checkGno = Integer.parseInt(msg);
+			 
+			 for(GameUserDto Typedto : connectPlayerList) {
+				 
+				 if(Typedto.getType() == 1 ) { //접속
+					 
+					 System.out.println(connectPlayerList);
+					 
+					 GameUserDto userDto = new GameUserDto(250, 0);
+					 
+					 userDto.setMno(Typedto.getMno());
+					 userDto.setRno(Typedto.getRno());
+					 
+					 for(GameUserDto dto : connectPlayerList) {
+						 if(dto.getGno() == checkGno ) {
+							userDto.setType(dto.getType());
+						 	userDto.setGno(dto.getGno()); 
+							System.out.println("for문 : " + userDto); 
+							json = mapper.writeValueAsString(userDto); 
+							dto.getSession().getBasicRemote().sendText(json);
+						} 
+						
+					 }
+				 }
+			 }
+		}else { //움직였을때 보내는 데이터
+			GameUserDto dto = mapper.readValue(msg, GameUserDto.class);
+			System.out.println(dto);
+			for(GameUserDto userdto : connectPlayerList) {
+				if(dto.getGno() == userdto.getGno()) {
+					dto.setRno(userdto.getRno());
+				
+					System.out.println("보내야하는 데이터 : " + dto);
+					json = mapper.writeValueAsString(dto);
+					userdto.getSession().getBasicRemote().sendText(json);
+				}
+			}
+		}
+	}
+
 }

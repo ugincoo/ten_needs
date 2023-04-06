@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import model.dto.RacketDto;
 
@@ -11,17 +12,17 @@ public class GameDao extends Dao {
 	public static GameDao getInstans() { return dao; }
 	
 	// 라켓 정보 가져오기
-	public ArrayList<RacketDto> getRacket( int rNo ){
-		ArrayList<RacketDto> racket = new ArrayList<>();
+	public RacketDto getRacket( int rNo ){
+		
 		String sql = "select * from racket where rNo = "+rNo;
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if( rs.next() ) {
-				racket.add(new RacketDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6)));
+				return new RacketDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
 			}
 		}catch (Exception e) { System.out.println(e); }
-		return racket;
+		return null;
 	}
 	
 	//게임 승리시 게임 종료 -> 데이터 넣기(승리자)
@@ -50,8 +51,8 @@ public class GameDao extends Dao {
 	}
 	
 	//라켓의 정보를 가지고 온다[모든 라켓을 가지고온다.]
-	public ArrayList<RacketDto> getRacketList(){
-		ArrayList<RacketDto> racketList = new ArrayList<>();
+	public Vector<RacketDto> getRacketList(){
+		Vector<RacketDto> racketList = new Vector<>();
 		
 		String sql = "select * from racket";
 		
