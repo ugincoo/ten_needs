@@ -11,6 +11,9 @@ public class GameUserDto {
 	private int x; //x좌표
 	private int y; //y좌표
 	private int rno; //라켓 번호
+	// 추가 유저 선택
+	private int user; // 1.User1 2.User2
+	
 	
 	public GameUserDto() {
 		super();
@@ -18,11 +21,13 @@ public class GameUserDto {
 
 	
 	
-	public GameUserDto(Session session, int gno, int mno) {
+	public GameUserDto(Session session, int type, int gno, int mno, int rno) {
 		super();
 		this.session = session;
+		this.type = type;
 		this.gno = gno;
 		this.mno = mno;
+		this.rno = rno;
 	}
 	
 
@@ -114,6 +119,18 @@ public class GameUserDto {
 	public void setRno(int rno) {
 		this.rno = rno;
 	}
+
+
+	public int getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(int user) {
+		this.user = user;
+	}
+
 
 
 	@Override
