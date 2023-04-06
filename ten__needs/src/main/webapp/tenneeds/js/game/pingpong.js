@@ -64,8 +64,8 @@ function ballMessage( e ){
 	if( data.ballState === 0 ){ //--------------------------------------- Start Ball
 		console.log('작동확인');
 		ball = {
-			x : data.x/2,
-			y : data.y/2,
+			x : data.x,
+			y : data.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -95,8 +95,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 3 ){ //--------------------------------------- player1 Reset Ball
 		ball = {
-			x : data.x/2,
-			y : data.y/2,
+			x : data.x,
+			y : data.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -105,8 +105,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 4 ){ //--------------------------------------- player2 Reset Ball
 		ball = {
-			x : data.x/2,
-			y : data.y/2,
+			x : data.x,
+			y : data.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -410,7 +410,7 @@ function game(){
 			collidePoint = collidePoint/(player.height/2);
 			
        		// Math.PI/10 = 18도
-			let angleRad = collidePoint * Math.PI/7;
+			let angleRad = collidePoint * Math.PI/3;
 			
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
@@ -423,7 +423,8 @@ function game(){
 				speed : ball.speed,
 				velocityX: direction * ball.speed * Math.cos(angleRad),
 				velocityY: ball.speed * Math.sin(angleRad)
-			}		
+			}
+					
 			if(player == user1){
 				user1.smash++;
 				connectServer( "player1TouchBall", updateBall );

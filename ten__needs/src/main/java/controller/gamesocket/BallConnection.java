@@ -10,21 +10,19 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.json.JSONArray;
-
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dto.BallDto;
 import model.dto.GameUserBallTestDto;
-import model.dto.MsgBoxDto;
 
 @ServerEndpoint("/ball/{gno}/{mno}")
 public class BallConnection {
 	
 	// 접속자 저장
 	public static ArrayList< GameUserBallTestDto > connectList = new ArrayList<>();
+	
+	// private BallDto balldto;
 
 	@OnOpen
 	public void enterServer( Session session , @PathParam("gno") int gno , @PathParam("mno") int mno ) throws Exception {
@@ -37,6 +35,12 @@ public class BallConnection {
 		if( count >= 2 ) { session.close(); return; }
 		
 		connectList.add( new GameUserBallTestDto(session, mno, gno) );
+		
+		/*
+		 * if (balldto == null) { balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow",
+		 * 0); }
+		 */
+		
 		msgServer( session, "startBall" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
 	
 	}
@@ -64,7 +68,7 @@ public class BallConnection {
 			System.out.println( "유저 정상 입장 / 볼 생성" );
 			
 			// 입장 확인 후 공 생성
-			balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow", 0);
+			balldto = new BallDto(310, 120, 10, 5, 0, 0, "yellow", 0);
 			json = mapper.writeValueAsString(balldto);
 			
 			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
@@ -149,7 +153,7 @@ public class BallConnection {
 	    } else if (msg.contains("player1ResetBall")) {
 	        System.out.println("player1ResetBall");
 
-	     	balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow", 3); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
+	     	balldto = new BallDto(310, 120, 10, 5, 0, 0, "yellow", 3); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
 	     	json = mapper.writeValueAsString(balldto);
 	     			
 	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
@@ -166,7 +170,7 @@ public class BallConnection {
 	    } else if (msg.contains("player2ResetBall")) {
 	        System.out.println("player2ResetBall");
 	        
-	     	balldto = new BallDto(300, 400, 10, 5, 5, -5, "yellow", 4); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
+	     	balldto = new BallDto(310, 690, 10, 5, 0, 0, "yellow", 4); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
 	     	json = mapper.writeValueAsString(balldto);
 	     			
 	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
