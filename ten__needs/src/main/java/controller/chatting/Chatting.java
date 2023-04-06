@@ -36,7 +36,6 @@ public class Chatting {
 		
 		connectList.add(new ChatUserDto(session, mid, gNo, false));
 	    OnMessage(session, "user");
-	    
 	}
 	
 	// OnMessage Method
@@ -110,6 +109,22 @@ public class Chatting {
 				dto.getSession().getBasicRemote().sendText(json);
 				 }
 			}
+		} else if(  msg.contains("out") ) { // --- 메시지 전송
+			System.out.println("ssssss");
+			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
+			json = mapper.writeValueAsString(messageDto);
+			
+			int senderGno = 0; //--- 변수 추가(이유: gNO 일치 여부 확인을 위함) 
+			for (ChatUserDto dto : connectList) { //--- 코드 추가: gNO 
+		            if (dto.getSession() == session) {
+		                senderGno = dto.getgNo();	break;
+		            }
+		     }
+			for( ChatUserDto dto : connectList ) {
+				 if (dto.getgNo() == senderGno) {
+				dto.getSession().getBasicRemote().sendText(json);
+				 }
+			}
 		}
 	}
 	
@@ -122,7 +137,7 @@ public class Chatting {
 			if( dto.getSession() == session ) {
 				connectList.remove(dto);
 				
-				String msg = "{\"type\":\"alarm\",\"data\":\""+dto.getmId()+"님이 나갔습니다.\"}";
+				String msg = "{\"type\":\"out\",\"data\":\""+dto.getmId()+"님이 게임방을 나갔습니다.\"}";
 				// 형태: { "필드명" : "데이터", "필드명" : 데이터 }
 				// 해석: 큰따음표 사용을 위에 이스케이프 문자 사용
 				
@@ -132,7 +147,7 @@ public class Chatting {
 				
 				// 모든 접속명단에게 연결 끊긴 클라이언트 소캣을 알림 [접속목록]
 				OnMessage( session, "user" );
-				break;
+				session.close();  break;
 			}
 		}
 		
@@ -144,6 +159,5 @@ public class Chatting {
 			GameroomDao.getInstance().onDelete(gNo);
 			session.close();    return;
 		}
-
 	}
 }
