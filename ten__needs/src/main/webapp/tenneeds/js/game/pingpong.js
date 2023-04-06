@@ -22,14 +22,14 @@ if( memberInfo == null ){}
 
 else{
 	// ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+user1Mno+'/'+user2Mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어'); onOpne(e);}
 
