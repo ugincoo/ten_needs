@@ -205,7 +205,7 @@ function onMessage(e){
 				y : userData.y,
 				width : 80,
 				height : 80,
-				score : userData.score,
+				score : 0,
 				win : false,
 				smash : 0,
 				swing : 0,
