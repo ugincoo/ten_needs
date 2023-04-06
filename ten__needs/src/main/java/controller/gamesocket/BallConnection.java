@@ -1,6 +1,6 @@
 package controller.gamesocket;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -20,7 +20,7 @@ import model.dto.GameUserBallTestDto;
 public class BallConnection {
 	
 	// 접속자 저장
-	public static ArrayList< GameUserBallTestDto > connectList = new ArrayList<>();
+	public static Vector< GameUserBallTestDto > connectList = new Vector<>();
 	
 	// private BallDto balldto;
 

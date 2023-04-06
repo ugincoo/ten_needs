@@ -121,6 +121,7 @@ function createGame(){
 			console.log(data);
 			if( data.gNo != null ){
 				location.href = `/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${data.gNo}`;
+				
 			} else{
 				alert('글쓰기 실패. 관리자에게 문의해주세요.');
 			}
@@ -132,4 +133,5 @@ function createGame(){
 			}*/
 		}
 	})
+	getgame(1);
 }
