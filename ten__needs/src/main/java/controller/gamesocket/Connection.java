@@ -28,36 +28,46 @@ public class Connection {
 	public static ArrayList<RacketDto> raketList = GameDao.getInstans().getRacketList();
 
 	@OnOpen
-	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
-		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
+	public synchronized void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) {
+		try {
+			System.out.println("게임방 들어옴 : " + gno + " : " + mno);
 
-		int rno = (int)(Math.random()*raketList.size())+1;
-		GameUserDto dto = new GameUserDto(session, 1, gno, mno, rno);
-		
-		
-		int count = 0;
-		for (GameUserDto userdto : connectPlayerList) {
-			if (userdto.getGno() == dto.getGno()) {
-				count++;
+			int rno = (int)(Math.random()*raketList.size())+1;
+			GameUserDto dto = new GameUserDto(session, 1, gno, mno, rno);
+			
+			
+			int count = 0;
+			for (GameUserDto userdto : connectPlayerList) {
+				if (userdto.getGno() == dto.getGno()) {
+					count++;
+				}
 			}
-		}
-		System.out.println(dto);
-		System.out.println(count);
-		
-		if (count <= 2) {
-			connectPlayerList.add(dto);
-			if (count == 1) {
-				msgServer(null, ""+gno+"");
+			System.out.println(dto);
+			System.out.println(count);
+			
+			if (count <= 2) {
+				connectPlayerList.add(dto);
+				System.out.println(connectPlayerList);
+				
+				if (count == 1) {
+					msgServer(null, ""+gno+"");
+					System.out.println(connectPlayerList);
+				}
 			}
-		} else {
-			// session.close();
-		}
+		}catch (Exception e) { System.out.println(e);}
+		
 
 	}
 
 	@OnClose
 	public void outServer(Session session) throws Exception {
-		System.out.println(session);
+		for( GameUserDto dto : connectPlayerList ) {
+			if( dto.getSession() == session ) {
+				connectPlayerList.remove( dto );
+				System.out.println(connectPlayerList);
+				break;
+			}
+		}
 	}
 
 	@OnError
@@ -66,47 +76,50 @@ public class Connection {
 	}
 
 	@OnMessage
-	public void msgServer(Session session, String msg) throws Exception {
+	public void msgServer(Session session, String msg) {
 		
-		 ObjectMapper mapper = new ObjectMapper(); 
-		 String json = null;
-		 StringTokenizer st = new StringTokenizer(msg, " ");
-		 
-		 int count = st.countTokens();
-		 
-		 if(count == 1) {
-			 int checkGno = Integer.parseInt(st.nextToken());
+		try {
+			ObjectMapper mapper = new ObjectMapper(); 
+			 String json = null;
+			 StringTokenizer st = new StringTokenizer(msg, " ");
 			 
-			 for(GameUserDto Typedto : connectPlayerList) {
+			 int count = st.countTokens();
+			 System.out.println(count);
+			 if(count == 1) {
+				 int checkGno = Integer.parseInt(st.nextToken());
 				 
-				 if(Typedto.getType() == 1 ) { //접속
+				 for(GameUserDto Typedto : connectPlayerList) {
 					 
-					 System.out.println(connectPlayerList);
-					 
-					 GameUserDto userDto = new GameUserDto(250, 0);
-					 
-					 userDto.setMno(Typedto.getMno());
-					 
-					 for(GameUserDto dto : connectPlayerList) { 
-						 if(dto.getGno() == checkGno ) {
-							 	userDto.setGno(dto.getGno()); 
-								System.out.println("for문 : " + userDto); 
-								json = mapper.writeValueAsString(userDto); 
-								dto.getSession().getBasicRemote().sendText(json);
-						} 
-						
+					 if(Typedto.getType() == 1 ) { //접속
+						 
+						 System.out.println(connectPlayerList);
+						 
+						 GameUserDto userDto = new GameUserDto(250, 0);
+						 
+						 userDto.setMno(Typedto.getMno());
+						 
+						 for(GameUserDto dto : connectPlayerList) { 
+							 if(dto.getGno() == checkGno ) {
+								 	userDto.setGno(dto.getGno()); 
+									System.out.println("for문 : " + userDto); 
+									json = mapper.writeValueAsString(userDto); 
+									dto.getSession().getBasicRemote().sendText(json);
+							} 
+							
+						 }
 					 }
 				 }
-			 }
-		}else if(count >= 2) { //움직임 공치기
-			int type = Integer.parseInt(st.nextToken());
-			
-			if(type == 2) { //움직임
-				System.out.println("움직였다.");
-			}else if(type == 3) { //공치기 
-				System.out.println("공쳤다.");
+			}else if(count >= 2) { //움직임 공치기
+				int type = Integer.parseInt(st.nextToken());
+				
+				if(type == 2) { //움직임
+					System.out.println("움직였다.");
+				}else if(type == 3) { //공치기 
+					System.out.println("공쳤다.");
+				}
 			}
-		}
+		}catch (Exception e)  {System.err.println(e);}
+		 
 	}
 
 }

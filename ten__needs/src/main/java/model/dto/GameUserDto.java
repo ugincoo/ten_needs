@@ -21,12 +21,13 @@ public class GameUserDto {
 
 	
 	
-	public GameUserDto(Session session, int type, int gno, int mno) {
+	public GameUserDto(Session session, int type, int gno, int mno, int rno) {
 		super();
 		this.session = session;
 		this.type = type;
 		this.gno = gno;
 		this.mno = mno;
+		this.rno = rno;
 	}
 	
 
