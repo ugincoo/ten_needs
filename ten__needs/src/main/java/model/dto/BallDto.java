@@ -1,9 +1,9 @@
 package model.dto;
 
+import javax.websocket.Session;
 
 public class BallDto {
 		
-		private String type;
 	    private int x;
 	    private int y;
 	    private int radius;
@@ -14,6 +14,7 @@ public class BallDto {
 	    
 	    // 추가 필드
 	    private int ballState; // 0: start, 1: user1 touch, 2: user2 touch, 3: reset
+	    private String msg; // 메시지 전송
 	    
 	    // Empty 생성자
 		public BallDto() {
@@ -22,18 +23,11 @@ public class BallDto {
 		}
 		
 		// 볼 정보 갱신용 생성자
-	    public BallDto(int x, int y, int radius, int speed, int velocityX, int velocityY, int ballState) {
-			super();
-			this.x = x;
-			this.y = y;
-			this.radius = radius;
-			this.speed = speed;
-			this.velocityX = velocityX;
-			this.velocityY = velocityY;
-			this.ballState = ballState;
+	    public BallDto( Session session, String msg ) {
+	    	this.msg = msg;
 		}
 		
-		// Full 생성자
+		// 처음 볼 생성 및 리셋용 생성자
 		public BallDto(int x, int y, int radius, int speed, int velocityX, int velocityY, String color, int ballState) {
 			super();
 			this.x = x;
@@ -45,11 +39,27 @@ public class BallDto {
 			this.color = color;
 			this.ballState = ballState;
 		}
+		
+		// FULL 생성자
+		public BallDto(int x, int y, int radius, int speed, int velocityX, int velocityY, String color, int ballState,
+				String msg) {
+			super();
+			this.x = x;
+			this.y = y;
+			this.radius = radius;
+			this.speed = speed;
+			this.velocityX = velocityX;
+			this.velocityY = velocityY;
+			this.color = color;
+			this.ballState = ballState;
+			this.msg = msg;
+		}
 
 		@Override
 		public String toString() {
 			return "BallDto [x=" + x + ", y=" + y + ", radius=" + radius + ", speed=" + speed + ", velocityX="
-					+ velocityX + ", velocityY=" + velocityY + ", color=" + color + "]";
+					+ velocityX + ", velocityY=" + velocityY + ", color=" + color + ", ballState=" + ballState
+					+ ", msg=" + msg + "]";
 		}
 
 		public int getX() {
@@ -115,8 +125,14 @@ public class BallDto {
 		public void setBallState(int ballState) {
 			this.ballState = ballState;
 		}
-	    
-	    
+
+		public String getMsg() {
+			return msg;
+		}
+
+		public void setMsg(String msg) {
+			this.msg = msg;
+		}
 	    
 }
 

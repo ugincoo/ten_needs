@@ -3,34 +3,61 @@ package model.dto;
 import javax.websocket.Session;
 
 public class GameUserDto {
-	private Session session; //소켓
 	
+	private Session session; //소켓
+	private int type; //1. 접속 2. 캐릭터 움직임 3. 공치
+	private int gno;
 	private int mno; //회원번호
 	private int x; //x좌표
 	private int y; //y좌표
-	private int score ; //점수 
-	private boolean gameResult; //게임 결과(이기면 1 지면 2)
-	private int smash; //스매시횟수 
-	private int swing; //스윙 횟수
 	private int rno; //라켓 번호
-	
+	// 추가 유저 선택
+	private int user; // 1.User1 2.User2
 	
 	
 	public GameUserDto() {
 		super();
 	}
 
-
-	public GameUserDto(Session session, int mno, int x, int y, int score, boolean gameResult, int smash, int swing, int rno) {
+	
+	
+	public GameUserDto(Session session, int type, int gno, int mno) {
 		super();
 		this.session = session;
+		this.type = type;
+		this.gno = gno;
+		this.mno = mno;
+	}
+	
+
+
+	public GameUserDto(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+
+	
+	
+	public GameUserDto(int type, int gno, int mno, int x, int y) {
+		super();
+		this.type = type;
+		this.gno = gno;
 		this.mno = mno;
 		this.x = x;
 		this.y = y;
-		this.score = score;
-		this.gameResult = gameResult;
-		this.smash = smash;
-		this.swing = swing;
+	}
+
+
+
+	public GameUserDto(Session session, int type, int gno, int mno, int x, int y, int rno) {
+		super();
+		this.session = session;
+		this.type = type;
+		this.gno = gno;
+		this.mno = mno;
+		this.x = x;
+		this.y = y;
 		this.rno = rno;
 	}
 
@@ -42,6 +69,26 @@ public class GameUserDto {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+
+	public int getType() {
+		return type;
+	}
+
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+
+	public int getGno() {
+		return gno;
+	}
+
+
+	public void setGno(int gno) {
+		this.gno = gno;
 	}
 
 
@@ -74,47 +121,6 @@ public class GameUserDto {
 		this.y = y;
 	}
 
-
-	public int getScore() {
-		return score;
-	}
-
-
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-
-	public boolean isGameResult() {
-		return gameResult;
-	}
-
-
-	public void setGameResult(boolean gameResult) {
-		this.gameResult = gameResult;
-	}
-
-
-	public int getSmash() {
-		return smash;
-	}
-
-
-	public void setSmash(int smash) {
-		this.smash = smash;
-	}
-
-
-	public int getSwing() {
-		return swing;
-	}
-
-
-	public void setSwing(int swing) {
-		this.swing = swing;
-	}
-
-
 	public int getRno() {
 		return rno;
 	}
@@ -125,9 +131,24 @@ public class GameUserDto {
 	}
 
 
+	public int getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(int user) {
+		this.user = user;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "GameUserDto [mno=" + mno + ", x=" + x + ", y=" + y + ", score=" + score + ", gameResult=" + gameResult
-				+ ", smash=" + smash + ", swing=" + swing + ", rno=" + rno + "]";
+		return "GameUserDto [session=" + session + ", type=" + type + ", gno=" + gno + ", mno=" + mno + ", x=" + x
+				+ ", y=" + y + ", rno=" + rno + "]";
 	}
+	
+	
+	
 }
