@@ -14,7 +14,7 @@
 	<div class="container">
 		<form class="signupForm">
 		
-			<h3> TENNEEDS </h3>
+			<h3> TENNEEDS admin page </h3>
 			<p> 라켓 등록 </p>
 			
 			<div class="title"> 라켓명 </div>
