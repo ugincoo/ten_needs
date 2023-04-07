@@ -154,10 +154,6 @@ function sendMessage(type, mno, x, y){
 	gameSocket.send(JSON.stringify(msg));
 }
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-	
-	
 // 방향키 전역 변수
 let rightPressed = false;	// 우키 상태
 let leftPressed = false;	// 좌키 상태
@@ -296,18 +292,6 @@ function onMessage(e){
 	}
 	
 }
-	
-	
-// 방향키 전역 변수
-let rightPressed = false;	// 우키 상태
-let leftPressed = false;	// 좌키 상태
-let upPressed = false;		// 상키 상태
-let downPressed = false;	// 하키 상태
-let spacePressed = false; //스페이스여부
-// 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
-let player = null;
-
-
 
 // 경기장 
 // 경기장 이미지
