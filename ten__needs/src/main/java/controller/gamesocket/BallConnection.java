@@ -47,7 +47,11 @@ public class BallConnection {
 	
 	@OnClose
 	public void outServer( Session session ) throws Exception {
-		System.out.println( session );
+		for(GameUserBallTestDto dto : connectList) {
+			if(dto.getSession() == session) {
+				connectList.remove(dto);
+			}
+		}
 	}
 	
 	@OnError
