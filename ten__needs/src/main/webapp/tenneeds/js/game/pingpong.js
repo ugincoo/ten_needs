@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://172.30.1.43:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://172.30.1.43:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -188,9 +188,9 @@ let user1 = {
 	swing : 0,
 	rno : 0,
 	user : 0,
+	imageno : 0,
 	draw(){
-		let no = imageno;
-		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
+		ctx.drawImage(user1Image[user1.imageno], this.x , this.y, this.width, this.height);
 	}
 }
 
@@ -205,7 +205,7 @@ user2Image[2].src = "mUserBL.png"
 let user2 = {
 	mno : 0,
 	x : 0,
-	y : canvas.height - 30,
+	y : canvas.height - 80,
 	width : 80,
 	height : 80,
 	score : 0 ,
@@ -214,9 +214,9 @@ let user2 = {
 	swing : 0,
 	rno : 0,
 	user : 0,
+	imageno : 0,
 	draw(){
-		let no = imageno;
-		ctx.drawImage(user2Image[no], this.x , this.y, this.width, this.height);
+		ctx.drawImage(user2Image[user2.imageno], this.x , this.y, this.width, this.height);
 	}
 }
 //서버로부터 상대방의 움직임 정보를 받기
@@ -300,6 +300,14 @@ function onMessage(e){
 			user2.y += userData.y;
 			user2.draw();
 		}
+	}else if(userData.type == 3){
+		if(userData.user == 1){
+			user1.imageno = userData.x; //키값새로 만들기 귀찮아서 x로 설정
+			setTimeout(() => user1.imageno = 0, 200)
+		}else if(userData.user == 2){
+			user2.imageno = userData.x;
+			setTimeout(() => user2.imageno = 0, 200)
+		}
 	}
 	
 }
@@ -341,10 +349,12 @@ function keyDownHandler(event) {
 	    downPressed = true;
 	} else if (event.key === "" || event.keyCode === 32) {
 	    spacePressed = true;
-	    if(user1.x > canvas.width/2 - 100/2 ){
-			imageno = 1;
+	    if((memberInfo.mno == user1.mno ? user1 : user2).x > canvas.width/2 - 100/2 ){
+			(memberInfo.mno == user1.mno ? user1 : user2).imageno = 1;
+			sendMessage(3, sendmno, 1, -1);
 		}else{
-			imageno = 2;
+			(memberInfo.mno == user1.mno ? user1 : user2).imageno = 2;
+			sendMessage(3, sendmno, 2, -1);
 		}
 	} 
 }
@@ -360,7 +370,7 @@ function keyUpHandler(event) {
 	    downPressed = false;
 	} else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
-	    setTimeout(() => spacePressed = false, imageno = 0, 3000); //정확함도를 낮추기 위해서
+	    setTimeout(() => spacePressed = false, (memberInfo.mno == user1.mno ? user1 : user2).imageno = 0, 3000); //정확함도를 낮추기 위해서
 		if(player == user1){
 				user1.swing++;
 				console.log(user1.swing)
@@ -415,7 +425,11 @@ function checkRound(){
 			winner : playerWin,
 			loser : playerLose,
 			winnergsAccute : winnergsAccute, //정확도(이긴사람)
-			losergsAccute : losergsAccute //정확도(진사람)
+			losergsAccute : losergsAccute, //정확도(진사람)
+			gno : gNo,
+			winnerRno : playerWin == user1.mno? user1.rno : user2.rno,
+			loserRno : playerLose == user1.mno ? user1.rno : user2.rno
+			
 		}
 		
 		console.log(user1.swing)
@@ -435,6 +449,9 @@ function checkRound(){
 		})
 	}
 }
+
+ let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
+ 
 // 1초 반복 실행
 function game(){
     requestAnimationFrame(game);
@@ -444,8 +461,6 @@ function game(){
     drawCircle(ball.x, ball.y, ball.radius, ball.color);	// 공 그려주기
     drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");	// 유저1 스코어
 	drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");	// 유저2 스코어
-    
-    let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
     
     
     // 플레어이 움직임
@@ -516,7 +531,13 @@ function game(){
 		user2.score += 15;
 		
 		if(user2.score >= 45){
-			alert('user2 ' + round +  "라운드 승!");
+			
+			document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+			document.querySelector('.userMid').innerHTML = user2.mno == user2Mno ? user2Mid : user1Mid
+			document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
+			
+			openModal();
+			
 			round++;
 			user2.score = 0;
 			user1.score = 0;
@@ -529,7 +550,12 @@ function game(){
 		user1.score += 15;
 		
 		if(user1.score >= 45){
-			alert('user1 ' + round +  "라운드 승!");
+			document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+			document.querySelector('.userMid').innerHTML = user1.mno == user1Mno ? user1Mid : user2Mid
+			document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
+			
+			openModal();
+			
 			round++;
 			user1.score = 0;
 			user2.score = 0;
@@ -545,5 +571,6 @@ function game(){
 	}
     
 }
+
 
 game();

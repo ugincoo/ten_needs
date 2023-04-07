@@ -28,7 +28,7 @@ public class Connection {
 	public static Vector<RacketDto> raketList = GameDao.getInstans().getRacketList();
 
 	@OnOpen
-	public void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
+	public synchronized void enterServer(Session session, @PathParam("gNo") int gno, @PathParam("mno") int mno) throws Exception {
 		System.out.println("게임방 들어옴 : " + gno + " : " + mno);
 		
 		 int checkCount = 1;
@@ -61,7 +61,7 @@ public class Connection {
 	}
 
 	@OnClose
-	public void outServer(Session session) throws Exception {
+	public synchronized void outServer(Session session) throws Exception {
 		for(GameUserDto dto : connectPlayerList) {
 			if(dto.getSession() == session) {
 				connectPlayerList.remove(dto);
@@ -71,12 +71,12 @@ public class Connection {
 	}
 
 	@OnError
-	public void errorServer(Session session, Throwable e) throws Exception {
+	public synchronized void errorServer(Session session, Throwable e) throws Exception {
 		System.out.println(session);
 	}
 
 	@OnMessage
-	public void msgServer(Session session, String msg) throws Exception {
+	public synchronized void msgServer(Session session, String msg) throws Exception {
 		
 		 ObjectMapper mapper = new ObjectMapper(); 
 		 String json = null;
@@ -113,15 +113,26 @@ public class Connection {
 					 }
 				 }
 			 }
-		}else { //움직였을때 보내는 데이터
+		}else { //움직였을때 보내는 데이터  + 스매싱
+			
 			GameUserDto dto = mapper.readValue(msg, GameUserDto.class);
 			System.out.println(dto);
-			for(GameUserDto gameDto : connectPlayerList) {
-				if(gameDto.getMno() == dto.getMno()) {
-					dto.setRno(gameDto.getRno());
-					dto.setUser(gameDto.getUser());
+			if(dto.getType() == 2) { //움직임
+				for(GameUserDto gameDto : connectPlayerList) {
+					if(gameDto.getMno() == dto.getMno()) {
+						dto.setRno(gameDto.getRno());
+						dto.setUser(gameDto.getUser());
+					}
+				}
+			}else if(dto.getType() == 3) { //스매싱
+				for(GameUserDto gameDto : connectPlayerList) {
+					if(gameDto.getMno() == dto.getMno()) {
+						dto.setRno(gameDto.getRno());
+						dto.setUser(gameDto.getUser());
+					}
 				}
 			}
+			
 			
 			for(GameUserDto userdto : connectPlayerList) {
 				if(dto.getGno() == userdto.getGno()) {
