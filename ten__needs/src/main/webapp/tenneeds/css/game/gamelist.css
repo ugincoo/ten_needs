@@ -14,7 +14,6 @@
 }
 
 .gametopetc{ /*글쓰기 버튼이 있는 구역 div*/
-	width: 100%;
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
@@ -26,6 +25,7 @@
 	padding: 5px 8px;
 	border : none;
 	border-radius: 10px;
+	margin-bottom: 20px;
 }
 
 /*------------------------- game 아래 검색창 부분 css  ----------------------*/
@@ -38,7 +38,8 @@
 	border-radius: 10px;
 	font-size: 16px;
 	padding: 5px;
-	margin-right: 5px;
+	width: 70px;
+	height: 40px;
 }
 
 .searchbox .keyword{ /*키워드 검색 input부분*/
@@ -47,14 +48,22 @@
 	font-size: 16px;
 	padding: 6px;
 	width: 300px;
+	margin: 0px 10px;
 }
 
 /*------------------------- game 게시물 목록 출력 css  ----------------------*/
-
+.gameTable{
+	display: flex;
+	flex-wrap :wrap;
+}
 #gameContent{ /*게시물 출력 부분*/	
 	margin-top : 20px;
-	border-top: 1px solid #203725;
-	padding: 20px;
+	border: 1px solid #203725;
+	border-radius :10px;
+	padding: 10px;
+	margin-left : 80px;
+	box-shadow: 1px 1px 3px black;
+	width: 40%;
 }
 
 .gTitle{/*게시물 제목 구역*/
@@ -78,9 +87,12 @@ span{ /*관리자 프로필 옆의 이름과 작성일자*/
 }
 
 /*--------------------------- game 페이지 버튼 css  -----------------------*/
-
+.page_box {
+		margin: 20px 0px;
+}
 .pageBox{ /*페이지 버튼 구역*/
 	border-radius: 10px;
+	margin-top: 20px;
 }
 
 .pagebtn{ /*페이지 버튼 */
