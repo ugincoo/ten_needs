@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<div class = "container">
-		<div class = "container" style ="text-align: center">
+		<div class = "container page_box" style ="text-align: center">
 			<div class ="pagebox">
 				<!-- 페이징 버튼 들어가는 부분 -->
 			</div>
