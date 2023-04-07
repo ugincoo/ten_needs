@@ -39,9 +39,9 @@ function printGameInfo(){
 	document.querySelector('.gId').innerHTML = memberInfo.mid; // 닉네임
 	
 	$.ajax({
-		url: "/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
+		url: "/ten__needs/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
 		method: "get",
-		data: { "mNo": memberInfo.mNo }, // data로 전달하거나, mNo전환 메소드 생성하면 servlet에서 바로 진행
+		data: { "mNo": memberInfo.mno }, // data로 전달하거나, mNo전환 메소드 생성하면 servlet에서 바로 진행
 		success: (r)=>{ // SQL 이용해서 데이터 조회한 값 가져오기
 				console.log("printGameInfo 결과");
 				console.log(r);

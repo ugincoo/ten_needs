@@ -28,20 +28,23 @@ public class MypageDao extends Dao {
 	public MypageGameDto printGameInfo( int mNo ) {
 		
 		String sql = "select count(*) as gCount, sum(gsResult) as gWin, (sum(gsResult)/count(*))*100 as gWinRate from gamestatus where mNo ="+mNo;
-		
+			// System.out.println("sql1 matters"); //--- 문제 없음
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if( rs.next() ) {
 				MypageGameDto dto = new MypageGameDto();
-				
+					// System.out.println( "sql1 checking" ); //--- if문 가동 확인
 				dto.setgCount(rs.getInt(1));
 				dto.setgWin(rs.getInt(2));
 				dto.setgWinRate(rs.getDouble(3));
 				
+					System.out.println("mNo cheking: " + mNo);
 				sql = "select r.rNo, r.rName, r.rImg, sum(g.gsResult) as total from gamestatus g join racket r on g.rNo = r.rNo where mNo = ? group by r.rNo order by total desc";
+				ps = con.prepareStatement(sql);
 				ps.setInt(1, mNo);
 				ResultSet rs2 = ps.executeQuery();
+					System.out.println( rs2 );
 				
 				while( rs2.next() ) { // --- test해야함
 					if( rs2.first() ) {

@@ -49,12 +49,12 @@
 						<div class="racketContent"> 파리채 </div>
 					</div>
 					<div class="gameContent">
-						<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"></span> </div>
-						<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"></span> 경기수 100 </div>
-						<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span> 승리 50  </div>
-						<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span> 승률 50.00%  </div>
-						<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> 베스트 라켓 파리채 </div>
-						<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span> 워스트 라켓 모기채 </div>
+						<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"> </span> </div>
+						<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"> </span> </div>
+						<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span>  </div>
+						<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span>  </div>
+						<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> </div>
+						<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span>  </div>
 					</div>
 					
 				</div>
