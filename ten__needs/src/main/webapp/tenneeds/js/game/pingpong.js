@@ -154,7 +154,6 @@ function sendMessage(type, mno, x, y){
 	gameSocket.send(JSON.stringify(msg));
 }
 
-<<<<<<< HEAD
 // 방향키 전역 변수
 let rightPressed = false;	// 우키 상태
 let leftPressed = false;	// 좌키 상태
@@ -164,9 +163,6 @@ let spacePressed = false; //스페이스여부
 // 선언 이유: 아래 방향키 작동 메소드로 만들어 사용하고자 함
 let player = null;
 
-
-=======
->>>>>>> branch 'ujin' of https://github.com/Tea-ho/ten__needs
 // 게임 사용자 정의	
 // user1 이미지
 let user1Image = new Array(3);
