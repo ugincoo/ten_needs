@@ -42,6 +42,8 @@ function sendMessage(){
 	connectServer("chat", chatContent);
 	
 	document.querySelector('.chatContent').value = '';
+
+	
 }
 
 let countStart = 0;
@@ -197,4 +199,10 @@ function getGame( ){
 		})
 }
 
-
+// 엔터키를 눌렀을때 전송
+document.addEventListener('keyup', (e)=>{
+	// 만약에 입력한 키 코드가 13[엔터] 이면 메시지전송
+	if( window.event.keyCode == 13 ){
+		sendMessage();
+	}
+});

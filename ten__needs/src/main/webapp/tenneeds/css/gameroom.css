@@ -72,6 +72,10 @@
    width:70%; 
    margin: 0 auto;
 }
+/*스크롤숨기기*/
+.geme_chat::-webkit-scrollbar  {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 .alarmBox{  text-align: center; margin: 2% 0; }
 .sendWrap{ display: flex; justify-content: flex-end; align-items: flex-end; }    
 .sDate{ margin-right: 1%; font-size: 10px; }
