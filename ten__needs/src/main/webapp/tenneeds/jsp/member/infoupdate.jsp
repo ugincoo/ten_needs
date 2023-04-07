@@ -47,8 +47,11 @@
 			<div class="title"> 프로필 </div>
 			<div class="pimgbox">
 				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.png">
-				<div>
-					<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
+				<div class="file">
+					<label for="mimg">
+ 					 	파일 업로드
+					</label>
+					<input onchange="premimg(this)" name="mimg" id="mimg" class="mimg img selectbtn" type="file"> <br/>
 					<input onclick="onchecked()" class="defaultimg" type="checkbox"> 기본프로필 사용
 				</div>
 			</div>

@@ -45,6 +45,10 @@
 			<div class="title"> 프로필 </div>
 			<div class="pimgbox">
 				<img class="premimg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.png">
+				<label for="mimg">
+ 					 	파일 업로드
+				</label>
+				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file"> <br/>
 				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
 			</div>
 			

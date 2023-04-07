@@ -116,3 +116,26 @@
     bottom: 0px;
     margin: 20px;
 }
+/*--------------추가----------*/
+
+.file label , .pimgbox label{
+	
+	display: inline-block;
+	width: 100px;
+	height: 40px;
+	background-color: #DBC8B9;
+	color : white;
+	cursor : pointer;
+	line-height: 45px;
+	border-radius: 5px;
+	text-align: center;
+}
+.file input[type="file"] , .pimgbox input[type="file"]  {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	clip: rect(0,0,0,0);
+	overflow: hidden;
+	padding: 0;
+}
