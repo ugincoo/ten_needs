@@ -36,7 +36,7 @@ function printInfo(){
  printGameInfo(); // --------------- 완료되면 주석 해제 처리
 function printGameInfo(){
 	
-	document.querySelector('.gId').innerHTML = memberInfo.mid; // 닉네임
+	document.querySelector('.gId').innerHTML = '닉네임: '+memberInfo.mid; // 닉네임
 	
 	$.ajax({
 		url: "/ten__needs/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업
@@ -45,14 +45,14 @@ function printGameInfo(){
 		success: (r)=>{ // SQL 이용해서 데이터 조회한 값 가져오기
 				console.log("printGameInfo 결과");
 				console.log(r);
-			document.querySelector('.gCount').innerHTML = r.gCount; //o
-			document.querySelector('.gWin').innerHTML = r.gWin; // o
-			document.querySelector('.gWinRate').innerHTML = r.gWinRate;
+			document.querySelector('.gCount').innerHTML = '경기수: '+r.gCount; //o
+			document.querySelector('.gWin').innerHTML = '승리수: ' +r.gWin; // o
+			document.querySelector('.gWinRate').innerHTML = '승률: '+r.gWinRate+' %';
 			// SQL: select count(*) as gCount, sum(gsResult) as gWin, (sum(gsResult)/count(*))*100 as gWinRate from gamestatus where mNo = ?;
-			document.querySelector('.rImg').src = "";
+			document.querySelector('.rImg').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg == null ? 'default.png' : r.rImg }`;
 			document.querySelector('.racketContent').innerHTML = r.gBestRa;
-			document.querySelector('.gBestRa').innerHTML = r.gBestRa; 	// 마지막 인덱스 라켓
-			document.querySelector('.gWorstRa').innerHTML = r.gWorstRa; // 첫번째 인덱스 라켓
+			document.querySelector('.gBestRa').innerHTML = 'Best: '+r.gBestRa; 	// 마지막 인덱스 라켓
+			document.querySelector('.gWorstRa').innerHTML = 'Worst:'+r.gWorstRa; // 첫번째 인덱스 라켓
 			// SQL: select r.rNo, r.rName, r.rImg, sum(g.gsResult) as total from gamestatus g join racket r on g.rNo = r.rNo where mNo = ? group by r.rNo order by total desc;
 			// => Dao에서 SQL 2번 작성하는 식으로 고고 (type 나누면, Dto 관리 복잡해짐)
 		}

@@ -44,7 +44,7 @@
 .rTitle, .gRank{ font-family: 'TheJamsil5Bold'; font-weight: 500; font-size: 25px; }
 
 /* --------------------------------------------------- 게임 전적 정보 */
-.gameContent div{ margin-top: 2%; margin-right: 3%; font-size: 20px; width: 28%; }
+.gameContent div{ margin-top: 2%; margin-right: 3%; font-size: 18px; width: 28%; }
 .gameContent{ display: flex; flex-wrap: wrap; }
 .infoContent, .gameContent i, .gRank i { color: #063223; font-size: 21px; }
 .racketwrap{ 
