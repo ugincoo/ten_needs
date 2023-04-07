@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -153,7 +153,12 @@ function sendMessage(type, mno, x, y){
 	}
 	gameSocket.send(JSON.stringify(msg));
 }
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> branch 'kimy041' of https://github.com/Tea-ho/ten__needs
 // 방향키 전역 변수
 let rightPressed = false;	// 우키 상태
 let leftPressed = false;	// 좌키 상태
@@ -168,11 +173,11 @@ let player = null;
 // user1 이미지
 let user1Image = new Array(3);
 user1Image[0] = new Image();
-user1Image[0].src = "wUser1.png"
+user1Image[0].src = "wUserF.png"
 user1Image[1] = new Image();
-user1Image[1].src = "wUser2.png"
+user1Image[1].src = "wUserFR.png"
 user1Image[2] = new Image();
-user1Image[2].src = "wUser3.png"
+user1Image[2].src = "wUserFL.png"
 let imageno = 0;
 let user1 = {
 	mno : 0,
@@ -194,7 +199,11 @@ let user1 = {
 // user2 이미지
 let user2Image = new Array(3);
 user2Image[0] = new Image();
-user2Image[0].src = "mUser1.png"
+user2Image[0].src = "mUserB.png"
+user2Image[1] = new Image();
+user2Image[1].src = "mUserBR.png"
+user2Image[2] = new Image();
+user2Image[2].src = "mUserBL.png"
 let user2 = {
 	mno : 0,
 	x : 0,
@@ -249,35 +258,35 @@ function onMessage(e){
 			})
 	
 			console.log("user1" + user1)
-	}else{
-		user2.mno = userData.mno;
-		user2.x += userData.x;
-		user2.y += userData.y;
-		user2.rno = userData.rno
-		user2.draw();
-		// 라켓정보 설정 및 출력
-		$.ajax({
-			url : "/ten__needs/game/result",
-			method : "get",
-			data : {"type" : 1, "rno" : userData.rno},
-			async : false,
-			success : (r) => {
-				console.log(r); 
-				
-				
-				if(r != null){
-					document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+		}else{
+			user2.mno = userData.mno;
+			user2.x += userData.x;
+			user2.y += userData.y;
+			user2.rno = userData.rno
+			user2.draw();
+			// 라켓정보 설정 및 출력
+			$.ajax({
+				url : "/ten__needs/game/result",
+				method : "get",
+				data : {"type" : 1, "rno" : userData.rno},
+				async : false,
+				success : (r) => {
+					console.log(r); 
 					
-					document.querySelector('.player2racketnm').innerHTML = r.rName
-				
-					document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
 					
+					if(r != null){
+						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
+						
+						document.querySelector('.player2racketnm').innerHTML = r.rName
+					
+						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
+						
+					}
 				}
-			}
-		})
-	
-		console.log("user2" + user2)
-	}
+			})
+		
+			console.log("user2" + user2)
+		}
 	}else if(userData.type == 2){ //움직임
 		if(userData.mno == memberInfo.mno){
 			user1.x += userData.x;
@@ -453,7 +462,7 @@ function game(){
 	} 
     else if (downPressed && user1.y < canvas.height - user1.height) {
 		 //상대편 네트보다 더 아래로 갈 수 없도록
-	  	if(user1.y < canvas.height/2 - 20){
+	  	if(user1.y < canvas.height/2 - 80){
 			   //user1.y += 8;
 			   sendMessage(2, sendmno, 0, 8);
 		}
