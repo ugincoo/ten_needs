@@ -154,6 +154,9 @@ function sendMessage(type, mno, x, y){
 	gameSocket.send(JSON.stringify(msg));
 }
 
+
+	
+	
 // 방향키 전역 변수
 let rightPressed = false;	// 우키 상태
 let leftPressed = false;	// 좌키 상태
@@ -295,6 +298,8 @@ function onMessage(e){
 	}
 	
 }
+
+
 
 // 경기장 
 // 경기장 이미지

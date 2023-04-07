@@ -127,7 +127,6 @@ public class BoardInfo extends HttpServlet {
 		
 		BoardDto dto = new BoardDto(bno, bTitle, bContent);
 		
-		System.out.println(dto);
 		
 		boolean result = BoardDao.getInstance().updateBoard(dto);
 		
@@ -137,7 +136,7 @@ public class BoardInfo extends HttpServlet {
 	//게시물 삭제
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		
+		System.out.println("bno" + bno);
 		boolean result = BoardDao.getInstance().deleteBoard(bno);
 		
 		response.getWriter().print(result);

@@ -110,7 +110,7 @@ public class BoardDao extends Dao{
 				if(rs2.next()) {
 					dto.setRcount(rs2.getInt(1));
 				}
-				
+				System.out.println(dto);
 				return dto;
 				
 			}
