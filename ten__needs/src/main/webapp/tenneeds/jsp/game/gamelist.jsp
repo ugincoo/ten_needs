@@ -36,7 +36,7 @@
 			<div class = "searchbox" style ="display: flex; justify-content: center">
 				<select class = "key"> <!-- key입력 -->
 					<option value = "gTitle">제목</option>
-					<option value = "gContent">아이디</option>
+					<option value = "mid">아이디</option>
 				</select>
 				<div>
 					<input class = "keyword" type = "text" placeholder="키워드 검색">
