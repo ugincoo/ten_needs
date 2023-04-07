@@ -54,9 +54,14 @@ public class GameResult extends HttpServlet {
 		int winner = Integer.parseInt(request.getParameter("winner"));
 		int loser = Integer.parseInt(request.getParameter("loser"));
 		
+		int gno = Integer.parseInt(request.getParameter("gno"));
+		
 		double winnergsAccute = Double.parseDouble(request.getParameter("winnergsAccute"));
 		
 		double losergsAccute = Double.parseDouble(request.getParameter("losergsAccute"));
+		
+		int winnerRno = Integer.parseInt(request.getParameter("winnerRno"));
+		int loserRno = Integer.parseInt(request.getParameter("loserRno"));
 		
 		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute);
 		System.out.println(dto);

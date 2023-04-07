@@ -60,9 +60,22 @@
 		</div>
 		
 	</div>
-	 
 	
+	 <!-- 모달 HTMLs -->
+	<div class="modal_wrap">
+		<div class="modal_box">
+			<h3 class="modal_title"> 라운드 :   </h3>
+			<div class="modal_content">
+				플레이어 : <span class = "userMid"></span>
+				<h4 class = "roundContent"></h4>
+			</div>
+			<div class="modal_btns">
+				<button onclick="closeModal()" class="modla_cancle" type="button"> 확인 </button>
+			</div>
+		</div>
+	</div>
 	
+	<script type="text/javascript" src = "/ten__needs/tenneeds/js/modal.js"></script>
 	<script type="text/javascript" src="/ten__needs/tenneeds/js/game/pingpong.js"></script> 
 </body>
 </html>

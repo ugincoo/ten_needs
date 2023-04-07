@@ -41,9 +41,7 @@ function sendMessage(){
 	
 	connectServer("chat", chatContent);
 	
-	document.querySelector('.chatContent').value = '';
-
-	
+	document.querySelector('.chatContent').value = '';	
 }
 
 let countStart = 0;

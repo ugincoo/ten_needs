@@ -11,6 +11,7 @@ public class GameUserDto {
 	private int x; //x좌표
 	private int y; //y좌표
 	private int rno; //라켓 번호
+	
 	// 추가 유저 선택
 	private int user; // 1.User1 2.User2
 	
@@ -49,8 +50,7 @@ public class GameUserDto {
 	}
 
 
-
-	public GameUserDto(Session session, int type, int gno, int mno, int x, int y, int rno) {
+	public GameUserDto(Session session, int type, int gno, int mno, int x, int y, int rno, int user) {
 		super();
 		this.session = session;
 		this.type = type;
@@ -59,7 +59,9 @@ public class GameUserDto {
 		this.x = x;
 		this.y = y;
 		this.rno = rno;
+		this.user = user;
 	}
+
 
 
 	public Session getSession() {
@@ -143,11 +145,16 @@ public class GameUserDto {
 
 
 
+
 	@Override
 	public String toString() {
 		return "GameUserDto [session=" + session + ", type=" + type + ", gno=" + gno + ", mno=" + mno + ", x=" + x
-				+ ", y=" + y + ", rno=" + rno + "]";
+				+ ", y=" + y + ", rno=" + rno + ", user=" + user + "]";
 	}
+
+
+
+
 	
 	
 	

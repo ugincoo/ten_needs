@@ -98,8 +98,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 3 ){ //--------------------------------------- player1 Reset Ball
 		ball = {
-			x : user1.x,
-			y : user1.y,
+			x : data.x,
+			y : data.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -108,8 +108,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 4 ){ //--------------------------------------- player2 Reset Ball
 		ball = {
-			x : user2.x,
-			y : user2.y,
+			x : data.x,
+			y : data.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -187,9 +187,10 @@ let user1 = {
 	smash : 0,
 	swing : 0,
 	rno : 0,
+	user : 0,
+	imageno : 0,
 	draw(){
-		let no = imageno;
-		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
+		ctx.drawImage(user1Image[user1.imageno], this.x , this.y, this.width, this.height);
 	}
 }
 
@@ -204,7 +205,7 @@ user2Image[2].src = "mUserBL.png"
 let user2 = {
 	mno : 0,
 	x : 0,
-	y : canvas.height - 30,
+	y : canvas.height - 80,
 	width : 80,
 	height : 80,
 	score : 0 ,
@@ -212,9 +213,10 @@ let user2 = {
 	smash : 0,
 	swing : 0,
 	rno : 0,
+	user : 0,
+	imageno : 0,
 	draw(){
-		let no = imageno;
-		ctx.drawImage(user2Image[no], this.x , this.y, this.width, this.height);
+		ctx.drawImage(user2Image[user2.imageno], this.x , this.y, this.width, this.height);
 	}
 }
 //서버로부터 상대방의 움직임 정보를 받기
@@ -226,11 +228,12 @@ function onMessage(e){
 	console.log(userData)
 	
 	if(userData.type == 1){ //입장
-		if(userData.mno == memberInfo.mno){
+		if(userData.user == 1){
 			user1.mno = userData.mno;
 			user1.x += userData.x
 			user1.y += userData.y;
 			rno = userData.rno;
+			user1.user = userData.user;
 			
 			user1.draw();
 				
@@ -249,17 +252,19 @@ function onMessage(e){
 						
 						document.querySelector('.player1racketnm').innerHTML = r.rName
 					
-						document.querySelector('.player1Name').innerHTML = memberInfo.mid
+						document.querySelector('.player1Name').innerHTML = (userData.mno == user1Mno ? user1Mid : user2Mid)
 					}
 				}
 			})
 	
 			console.log("user1" + user1)
-		}else{
+		}else if(userData.user == 2){
 			user2.mno = userData.mno;
 			user2.x += userData.x;
 			user2.y += userData.y;
-			user2.rno = userData.rno
+			user2.rno = userData.rno;
+			user2.user = userData.user;
+			
 			user2.draw();
 			// 라켓정보 설정 및 출력
 			$.ajax({
@@ -276,7 +281,7 @@ function onMessage(e){
 						
 						document.querySelector('.player2racketnm').innerHTML = r.rName
 					
-						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
+						document.querySelector('.player2Name').innerHTML = (userData.mno == user1Mno ? user1Mid : user2Mid)
 						
 					}
 				}
@@ -285,21 +290,27 @@ function onMessage(e){
 			console.log("user2" + user2)
 		}
 	}else if(userData.type == 2){ //움직임
-		if(userData.mno == memberInfo.mno){
+		if(userData.user == 1){
 			user1.x += userData.x;
 			user1.y += userData.y
 			user1.draw();
 						
-		}else{
+		}else if(userData.user == 2){
 			user2.x += userData.x;
-			user2.y -= userData.y;
+			user2.y += userData.y;
 			user2.draw();
+		}
+	}else if(userData.type == 3){
+		if(userData.user == 1){
+			user1.imageno = userData.x; //키값새로 만들기 귀찮아서 x로 설정
+			setTimeout(() => user1.imageno = 0, 200)
+		}else if(userData.user == 2){
+			user2.imageno = userData.x;
+			setTimeout(() => user2.imageno = 0, 200)
 		}
 	}
 	
 }
-
-
 
 // 경기장 
 // 경기장 이미지
@@ -338,10 +349,12 @@ function keyDownHandler(event) {
 	    downPressed = true;
 	} else if (event.key === "" || event.keyCode === 32) {
 	    spacePressed = true;
-	    if(user1.x > canvas.width/2 - 100/2 ){
-			imageno = 1;
+	    if((memberInfo.mno == user1.mno ? user1 : user2).x > canvas.width/2 - 100/2 ){
+			(memberInfo.mno == user1.mno ? user1 : user2).imageno = 1;
+			sendMessage(3, sendmno, 1, -1);
 		}else{
-			imageno = 2;
+			(memberInfo.mno == user1.mno ? user1 : user2).imageno = 2;
+			sendMessage(3, sendmno, 2, -1);
 		}
 	} 
 }
@@ -357,7 +370,7 @@ function keyUpHandler(event) {
 	    downPressed = false;
 	} else if (event.key === "" || event.keyCode === 32) {
 		//3초 후에 spacePressed = false로 적용
-	    setTimeout(() => spacePressed = false, imageno = 0, 3000); //정확함도를 낮추기 위해서
+	    setTimeout(() => spacePressed = false, (memberInfo.mno == user1.mno ? user1 : user2).imageno = 0, 3000); //정확함도를 낮추기 위해서
 		if(player == user1){
 				user1.swing++;
 				console.log(user1.swing)
@@ -412,7 +425,11 @@ function checkRound(){
 			winner : playerWin,
 			loser : playerLose,
 			winnergsAccute : winnergsAccute, //정확도(이긴사람)
-			losergsAccute : losergsAccute //정확도(진사람)
+			losergsAccute : losergsAccute, //정확도(진사람)
+			gno : gNo,
+			winnerRno : playerWin == user1.mno? user1.rno : user2.rno,
+			loserRno : playerLose == user1.mno ? user1.rno : user2.rno
+			
 		}
 		
 		console.log(user1.swing)
@@ -432,6 +449,9 @@ function checkRound(){
 		})
 	}
 }
+
+ let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
+ 
 // 1초 반복 실행
 function game(){
     requestAnimationFrame(game);
@@ -442,29 +462,25 @@ function game(){
     drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");	// 유저1 스코어
 	drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");	// 유저2 스코어
     
-    let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
     
     // 플레어이 움직임
-    if (rightPressed && user1.x < canvas.width - user1.width) { 
+    if (rightPressed && (user1.mno == sendmno ? user1.x : user2.x) < canvas.width - (user1.mno == sendmno ? user1.width : user2.width)) { 
 		//user1.x += 8;
 		sendMessage(2, sendmno, 8, 0);
 		
 	} 
-    else if (leftPressed && user1.x > 0) {
+    else if (leftPressed && (user1.mno == sendmno ? user1.x : user2.x) > 0) {
 		 //user1.x -= 8; 
 		 sendMessage(2, sendmno, -8, 0);
 	}
     
-    if (upPressed && user1.y > 0){
+    if (upPressed && (user1.mno == sendmno ? user1.y : user2.y) > 0){
 		 //user1.y -= 8;
 		 sendMessage(2, sendmno, 0, -8);
 	} 
-    else if (downPressed && user1.y < canvas.height - user1.height) {
-		 //상대편 네트보다 더 아래로 갈 수 없도록
-	  	if(user1.y < canvas.height/2 - 80){
-			   //user1.y += 8;
-			   sendMessage(2, sendmno, 0, 8);
-		}
+    else if (downPressed && (user1.mno == sendmno ? user1.y : user2.y) < canvas.height - (user1.mno == sendmno ? user1.height : user2.height)) {
+		   //user1.y += 8;
+		   sendMessage(2, sendmno, 0, 8);
 	}
     
     // 공 속도
@@ -515,7 +531,13 @@ function game(){
 		user2.score += 15;
 		
 		if(user2.score >= 45){
-			alert('user2 ' + round +  "라운드 승!");
+			
+			document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+			document.querySelector('.userMid').innerHTML = user2.mno == user2Mno ? user2Mid : user1Mid
+			document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
+			
+			openModal();
+			
 			round++;
 			user2.score = 0;
 			user1.score = 0;
@@ -528,7 +550,12 @@ function game(){
 		user1.score += 15;
 		
 		if(user1.score >= 45){
-			alert('user1 ' + round +  "라운드 승!");
+			document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+			document.querySelector('.userMid').innerHTML = user1.mno == user1Mno ? user1Mid : user2Mid
+			document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
+			
+			openModal();
+			
 			round++;
 			user1.score = 0;
 			user2.score = 0;
@@ -544,5 +571,6 @@ function game(){
 	}
     
 }
+
 
 game();
