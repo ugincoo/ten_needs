@@ -153,12 +153,7 @@ function sendMessage(type, mno, x, y){
 	}
 	gameSocket.send(JSON.stringify(msg));
 }
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> branch 'kimy041' of https://github.com/Tea-ho/ten__needs
 // 방향키 전역 변수
 let rightPressed = false;	// 우키 상태
 let leftPressed = false;	// 좌키 상태
