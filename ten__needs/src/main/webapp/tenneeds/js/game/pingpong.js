@@ -187,6 +187,7 @@ let user1 = {
 	smash : 0,
 	swing : 0,
 	rno : 0,
+	user : 0,
 	draw(){
 		let no = imageno;
 		ctx.drawImage(user1Image[no], this.x , this.y, this.width, this.height);
@@ -212,6 +213,7 @@ let user2 = {
 	smash : 0,
 	swing : 0,
 	rno : 0,
+	user : 0,
 	draw(){
 		let no = imageno;
 		ctx.drawImage(user2Image[no], this.x , this.y, this.width, this.height);
@@ -226,11 +228,12 @@ function onMessage(e){
 	console.log(userData)
 	
 	if(userData.type == 1){ //입장
-		if(userData.mno == memberInfo.mno){
+		if(userData.user == 1){
 			user1.mno = userData.mno;
 			user1.x += userData.x
 			user1.y += userData.y;
 			rno = userData.rno;
+			user1.user = userData.user;
 			
 			user1.draw();
 				
@@ -249,17 +252,19 @@ function onMessage(e){
 						
 						document.querySelector('.player1racketnm').innerHTML = r.rName
 					
-						document.querySelector('.player1Name').innerHTML = memberInfo.mid
+						document.querySelector('.player1Name').innerHTML = (userData.mno == user1Mno ? user1Mid : user2Mid)
 					}
 				}
 			})
 	
 			console.log("user1" + user1)
-		}else{
+		}else if(userData.user == 2){
 			user2.mno = userData.mno;
 			user2.x += userData.x;
 			user2.y += userData.y;
-			user2.rno = userData.rno
+			user2.rno = userData.rno;
+			user2.user = userData.user;
+			
 			user2.draw();
 			// 라켓정보 설정 및 출력
 			$.ajax({
@@ -276,7 +281,7 @@ function onMessage(e){
 						
 						document.querySelector('.player2racketnm').innerHTML = r.rName
 					
-						document.querySelector('.player2Name').innerHTML = user1Mid != memberInfo.mid ? user1Mid : user2Mid;
+						document.querySelector('.player2Name').innerHTML = (userData.mno == user1Mno ? user1Mid : user2Mid)
 						
 					}
 				}
@@ -285,21 +290,19 @@ function onMessage(e){
 			console.log("user2" + user2)
 		}
 	}else if(userData.type == 2){ //움직임
-		if(userData.mno == memberInfo.mno){
+		if(userData.user == 1){
 			user1.x += userData.x;
 			user1.y += userData.y
 			user1.draw();
 						
-		}else{
+		}else if(userData.user == 2){
 			user2.x += userData.x;
-			user2.y -= userData.y;
+			user2.y += userData.y;
 			user2.draw();
 		}
 	}
 	
 }
-
-
 
 // 경기장 
 // 경기장 이미지
@@ -444,27 +447,25 @@ function game(){
     
     let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
     
+    
     // 플레어이 움직임
-    if (rightPressed && user1.x < canvas.width - user1.width) { 
+    if (rightPressed && (user1.mno == sendmno ? user1.x : user2.x) < canvas.width - (user1.mno == sendmno ? user1.width : user2.width)) { 
 		//user1.x += 8;
 		sendMessage(2, sendmno, 8, 0);
 		
 	} 
-    else if (leftPressed && user1.x > 0) {
+    else if (leftPressed && (user1.mno == sendmno ? user1.x : user2.x) > 0) {
 		 //user1.x -= 8; 
 		 sendMessage(2, sendmno, -8, 0);
 	}
     
-    if (upPressed && user1.y > 0){
+    if (upPressed && (user1.mno == sendmno ? user1.y : user2.y) > 0){
 		 //user1.y -= 8;
 		 sendMessage(2, sendmno, 0, -8);
 	} 
-    else if (downPressed && user1.y < canvas.height - user1.height) {
-		 //상대편 네트보다 더 아래로 갈 수 없도록
-	  	if(user1.y < canvas.height/2 - 80){
-			   //user1.y += 8;
-			   sendMessage(2, sendmno, 0, 8);
-		}
+    else if (downPressed && (user1.mno == sendmno ? user1.y : user2.y) < canvas.height - (user1.mno == sendmno ? user1.height : user2.height)) {
+		   //user1.y += 8;
+		   sendMessage(2, sendmno, 0, 8);
 	}
     
     // 공 속도
