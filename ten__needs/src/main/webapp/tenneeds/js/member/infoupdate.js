@@ -9,14 +9,14 @@ if( memberInfo.mid == null ){
 document.querySelector('.mid').innerHTML = memberInfo.mid;
 document.querySelector('.mphone').value = memberInfo.mphone;
 document.querySelector('.memail').value = memberInfo.memail;
-document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg == null ? 'default.webp' : memberInfo.mimg }`;
+document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg == null ? 'default.png' : memberInfo.mimg }`;
 
 function onchecked(){
 	let check = document.querySelector('.defaultimg').checked;
 	
 	
 	if(check){
-      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/default.webp`;
+      document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/default.png`;
     
    }else{
       document.querySelector('.premimg').src = `/ten__needs/tenneeds/jsp/member/mimg/` + memberInfo.mimg;

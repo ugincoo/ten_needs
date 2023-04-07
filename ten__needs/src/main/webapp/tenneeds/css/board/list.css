@@ -5,7 +5,16 @@
 }
 
 /*---------------------------- board 위쪽 css  -------------------------*/
-
+.gomain{
+   background-color: #648977;
+   border: none;
+   border-radius: 5px;
+   padding: 5px 5px;
+   margin:20px 0px 10px 120px;
+   color : white;
+   font-size : 12px;
+   text-align: left;
+}
 .boardtoptitle h3{ /*이벤트 공지 타이틀 부분*/
 	margin-top: 10px;
 	font-weight : 700;

@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://172.30.1.29:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://172.30.1.29:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -98,8 +98,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 3 ){ //--------------------------------------- player1 Reset Ball
 		ball = {
-			x : data.x,
-			y : data.y,
+			x : user1.x,
+			y : user1.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,
@@ -108,8 +108,8 @@ function ballMessage( e ){
 		}
 	} else if( data.ballState === 4 ){ //--------------------------------------- player2 Reset Ball
 		ball = {
-			x : data.x,
-			y : data.y,
+			x : user2.x,
+			y : user2.y,
 			radius : data.radius,
 			speed : data.speed,
 			velocityX : data.velocityX,

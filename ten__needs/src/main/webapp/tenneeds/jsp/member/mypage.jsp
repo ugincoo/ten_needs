@@ -12,6 +12,7 @@
 	<%@ include file = "/tenneeds/header.jsp" %>
 	
 	<div class="container">
+		<a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
 		
 		<h3 class="mypageTitle"> 마이페이지 </h3>
 		
@@ -24,10 +25,10 @@
 				<div class="infoContent">
 					<form class="updateForm">
 						<img class="mImg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.png">	<!-- 프로필: member 폴더에서 들어옴 -->
-						<div class="mName"> <i class="fas fa-user-circle"></i> 이름: 김태호 </div>
-						<div class="mId"> <i class="fas fa-regular fa-id-badge"></i> 아이디: hoky </div>	
-						<div class="mPhone"> <i class="fas fa-mobile"></i> 연락처: 010-0000-0000 </div>
-						<div class="mEmail"> <i class="fas fa-envelope"></i> 이메일: hohohohoho@naver.com </div>
+						<!-- <i class="fas fa-user-circle"></i><div class="mName"> 이름: 김태호 </div> -->
+						<div> <i class="fas fa-regular fa-id-badge"></i> <span class="mId"></span></div>	
+						<div> <i class="fas fa-mobile"></i> <span class="mPhone"></span>  </div>
+						<div> <i class="fas fa-envelope"></i> <span class="mEmail"></span>   </div>
 					</form>
 				</div>
 				<a href="/ten__needs/tenneeds/jsp/member/infoupdate.jsp"><button class="updateBtn" type="button"> 정보수정 </button> </a>
@@ -48,12 +49,12 @@
 						<div class="racketContent"> 파리채 </div>
 					</div>
 					<div class="gameContent">
-						<div class="gId"> <i class="fas fa-regular fa-id-badge"></i> 닉네임 호키 </div>
-						<div class="gCount"> <i class="fas fa-solid fa-gamepad"></i> 경기수 100 </div>
-						<div class="gWin"> <i class="fas fa-laugh-squint"></i> 승리 50  </div>
-						<div class="gWinRate"> <i class="fas fa-table-tennis"></i> 승률 50.00%  </div>
-						<div class="gBestRa"> <i class="fas fa-solid fa-trophy"></i> 베스트 라켓 파리채 </div>
-						<div class="gWorstRa"> <i class="fas fa-solid fa-skull"></i> 워스트 라켓 모기채 </div>
+						<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"></span> </div>
+						<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"></span> 경기수 100 </div>
+						<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span> 승리 50  </div>
+						<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span> 승률 50.00%  </div>
+						<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> 베스트 라켓 파리채 </div>
+						<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span> 워스트 라켓 모기채 </div>
 					</div>
 					
 				</div>

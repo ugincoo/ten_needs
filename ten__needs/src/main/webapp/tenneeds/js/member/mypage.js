@@ -1,5 +1,5 @@
 	// console.log('mypage.js 연결확인');
-
+console.log(memberInfo)
 if( memberInfo == null ){ // --- memberInfo 빈 상태일 때, 객체로 받아지면 .mId 추가
 	alert( '[알림] 로그인된 회원만 이용 가능합니다.' )
 	location.href="/ten__needs/tenneeds/jsp/main.jsp"
@@ -23,20 +23,20 @@ function onDelete(){
 }
 //
 // ------------------------ 프로필 출력: memberInfo 이용 ------------------------
-// printInfo(); // --------------- 완료되면 주석 해제 처리
+printInfo(); // --------------- 완료되면 주석 해제 처리
 function printInfo(){
-	document.querySelector('.mImg').src = "";
-	document.querySelector('.mName').innerHTML = memberInfo.mName;
-	document.querySelector('.mId').innerHTML = memberInfo.mId;
-	document.querySelector('.mPhone').innerHTML = memberInfo.mPhone;
-	document.querySelector('.mEmail').innerHTML = memberInfo.mEmail;
+	document.querySelector('.mImg').src = `/ten__needs/tenneeds/jsp/member/mimg/${memberInfo.mimg == null ? 'default.png' : memberInfo.mimg }`;
+	//document.querySelector('.mName').innerHTML = memberInfo.mName;
+	document.querySelector('.mId').innerHTML = memberInfo.mid;
+	document.querySelector('.mPhone').innerHTML = memberInfo.mphone;
+	document.querySelector('.mEmail').innerHTML = memberInfo.memail;
 }
 
 // ------------------------ 게임 전적 출력: ajax 이용 ------------------------
-// printGameInfo(); // --------------- 완료되면 주석 해제 처리
+ printGameInfo(); // --------------- 완료되면 주석 해제 처리
 function printGameInfo(){
 	
-	document.querySelector('.gId').innerHTML = memberInfo.mId; // 닉네임
+	document.querySelector('.gId').innerHTML = memberInfo.mid; // 닉네임
 	
 	$.ajax({
 		url: "/tenneeds/member/mypage", // servelt MemberInfo랑 합치기 작업

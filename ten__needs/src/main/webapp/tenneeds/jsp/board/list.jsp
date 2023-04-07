@@ -8,7 +8,6 @@
 
 <!-- 사용자 정의 css -->
 <link href = "/ten__needs/tenneeds/css/board/list.css" rel = "stylesheet">
-<link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
 
 </head>
 <body>

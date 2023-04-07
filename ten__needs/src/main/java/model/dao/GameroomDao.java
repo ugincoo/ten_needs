@@ -106,7 +106,6 @@ public class GameroomDao extends Dao {
 	}
 	
 	// 3. 게임방 삭제
-	// 회원 탈퇴
 	public synchronized  boolean onDelete( int gNo ) {
 		String sql = "delete from gameroom where gNo ="+gNo;
 		try {

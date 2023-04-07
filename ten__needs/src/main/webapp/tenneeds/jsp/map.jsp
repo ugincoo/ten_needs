@@ -13,11 +13,13 @@
 	<%@include file = "/tenneeds/header.jsp" %>
 	
 	<div class="wrap container">
+		 <a href="/ten__needs/tenneeds/jsp/board/list.jsp"><button onclick="go_main()" type="button" class="gomain"> 뒤로가기 </button></a>
+		
 		<div class="maptitle"> 
 			<h3> 주변 테니스장 정보 </h3>
 		</div>
 		<div class="mapbox"> 
-			<div id="map" style="width:100%;height:900px;"></div>
+			<div id="map" style="width:90%;height:500px;"></div>
 		</div>
 	</div>
 	
@@ -34,8 +36,7 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db8620d22f203bb5f5678d7b78ad885a&libraries=clusterer"></script>
-	<script src="/ten__needs/tenneeds/js/map.js" type="text/javascript"> </script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db8620d22f203bb5f5678d7b78ad885a&libraries=clusterer"></script>	<script src="/ten__needs/tenneeds/js/map.js" type="text/javascript"> </script>
 	<script src="/ten__needs/tenneeds/js/modal.js" type="text/javascript"> </script>
 	
 </body>

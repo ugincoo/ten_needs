@@ -9,7 +9,7 @@
 <link href="/ten__needs/tenneeds/css/main.css" rel="stylesheet">
 </head>
 <body>
-	<%@include file = "/tenneeds/header.jsp" %>
+	 <%@include file = "/tenneeds/header.jsp" %>
    <!--  메인 화면 -->
    <div class="container main">
       <div class="mainback">

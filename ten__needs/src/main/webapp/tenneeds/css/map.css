@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+.gomain{
+   font-family: "TheJamsil5Bold";
+   background-color: #648977;
+   border: none;
+   border-radius: 5px;
+   padding: 5px 5px;
+   margin:20px 0px 10px 0px;
+   color : white;
+   font-size : 12px;
+   text-align: left;
+}
+
+
 .maptitle h3{ 
 	margin: 3% 0; 		font-family: 'TheJamsil5Bold'; 
 	font-size: 43px;	font-weight : 700;		color : #203725;
@@ -20,7 +33,7 @@
 .modal_box{
 	font-family: 'TheJamsil5Bold'; 
 	background-color: white;
-	width: 27%;		height: 32%;  	padding: 3%;
+	width: 27%;		height: 32%;  	padding: 30px 30px;
 	border: 3px solid #203624;	border-radius: 15px;
 }
 .modal_title{ font-size: 35px; font-weight: 500; margin-bottom: 5%; } 

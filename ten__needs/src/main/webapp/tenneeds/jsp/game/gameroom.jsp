@@ -20,7 +20,7 @@
    <input type = "hidden" type = "text" class = "gNo" value="<%=gNo%>">
    
    <div class="container gameback" >   
-      	 <a href="/ten__needs/tenneeds/jsp/game/gamelist.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
+      	 <a href="/ten__needs/tenneeds/jsp/game/gamelist.jsp"><button onclick="go_main()" type="button" class="gomain"> 뒤로가기 </button></a>
 
       <!-- 방 번호 / 방제목  -->
       <div class="gametitle_box"> 
