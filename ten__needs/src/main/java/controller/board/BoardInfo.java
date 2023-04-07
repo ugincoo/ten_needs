@@ -43,12 +43,12 @@ public class BoardInfo extends HttpServlet {
 
 			//페이지 처리
 			int page = Integer.parseInt(request.getParameter("page"));
-			int startRow = (page-1)*10; //10개씩 출력
+			int startRow = (page-1)*3; //3개씩 출력
 
 			//게시물 수 구하기
 			int totalSize = BoardDao.getInstance().getTotalSize(key, keyword);
 			//총 페이지
-			int totalpage = (totalSize%10 == 0) ? (totalSize/10) : (totalSize/10 +1);
+			int totalpage = (totalSize%3 == 0) ? (totalSize/3) : (totalSize/3 +1);
 
 			
 			//버튼 최대 개수 

@@ -44,10 +44,10 @@ public class BoardDao extends Dao{
 		ArrayList<BoardDto> boardList = new ArrayList<>();
 		
 		if(key.equals("") && keyword.equals("")) {
-			sql = "select b.* from board b order by bDate desc limit ?, 10";
+			sql = "select b.* from board b order by bDate desc limit ?, 3";
 		}else {
 			System.out.println("키워드 있음");
-			sql = "select * from board where "+key+" like \"%"+keyword+"%\" order by bDate desc limit ?, 10";
+			sql = "select * from board where "+key+" like \"%"+keyword+"%\" order by bDate desc limit ?, 3";
 		}
 		
 		try {
