@@ -61,10 +61,10 @@ public class GameroomDao extends Dao {
 		ArrayList<GameroomDto> gamelist = new ArrayList<>();
 		
 		if(key.equals("") && keyword.equals("")) {
-			sql = "select * from gameroom order by gDate desc limit ?, 10"; //--- SQL 정상 작동
+			sql = "select g.*, m.mid from gameroom g natural join member m order by g.gDate desc limit ?, 10"; //--- SQL 정상 작동
 		}else {
 			System.out.println("키워드 있음");
-			sql = "select * from gameroom where "+key+" like \"%"+keyword+"%\" order by gDate desc limit ?, 10";
+			sql = "select g.*, m.mid from gameroom g natural join member m where "+key+" like \"%"+keyword+"%\" order by gDate desc limit ?, 10";
 		}
 		try {
 			ps = con.prepareStatement(sql);
@@ -74,12 +74,13 @@ public class GameroomDao extends Dao {
 				GameroomDto dto = new GameroomDto(
 						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)
 						);
-					
+				dto.setmId(rs.getString(5));
+				/*
 				sql = "select mid from member where mno ="+rs.getInt(4);
 				ps = con.prepareStatement(sql); ResultSet rs2 = ps.executeQuery();
 				if( rs2.next() ) {
 					dto.setmId(rs2.getString(1));
-				}
+				}*/
 					// System.out.println(dto.toString()); //--- 확인 완료
 				gamelist.add(dto);
 			}
