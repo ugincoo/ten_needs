@@ -29,7 +29,7 @@ JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summern
 
 
 #### 7. MVC Structure
-![Control_Structure_tenneeds](https://user-images.githubusercontent.com/119651889/229290818-75dd1d43-42c6-4acb-b154-639ffb148730.png)
+![image](https://user-images.githubusercontent.com/119651889/230697322-7a6ced6c-654a-4370-a121-8149752464c4.png)
 
 
 #### 8. Front-End Structure [ layout ]
