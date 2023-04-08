@@ -13,10 +13,10 @@ tenNeeds(project3)
 
 #### 3. 팀원: 권가영, 김미영, 김태호, 오유진
 **[ R&R ]**
-![image](https://user-images.githubusercontent.com/119651889/230697751-ddabd365-8115-41da-b7cf-c94d20c0babb.png)
+![image](https://user-images.githubusercontent.com/119651889/230697764-70c1d62e-10bd-427b-8e02-6c99f25444a9.png)
 
 **[ Personal Schedule ]**
-![image](https://user-images.githubusercontent.com/119651889/230697745-22911e04-1a00-4ec8-8425-1412e7b69319.png)
+![image](https://user-images.githubusercontent.com/119651889/230697768-cf2b791f-8b47-41bb-b0a5-d6397d8d65c8.png)
 
 #### 4.개발 전체 일정
 ![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292513-9761368f-0ca5-40ca-b470-8546b6e30b22.gif)
