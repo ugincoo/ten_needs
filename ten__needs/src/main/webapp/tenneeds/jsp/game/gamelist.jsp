@@ -35,7 +35,7 @@
 			<!-- 검색하는 창 -->
 			<div class = "searchbox" style ="display: flex; justify-content: center">
 				<select class = "key"> <!-- key입력 -->
-					<option value = "gTitle">제목</option>
+					<option onkeyup="gTitleCheck()" value = "gTitle">제목</option>
 					<option value = "mid">아이디</option>
 				</select>
 				<div>

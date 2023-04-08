@@ -37,7 +37,8 @@ public class RacketDao extends Dao {
 	
 	// 2. 라켓 삭제
 	public boolean onDelete( String rName ) {
-		String sql = "delete from racket where rName ="+rName;
+			System.out.println(rName);
+		String sql = "delete from racket where rName ='"+rName+"'";
 		try {
 			ps = con.prepareStatement(sql);
 			if( ps.executeUpdate() == 1 ) { return true; }
