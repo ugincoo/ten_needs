@@ -3,6 +3,8 @@ package model.dao;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import model.dto.GameResultDto;
+import model.dto.GameUserDto;
 import model.dto.RacketDto;
 
 public class GameDao extends Dao {
@@ -25,20 +27,28 @@ public class GameDao extends Dao {
 		return null;
 	}
 	
-	//게임 승리시 게임 종료 -> 데이터 넣기(승리자)
-	public boolean endGame(int winner) {
-		String sql = "update into game set winner = ";
+	//게임 종료시 데이터 넣기
+	public boolean endGame(GameResultDto dto) {
+		//승리자부터
+		String sql = "insert into gamestatus(gsAccute, gsResult, mNo, gNo, rNo) vlaues (?, true, ?, ?, ?) ";
 		
 		try {
 			ps = con.prepareStatement(sql);
 			
-			ps.setInt(1, winner);
+			ps.setDouble(1, dto.getWinnerAccute());
+			ps.setInt(2, dto.getWinnerMno());
+			ps.setInt(3, dto.getGno());
+			ps.setInt(4, dto.getWinnerRno());
 			
-			int count =  ps.executeUpdate();
 			
-			if(count == 1) {
+			if(ps.executeUpdate() == 1) {
 				//게임 승리자의 gResult의 값을 1로 바꿔준다.
-				sql = "update into gamestatus set gResult = 1 where mNo = " + winner;
+				sql = "insert into gamestatus(gsAccute, mNo, gNo, rNo) vlaues (?, ?, ?, ?) ";
+				
+				ps.setDouble(1, dto.getLoserAccute());
+				ps.setInt(2, dto.getLoserMno());
+				ps.setInt(3, dto.getGno());
+				ps.setInt(4, dto.getLoserRno());
 				
 				ps.executeUpdate();
 				
@@ -71,6 +81,29 @@ public class GameDao extends Dao {
 						rs.getInt(6)));
 			}
 			return racketList;
+		}catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	//정확도 승리수 출력
+	public ArrayList<GameResultDto> getRanking(){
+		ArrayList<GameResultDto> memberRankingList = new ArrayList<>();
+		
+		String sql = "select m.mid, sum(gs.gsResult) as '승리횟수', avg(gs.gsAccute) as '정확도 평균' ,m.mImg from gamestatus gs natural join member m group by m.mno order by '정확도 평균' desc";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				memberRankingList.add(new GameResultDto(rs.getDouble(3), rs.getString(4), rs.getString(1), rs.getInt(2)));
+				
+			}
+			return memberRankingList;
+			
 		}catch (Exception e) {
 			System.err.println(e.getMessage());
 		}

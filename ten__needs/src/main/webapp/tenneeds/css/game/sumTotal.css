@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+.totalTitle{ /*헤더*/		
+	margin-top: 10px;
+	font-weight : 700;
+	font-size: 43px;
+	color : #203725;
+}
+
+.totalTable{
+	width: 90%;
+	margin: 0 auto;
+}
+
+tr{
+	width: 90%;
+	margin: 0 auto;
+	border-bottom : 1px solid #DBC8B9;
+}
+
+table{
+	border: 1px solid #DBC8B9;
+	border-collapse: collapse;
+}
+
+/* -------------------- th, td --------------------------- */
+
+th{
+	background-color: #DBC8B9;
+	font-size: 25px;
+	color : white;
+	padding: 7px 3px;
+	text-align: center !important;
+}
+.member_profile{ /*프로필*/
+	width: 20%;
+}
+
+.member_nickname{/*닉네임*/
+	width: 15%;
+}
+
+.member_winCount{/*승리횟수*/
+	width: 15%;
+}
+
+.member_Accute{/*정확도*/
+	width: 40%;
+}
+
+.member_etc{ /*비고*/
+	width: 10%;
+}
+
+img{/*player 프로필*/
+	width : 150px;
+	height: 150px;
+	border:  solid 1px #e8e8e8;
+	border-radius: 3%; /*둥근 모서리*/
+}

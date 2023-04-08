@@ -3,6 +3,7 @@ package controller.game;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.GameDao;
 import model.dto.GameResultDto;
+import model.dto.GameUserDto;
 import model.dto.RacketDto;
 
 
@@ -28,18 +30,26 @@ public class GameResult extends HttpServlet {
 	//게임에 필요한 정보를 가져오는
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int type = Integer.parseInt(request.getParameter("type"));
-		int rno = Integer.parseInt(request.getParameter("rno"));
+		ObjectMapper mapper = new ObjectMapper();
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
 		
 		System.out.println(type);
 		if(type == 1) { //라켓의 정보를 가져오는
+			int rno = Integer.parseInt(request.getParameter("rno"));
 			RacketDto dto = GameDao.getInstans().getRacket(rno);
-			
-			ObjectMapper mapper = new ObjectMapper();
+		
 			
 			String jsonArray = mapper.writeValueAsString(dto);
 			
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json");
+			
+			response.getWriter().print(jsonArray);
+		}else if(type == 2) { //통계
+
+			ArrayList<GameResultDto> memberRankingList = GameDao.getInstans().getRanking();
+				
+			String jsonArray = mapper.writeValueAsString(memberRankingList);
+			
 			response.getWriter().print(jsonArray);
 		}
 	}
@@ -56,19 +66,22 @@ public class GameResult extends HttpServlet {
 		
 		int gno = Integer.parseInt(request.getParameter("gno"));
 		
-		double winnergsAccute = Double.parseDouble(request.getParameter("winnergsAccute"));
+		double winnergsAccute = Math.round(Double.parseDouble(request.getParameter("winnergsAccute"))*100)/100.0;
 		
-		double losergsAccute = Double.parseDouble(request.getParameter("losergsAccute"));
+		System.out.println("winnerAccute : " + winnergsAccute);
 		
+		double losergsAccute = Math.round(Double.parseDouble(request.getParameter("losergsAccute"))*100)/100.0;
+		
+		System.out.println("losergsAccute : " + losergsAccute);
 		int winnerRno = Integer.parseInt(request.getParameter("winnerRno"));
 		int loserRno = Integer.parseInt(request.getParameter("loserRno"));
 		
-		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute);
+		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute, gno, winnerRno, loserRno);
 		System.out.println(dto);
-		//boolean result = GameDao.getInstance().endGame(dto);
 		
-		//response.getWriter().print(result);
-		response.getWriter().print(true);
+		boolean result = GameDao.getInstans().endGame(dto);
+		
+		response.getWriter().print(result);
 		
 	}
 
