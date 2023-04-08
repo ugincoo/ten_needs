@@ -10,15 +10,21 @@
 <body>
 
 	<%@ include file = "/tenneeds/header.jsp" %>
+	<%	
+		String rNo = request.getParameter("rNo");
+	%>
+	
+  
 	
 	<div class="container">
-		<form class="racketForm">
+		<form class="updateForm">
 		
+			<input type = "hidden" type = "text" name="rNo" class = "rNo" value="<%=rNo%>">
 			<h3> TENNEEDS admin page </h3>
-			<p> 라켓 등록 </p>
+			<p> 라켓 정보 수정 </p>
 			
 			<div class="title"> 라켓명 </div>
-			<input onkeyup="racketcheck()" maxlength="30" name="rName" class="rName" type="text">
+			<input maxlength="30" name="rName" class="rName" type="text">
 			<div class="checkconfirm"></div>
 			
 			<div class="title"> 레벨설정 </div>
@@ -43,10 +49,26 @@
 				<input onchange="prerimg(this)" name="rimg" class="rimg img" type="file">
 			</div>
 			
-			<button class="signupbtn" onclick="addRacket()" type="button"> 라켓등록 완료 </button>
+			<button class="signupbtn" onclick="updateRacket()" type="button"> 라켓수정 완료 </button>
+			<button class="signupbtn" onclick="openModal()" type="button"> 라켓삭제 </button>
 		</form>
 	</div>
 	
-	<script src="/ten__needs/tenneeds/js/admin/adminRacket.js" type="text/javascript"></script>
+		<!-- 모달 HTMLs -->
+	<div class="modal_wrap">
+		<div class="modal_box">
+			<h3 class="modal_title"> 라켓 정보를 삭제하시겠습니까?  </h3>
+			<div class="modal_content">
+				라켓명: <input type="text" class="dName" name="dName" id="dName">
+			</div>
+			<div class="modal_btns">
+				<button onclick="onDelete()" class="modla_cancle" type="button"> 확인 </button>
+				<button onclick="closeModal()" class="modla_cancle" type="button"> 취소 </button>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/ten__needs/tenneeds/js/admin/adminRacktView.js" type="text/javascript"></script>
+	<script src="/ten__needs/tenneeds/js/modal.js" type="text/javascript"> </script>
 </body>
 </html>

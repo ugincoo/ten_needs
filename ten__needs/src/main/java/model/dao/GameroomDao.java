@@ -33,7 +33,7 @@ public class GameroomDao extends Dao {
 		return null;
 	}
 	
-	// 2-1. 게시물 구하기
+	// 2-1. 게임방수 구하기
 	public synchronized int getTotalSize(String key, String keyword) {
 		String sql;
 		

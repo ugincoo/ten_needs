@@ -14,7 +14,9 @@ public class PageDto {
 	//!! : 실질적인 게시물 목록 
 	ArrayList<BoardDto> boardList; //출력할 데이터[게시물] 리스트
 	ArrayList<GameroomDto> gameList;
+	ArrayList<RacketDto> racketList;
 	int type; // -- gameList 공용 사용을 위함
+	String racket;
 	
 	//게시물용
 	public PageDto(int page, int startRow, int totalsize, int totalpage, int btnSize, int startBtn,
@@ -44,7 +46,21 @@ public class PageDto {
 		this.gameList = gameList;
 		this.type = type;
 	}
-	
+
+	// 라켓용
+	public PageDto(int page, int startRow, int totalsize, int totalpage, int btnSize, int startBtn,
+			int endBtn, ArrayList<RacketDto> racketList, String racket) {
+		super();
+		this.page = page;
+		this.startRow = startRow;
+		this.totalsize = totalsize;
+		this.totalpage = totalpage;
+		this.btnSize = btnSize;
+		this.startBtn = startBtn;
+		this.endBtn = endBtn;
+		this.racketList = racketList;
+		this.racket = racket;
+	}
 
 	public int getPage() {
 		return page;
@@ -116,6 +132,14 @@ public class PageDto {
 
 	public void setGameList(ArrayList<GameroomDto> gameList) {
 		this.gameList = gameList;
+	}
+	
+	public ArrayList<RacketDto> getRacketList() {
+		return racketList;
+	}
+
+	public void setRacketList(ArrayList<RacketDto> racketList) {
+		this.racketList = racketList;
 	}
 
 	public int getType() {

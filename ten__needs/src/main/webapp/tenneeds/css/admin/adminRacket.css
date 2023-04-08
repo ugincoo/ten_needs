@@ -1,18 +1,18 @@
 @charset "UTF-8";
-.signupForm , .updateForm{
+.racketForm , .updateForm{
 	width: 30%;
 	margin: 30px auto;
 	font-size: 15px;
 }
-.signupForm h3 , .updateForm h3{
+.racketForm h3 , .updateForm h3{
 	font-family: TheJamsil5Bold;
 	text-align: center;
 }
-.signupForm  p , .updateForm p{
+.racketForm  p , .updateForm p{
 	font-size: 16px;
 	text-align: center;
 }
-.signupForm input:not(.img , .defaultimg) , .updateForm input:not(.img , .defaultimg){
+.racketForm input:not(.img , .defaultimg) , .updateForm input:not(.img , .defaultimg){
 	width: 100%;
 	height: 45px;
 	padding: 20px;
