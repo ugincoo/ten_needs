@@ -13,7 +13,7 @@ tenNeeds(project3)
 
 #### 3. 팀원: 권가영, 김미영, 김태호, 오유진
 **[ R&R ]**
-![image](https://user-images.githubusercontent.com/119651889/230697803-dfbaa267-4567-4fdf-89ba-0f765206dafc.png)
+![image](https://user-images.githubusercontent.com/119651889/230697872-f8626686-b371-4e8d-b308-166af3722dc6.png)
 
 **[ Personal Schedule ]**
 ![image](https://user-images.githubusercontent.com/119651889/230697849-c36f0dc0-dde2-4d90-9be8-1fa40b0e167e.png)
