@@ -16,7 +16,7 @@ tenNeeds(project3)
 ![image](https://user-images.githubusercontent.com/119651889/230697803-dfbaa267-4567-4fdf-89ba-0f765206dafc.png)
 
 **[ Personal Schedule ]**
-![image](https://user-images.githubusercontent.com/119651889/230697793-c1e4a57b-30f9-49db-b26c-56c631f6ce65.png)
+![image](https://user-images.githubusercontent.com/119651889/230697849-c36f0dc0-dde2-4d90-9be8-1fa40b0e167e.png)
 
 #### 4.개발 전체 일정
 ![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292513-9761368f-0ca5-40ca-b470-8546b6e30b22.gif)
