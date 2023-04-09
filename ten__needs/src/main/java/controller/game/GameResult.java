@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.GameDao;
+import model.dao.MemberDao;
 import model.dto.GameResultDto;
 import model.dto.GameUserDto;
+import model.dto.MemberDto;
 import model.dto.RacketDto;
 
 
@@ -33,6 +35,7 @@ public class GameResult extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
+		request.setCharacterEncoding("UTF-8");
 		
 		System.out.println(type);
 		if(type == 1) { //라켓의 정보를 가져오는
@@ -51,6 +54,11 @@ public class GameResult extends HttpServlet {
 			String jsonArray = mapper.writeValueAsString(memberRankingList);
 			
 			response.getWriter().print(jsonArray);
+		}else if(type == 3) { //회원 정보 가져오기
+			String mid = request.getParameter("mid");
+			
+			MemberDto dto = MemberDao.getInstance().getMember(mid);
+			response.getWriter().print(dto);
 		}
 	}
 

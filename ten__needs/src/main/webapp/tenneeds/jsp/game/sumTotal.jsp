@@ -9,11 +9,20 @@
 </head>
 <body>
 	<%@include file = "/tenneeds/header.jsp" %>
+	
 	<div class = "container">
 		<div class = "totalTitle"> <!-- 맨위 타이틀 부분 -->
-				<h3>Player Ranking</h3>
+			<h3>Player Ranking</h3>
+		</div>
+		<div class = member_topinfo>
+			<div class = "member_info"> <!-- 차트 멤버 정보 -->
+				
 			</div>
-		<table class = "totalTable">
+			<div class = "member_chart"> <!-- 차트 -->
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+		<table class = "totalTable table table-hover">
 			<!-- <tr>
 				<th class = "member_profile">프로필</th>
 				<th class = "member_nickname">닉네임</th>

@@ -26,10 +26,11 @@ table{
 /* -------------------- th, td --------------------------- */
 
 th{
-	background-color: #DBC8B9;
+	background-color: #DBC8B9 !important;
 	font-size: 25px;
 	color : white;
 	padding: 7px 3px;
+	--bs-table-hover-color: white;
 	text-align: center !important;
 }
 .member_profile{ /*프로필*/
@@ -57,4 +58,20 @@ img{/*player 프로필*/
 	height: 150px;
 	border:  solid 1px #e8e8e8;
 	border-radius: 3%; /*둥근 모서리*/
+}
+
+.member_topinfo{
+	display: flex;
+	justify-content: space-between;
+	height: 300px;
+	width: 100%;
+	margin: 5px 20px;
+}
+
+.member_topinfo{
+	width: 40%;
+}
+
+.member_chart{
+	width: 60%;
 }
