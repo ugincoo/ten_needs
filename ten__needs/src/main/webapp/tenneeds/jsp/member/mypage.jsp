@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>마이페이지입니다.</title>
 	<link href="/ten__needs/tenneeds/css/member/mypage.css" rel="stylesheet">
+	<link href="/ten__needs/tenneeds/css/game/sumTotal.css" rel="stylesheet">
 </head>
 <link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
@@ -41,21 +42,30 @@
 				
 				<!-- 게임 전적 정보 --><!--  -->
 				<div class="gamebox">
-				
-					<h4 class="gameTitle"> 게임 전적 정보 </h4>
-					<!-- <div class="gRank"> <i class="fab fa-ravelry"></i> 랭크 3위 </div> -->
-					<div class="racketwrap">
-						<img class="rImg" alt="" src=""> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
-						<div class="racketTitle"> 가장 잘하는 라켓 </div>
-						<div class="racketContent"> 파리채 </div>
+					<div class ="memberGame_info">
+						<h4 class="gameTitle"> 게임 전적 정보 </h4>
+						<button class ="wholeranking updateBtn" onClick = "getTotal()">
+							전체랭킹보기
+						</button>
 					</div>
-					<div class="gameContent">
-						<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"> </span> </div>
-						<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"> </span> </div>
-						<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span>  </div>
-						<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span>  </div>
-						<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> </div>
-						<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span>  </div>
+					<div class = "memberGame_info2">
+						
+					</div>
+					<!-- <div class="gRank"> <i class="fab fa-ravelry"></i> 랭크 3위 </div> -->
+					<div class = "realGame_info">
+						<div class="racketwrap">
+							<img class="rImg" alt="" src=""> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
+							<div class="racketTitle"> </div>
+							<div class="racketContent"> </div>
+						</div>
+						<div class="gameContent">
+							<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"> </span> </div>
+							<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"> </span> </div>
+							<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span>  </div>
+							<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span>  </div>
+							<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> </div>
+							<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span>  </div>
+						</div>
 					</div>
 					
 				</div>
@@ -76,9 +86,23 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal_wrap2">
+		<div class="modal_box" style = "width : 30%;">
+			<h3 class="modal_title2"> </h3>
+			<div class="modal_content">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div class="modal_btns2">
+				<button onclick="closeModal2()" class="modla_cancle" type="button"> 확인 </button>
+			</div>
+		</div>
+	</div>
 
 	<script src="/ten__needs/tenneeds/js/member/mypage.js" type="text/javascript"></script>
 	<script src="/ten__needs/tenneeds/js/modal.js" type="text/javascript"> </script>
 	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="/ten__needs/tenneeds/js/game/sumTotal.js" type="text/javascript"></script>
 </body>
 </html>

@@ -52,11 +52,14 @@ public class GameResult extends HttpServlet {
 			String jsonArray = mapper.writeValueAsString(memberRankingList);
 			
 			response.getWriter().print(jsonArray);
-		}else if(type == 3) { //회원 정보 가져오기
-			String mid = request.getParameter("mid");
+		}else if(type == 3) { //ID 검색
+			String keyword = request.getParameter("keyword");
 			
-			MemberDto dto = MemberDao.getInstance().getMember(mid);
-			response.getWriter().print(dto);
+			ArrayList<GameResultDto> memberRankingList =  GameDao.getInstans().getSigleRanking(keyword);
+			
+			String jsonArray = mapper.writeValueAsString(memberRankingList);
+			
+			response.getWriter().print(jsonArray);
 		}
 	}
 

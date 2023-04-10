@@ -35,7 +35,28 @@ function printInfo(){
 // ------------------------ 게임 전적 출력: ajax 이용 ------------------------
  printGameInfo(); // --------------- 완료되면 주석 해제 처리
 function printGameInfo(){
-	
+	let html = `<h4 class="gameTitle"> 게임 전적 정보 </h4>
+						<button class ="wholeranking updateBtn" onClick = "getTotal()">
+							전체 랭킹보기
+						</button>`;
+						
+	document.querySelector('.memberGame_info').innerHTML = html;
+	document.querySelector('.memberGame_info2').innerHTML = "";				
+	html = `<div class="racketwrap">
+							<img class="rImg" alt="" src=""> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
+							<div class="racketTitle"> </div>
+							<div class="racketContent"> </div>
+						</div>
+						<div class="gameContent">
+							<div> <i class="fas fa-regular fa-id-badge"></i> <span  class="gId"> </span> </div>
+							<div> <i class="fas fa-solid fa-gamepad"></i> <span class="gCount"> </span> </div>
+							<div> <i class="fas fa-laugh-squint"></i> <span class="gWin"></span>  </div>
+							<div> <i class="fas fa-table-tennis"></i> <span class="gWinRate"></span>  </div>
+							<div> <i class="fas fa-solid fa-trophy"></i> <span class="gBestRa"></span> </div>
+							<div> <i class="fas fa-solid fa-skull"></i> <span class="gWorstRa"></span>  </div>
+						</div>`
+	document.querySelector('.realGame_info').innerHTML = html;
+		
 	document.querySelector('.gId').innerHTML = '닉네임: '+memberInfo.mid; // 닉네임
 	
 	$.ajax({
