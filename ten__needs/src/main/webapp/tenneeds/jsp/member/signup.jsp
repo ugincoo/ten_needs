@@ -49,8 +49,10 @@
 				<label for="mimg">
  					 	파일 업로드
 				</label>
-				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file"> <br/>
-				<input onchange="premimg(this)" name="mimg" class="mimg img" type="file">
+				<input onchange="premimg(this)" name="mimg" id="mimg" class="mimg img" type="file"> <br/>
+				
+				
+				<input onchange="premimg(this)" name="mimg" id="mimg"  class="mimg img" type="file">
 			</div>
 			
 			<button class="signupbtn" onclick="signup()" type="button"> 회원가입 완료 </button>
