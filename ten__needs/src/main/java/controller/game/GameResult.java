@@ -3,7 +3,6 @@ package controller.game;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dao.GameDao;
 import model.dao.MemberDao;
 import model.dto.GameResultDto;
-import model.dto.GameUserDto;
 import model.dto.MemberDto;
 import model.dto.RacketDto;
 
