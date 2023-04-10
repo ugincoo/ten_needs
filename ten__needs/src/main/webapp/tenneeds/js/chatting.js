@@ -10,7 +10,7 @@ let chattingSockat = null;
 if( memberInfo.mid == null ){
 	alert('로그인필요');
 }else{
-	chattingSockat = new WebSocket('ws://172.30.1.9:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);	
+	chattingSockat = new WebSocket('ws://localhost:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);	
 
 	// open, message, close 작동 on
 	chattingSockat.onopen = function(e){ inputChat(e); }
