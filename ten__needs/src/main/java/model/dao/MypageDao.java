@@ -27,7 +27,7 @@ public class MypageDao extends Dao {
 	// 게임 정보 출력
 	public MypageGameDto printGameInfo( int mNo ) {
 		
-		String sql = "select count(*) as gCount, sum(gsResult) as gWin, (sum(gsResult)/count(*))*100 as gWinRate from gamestatus where mNo ="+mNo;
+		String sql = "select count(*) as gCount, sum(gsResult) as gWin, ROUND((sum(gsResult)/count(*))*100,2) as gWinRate from gamestatus where mNo ="+mNo;
 			// System.out.println("sql1 matters"); //--- 문제 없음
 		try {
 			ps = con.prepareStatement(sql);
@@ -41,9 +41,10 @@ public class MypageDao extends Dao {
 				
 					System.out.println("mNo cheking: " + mNo);
 				sql = "select r.rNo, r.rName, r.rImg, sum(g.gsResult) as total from gamestatus g join racket r on g.rNo = r.rNo where mNo = ? group by r.rNo order by total desc";
-				ps = con.prepareStatement(sql);
+				ps = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ps.setInt(1, mNo);
 				ResultSet rs2 = ps.executeQuery();
+				
 					System.out.println( rs2 );
 				
 				while( rs2.next() ) { // --- test해야함

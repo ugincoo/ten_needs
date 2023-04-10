@@ -24,7 +24,7 @@
 				<h4 class="infoTitle"> 프로필 정보 </h4>
 				<div class="infoContent">
 					<form class="updateForm">
-						<img class="mImg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/default.png">	<!-- 프로필: member 폴더에서 들어옴 -->
+						<img class="mImg" alt="" src="">	<!-- 프로필: member 폴더에서 들어옴 -->
 						<!-- <i class="fas fa-user-circle"></i><div class="mName"> 이름: 김태호 </div> -->
 						<div> <i class="fas fa-regular fa-id-badge"></i> <span class="mId"></span></div>	
 						<div> <i class="fas fa-mobile"></i> <span class="mPhone"></span>  </div>
@@ -44,7 +44,7 @@
 					<h4 class="gameTitle"> 게임 전적 정보 </h4>
 					<!-- <div class="gRank"> <i class="fab fa-ravelry"></i> 랭크 3위 </div> -->
 					<div class="racketwrap">
-						<img class="rImg" alt="" src="/ten__needs/tenneeds/jsp/member/mimg/파리채.png"> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
+						<img class="rImg" alt="" src=""> <!-- 라켓 이미지: game 폴더에서 들어옴 -->
 						<div class="racketTitle"> 가장 잘하는 라켓 </div>
 						<div class="racketContent"> 파리채 </div>
 					</div>

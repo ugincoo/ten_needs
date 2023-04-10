@@ -17,9 +17,12 @@ public class GameroomDao extends Dao {
 		// --- 1. 방을 생성해라
 		// --- 2. 가장 최근에 생성된 방 정보를 가져온다.
 		// --- 3. 이거를 DTO넣고, 반환한다
+			// System.out.println(dto.getgTitle()); //--- null아니고 공백으로 들어옴
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setString(1, dto.getgTitle()); 	ps.setInt(2, dto.getmNo());
+			 if (dto.getgTitle() == "") { ps.setString(1, "아무나 오세요");
+		        } else { ps.setString(1, dto.getgTitle()); }
+			ps.setInt(2, dto.getmNo());
 			
 			if( ps.executeUpdate() == 1 ) {
 				sql = "select g.*, m.mid from gameroom g natural join member m where mno = "+ dto.getmNo() +" order by gdate desc limit 1";
@@ -33,7 +36,7 @@ public class GameroomDao extends Dao {
 		return null;
 	}
 	
-	// 2-1. 게시물 구하기
+	// 2-1. 게임방수 구하기
 	public synchronized int getTotalSize(String key, String keyword) {
 		String sql;
 		

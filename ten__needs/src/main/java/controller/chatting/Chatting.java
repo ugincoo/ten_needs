@@ -43,6 +43,8 @@ public class Chatting {
 	@OnMessage
 	public void OnMessage( Session session, String msg ) throws Exception{
 		
+		System.out.println(msg);
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		

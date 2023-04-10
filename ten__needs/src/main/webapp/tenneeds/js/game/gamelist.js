@@ -106,9 +106,6 @@ function setSearch(){
 // 4, 게임 방만들기
 function createGame(){
 	let gTitle = document.querySelector('.gcTitle').value;
-		
-		console.log(gTitle);
-		
 		// console.log( memberInfo.mno ); // -- 확인완료
 		
 	$.ajax({
@@ -123,7 +120,7 @@ function createGame(){
 				location.href = `/ten__needs/tenneeds/jsp/game/gameroom.jsp?gNo=${data.gNo}`;
 				
 			} else{
-				alert('글쓰기 실패. 관리자에게 문의해주세요.');
+				alert('[알림]방제목을 입력해주세요.');
 			}
 			/*if(r == 'true'){
 				alert('방생성 성공')
