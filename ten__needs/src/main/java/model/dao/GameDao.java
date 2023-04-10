@@ -110,4 +110,30 @@ public class GameDao extends Dao {
 		return null;
 	}
 	
+	//ID 검색
+	public ArrayList<GameResultDto> getSigleRanking(String keyword) {
+		ArrayList<GameResultDto> memberRankingList = new ArrayList<>();
+		
+		String sql = "select m.mid, sum(gs.gsResult) as '승리횟수', avg(gs.gsAccute) as '정확도 평균' ,m.mImg"
+						+ " from gamestatus gs , member m"
+						+ " where m.mid like \"%"+keyword+"%\" and m.mno = gs.mno"
+						+ " group by m.mno "
+						+ " order by '정확도 평균' desc";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				memberRankingList.add(new GameResultDto(rs.getDouble(3), rs.getString(4), rs.getString(1), rs.getInt(2)));
+			}
+			return memberRankingList;
+		}catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return null;
+		
+	}
+	
 }
