@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://172.30.1.29:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://172.30.1.29:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -495,16 +495,16 @@ function game(){
 		 // 공이 패들에 부딪힌 경우
 		if(collision(ball, player)){
 			// 공이 패들에 닿는 위치 확인
-			let collidePoint = ball.y - (player.y + player.height/2);
+			let collidePoint = ball.y - (player.x + player.width/2);
 			
        		// -player.height/2 < 충돌 지점 < player.height/2
-			collidePoint = collidePoint/(player.height/2);
+			collidePoint = collidePoint/(player.width/2);
 			
        		// Math.PI/10 = 18도
 			let angleRad = collidePoint * Math.PI/3;
 			
 			// X 및 Y 속도 방향 변경
-			let direction = (ball.x < canvas.width/2)? 1 : -1;
+			let direction = (ball.y < canvas.height/2)? 1 : -1;
 			ball.speed += 0.5;
 			
 			updateBall = {
@@ -512,8 +512,8 @@ function game(){
 				y : ball.y,
 				radius : ball.radius,
 				speed : ball.speed,
-				velocityX: direction * ball.speed * Math.cos(angleRad),
-				velocityY: ball.speed * Math.sin(angleRad)
+				velocityX: ball.speed,
+				velocityY: direction * ball.speed * Math.tan(angleRad)
 			}
 					
 			if(player == user1){
@@ -527,7 +527,7 @@ function game(){
 	}
 	
 	// 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
-	if(ball.y -ball.radius < 0){
+	if(ball.y -ball.radius < 0 || (ball.x -ball.radius <0 && ball.y < canvas.height/2 ) || (ball.x +ball.radius > canvas.width && ball.y < canvas.height/2) ){
 		user2.score += 15;
 		
 		if(user2.score >= 45){
@@ -546,7 +546,7 @@ function game(){
 		checkRound();
 		connectServer( "player1ResetBall", 3 );
 
-	}else if(ball.y + ball.radius > canvas.height){
+	}else if(ball.y + ball.radius > canvas.height || (ball.x -ball.radius <0 && ball.y > canvas.height/2) || (ball.x +ball.radius > canvas.width && ball.y > canvas.height/2) ){
 		user1.score += 15;
 		
 		if(user1.score >= 45){
