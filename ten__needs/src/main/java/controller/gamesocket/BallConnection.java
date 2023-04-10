@@ -34,13 +34,7 @@ public class BallConnection {
 			
 			if( count >= 2 ) { session.close(); return; }
 			
-			connectList.add( new GameUserBallTestDto(session, mno, gno) );
-			
-			/*
-			 * if (balldto == null) { balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow",
-			 * 0); }
-			 */
-			
+			connectList.add( new GameUserBallTestDto(session, mno, gno) );		
 			msgServer( session, "startBall" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
 		
 		}catch (Exception e) { System.out.println(e);}

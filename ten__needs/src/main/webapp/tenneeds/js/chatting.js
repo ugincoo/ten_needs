@@ -10,7 +10,7 @@ let chattingSockat = null;
 if( memberInfo.mid == null ){
 	alert('로그인필요');
 }else{
-	chattingSockat = new WebSocket('ws://localhost:8080/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);	
+	chattingSockat = new WebSocket('ws://localhost:8089/ten__needs/tenneeds/chatting/'+gNo+'/'+memberInfo.mid);	
 
 	// open, message, close 작동 on
 	chattingSockat.onopen = function(e){ inputChat(e); }
@@ -54,7 +54,6 @@ function onMessage( e ){
 	// console.log( JSON.parse(e.data) ); // --- 확인 완료
 	 
 	let data = JSON.parse(e.data);
-	
 	if(data.length >= 2){
 		info = data;
 	}
@@ -112,9 +111,10 @@ function onMessage( e ){
 									</div>
 									`
 			} else if( JSON.parse(data.msg).type == 'out' ){ // ------------- 사용자 나감 알람 출력
+				console.log('out확인');
 				geme_chat.innerHTML += `
 									<div class="alarm">
-										<span> ${data.mId}님이 퇴장하셨습니다. </span>
+										<span> ${data.data} </span>
 									</div>
 									`
 			}  else if( JSON.parse(data.msg).type == "game" ){
