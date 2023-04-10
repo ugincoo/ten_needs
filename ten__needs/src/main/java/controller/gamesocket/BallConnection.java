@@ -25,24 +25,26 @@ public class BallConnection {
 	// private BallDto balldto;
 
 	@OnOpen
-	public void enterServer( Session session , @PathParam("gno") int gno , @PathParam("mno") int mno ) throws Exception {
+	public void enterServer( Session session , @PathParam("gno") int gno , @PathParam("mno") int mno ) {
+		try{
+			int count = 0;
+			for( GameUserBallTestDto dto : connectList ) {
+				if( dto.getGno() == gno ) { count++; }
+			}
+			
+			if( count >= 2 ) { session.close(); return; }
+			
+			connectList.add( new GameUserBallTestDto(session, mno, gno) );
+			
+			/*
+			 * if (balldto == null) { balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow",
+			 * 0); }
+			 */
+			
+			msgServer( session, "startBall" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
 		
-		int count = 0;
-		for( GameUserBallTestDto dto : connectList ) {
-			if( dto.getGno() == gno ) { count++; }
-		}
+		}catch (Exception e) { System.out.println(e);}
 		
-		if( count >= 2 ) { session.close(); return; }
-		
-		connectList.add( new GameUserBallTestDto(session, mno, gno) );
-		
-		/*
-		 * if (balldto == null) { balldto = new BallDto(300, 400, 10, 5, 5, 5, "yellow",
-		 * 0); }
-		 */
-		
-		msgServer( session, "startBall" );  // --- 게임 시작 조건이 2명이기 때문에 부가 옵션 설정 안함
-	
 	}
 	
 	@OnClose
@@ -61,6 +63,7 @@ public class BallConnection {
 	
 	@OnMessage
 	public void msgServer( Session session , String msg ) throws Exception {
+		try{
 		System.out.println( session );
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -189,6 +192,7 @@ public class BallConnection {
 	     		}
 	     	}	 
 	    }
+	}catch (Exception e) { System.out.println(e);}
 	}
 	
 }

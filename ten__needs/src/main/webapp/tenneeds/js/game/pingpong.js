@@ -26,18 +26,18 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://192.168.219.111:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
-	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
+	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://192.168.219.111:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
-	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감')}
+	gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
 
 	gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
 
@@ -507,6 +507,8 @@ function game(){
 		 // 공이 패들에 부딪힌 경우
 		if(collision(ball, player)){
 			// 공이 패들에 닿는 위치 확인
+			console.log("!!!"+ball.y)
+			console.log("@@"+player.y)
 			let collidePoint = ball.y - (player.x + player.width/2);
 			
        		// -player.height/2 < 충돌 지점 < player.height/2
@@ -516,7 +518,7 @@ function game(){
 			let angleRad = collidePoint * Math.PI/3;
 			
 			// X 및 Y 속도 방향 변경
-			let direction = (ball.x < canvas.width/2)? 1 : -1;
+			let direction = (ball.y < canvas.height/2)? 1 : -1;
 			ball.speed += 0.5*(player.userRnoLevel);
 			
 			updateBall = {
@@ -524,8 +526,8 @@ function game(){
 				y : ball.y,
 				radius : ball.radius,
 				speed : ball.speed,
-				velocityX: ball.speed,
-				velocityY: direction * ball.speed * Math.tan(angleRad)
+				velocityX: direction * ball.speed * Math.cos(angleRad),
+				velocityY: ball.speed * Math.sin(angleRad)
 			}
 					
 			if(player == user1){

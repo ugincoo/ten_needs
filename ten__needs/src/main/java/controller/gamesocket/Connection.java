@@ -77,8 +77,8 @@ public class Connection {
 
 	@OnMessage
 	public synchronized void msgServer(Session session, String msg) throws Exception {
-		
-		 ObjectMapper mapper = new ObjectMapper(); 
+	try {
+		ObjectMapper mapper = new ObjectMapper(); 
 		 String json = null;
 
 		 System.out.println(msg);
@@ -149,6 +149,8 @@ public class Connection {
 				}
 			}
 		}
+	}catch (Exception e) {System.out.println(e);}
+		 
 	}
 
 }
