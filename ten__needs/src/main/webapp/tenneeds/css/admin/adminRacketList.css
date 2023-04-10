@@ -3,10 +3,20 @@
 *{ font-family: "TheJamsil5Bold"; }
 
 /*---------------------------- racket 위쪽 css  -------------------------*/
+.admin_topbox{
+	display: flex; justify-content: space-between;
+	padding-right: 200px;
+}
 .gomain{
    background-color: #648977;
    border: none;		border-radius: 5px;
    padding: 5px 5px;	margin:20px 0px 10px 120px;
+   color : white;	    font-size : 12px;		text-align: left;
+}
+.racketbtn{
+   background-color: #648977;
+   border: none;		border-radius: 5px;
+   padding: 5px 5px;	margin:20px 0px 10px 0px;
    color : white;	    font-size : 12px;		text-align: left;
 }
 .rackettoptitle h3{ /*이벤트 공지 타이틀 부분*/

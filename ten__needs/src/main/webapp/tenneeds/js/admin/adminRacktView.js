@@ -83,3 +83,13 @@ function onDelete() {
         }
     })
 }
+// 7. 라켓 사진 미리보기 ---------------------------------------------------------
+function prerimg( object ){
+   
+   let file = new FileReader();
+   file.readAsDataURL( object.files[0] )
+   file.onload = (e)=>{
+      
+      document.querySelector('.prerimg').src = e.target.result;
+   }
+}

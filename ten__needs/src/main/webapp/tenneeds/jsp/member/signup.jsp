@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Tenneeds 회원가입</title>
 
 	<link href="/ten__needs/tenneeds/css/member/signup.css" rel="stylesheet" >
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시글수정</title>
 
 <!-- summerNote -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -14,6 +14,7 @@
 <link href="/ten__needs/tenneeds/css/board/write.css" rel = "stylesheet">
 
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<!-- jsp 태그; JSP 페이지 포함 --> 
 	<%@ include file = "/tenneeds/header.jsp" %> <!-- 헤더 포함 --> 

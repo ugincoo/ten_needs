@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게임방</title>
 
    <link href="/ten__needs/tenneeds/css/gameroom.css" rel="stylesheet">
  
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 
    <%@include file = "/tenneeds/header.jsp" %>

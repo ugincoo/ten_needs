@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>테니스장 정보</title>
 
 	<link href="/ten__needs/tenneeds/css/map.css" rel="stylesheet">
 </head>
+<link rel = "shortcut icon" href="../favicon.ico" type="image/x-icon">
 <body>
 
 	<%@include file = "/tenneeds/header.jsp" %>

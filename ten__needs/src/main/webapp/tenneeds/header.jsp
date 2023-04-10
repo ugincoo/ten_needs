@@ -17,6 +17,7 @@
 <link rel = "stylesheet" href = "/ten__needs/tenneeds/css/index.css">
 
 </head>
+<link rel = "shortcut icon" href="favicon.ico" type="image/x-icon">
 <body >
 	<div class ="container">
 	

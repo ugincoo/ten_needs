@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시글 상세보기</title>
 
 <!-- 사용자 정의 css -->
 <link href = "/ten__needs/tenneeds/css/board/view.css" rel = "stylesheet">
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<!-- jsp 태그; JSP 페이지 포함 --> 
 	<%@ include file = "/tenneeds/header.jsp" %> <!-- 헤더 포함 --> 

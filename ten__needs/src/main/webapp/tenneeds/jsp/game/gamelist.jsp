@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title> 게임 대기실</title>
 	<link href = "/ten__needs/tenneeds/css/game/gamelist.css" rel = "stylesheet">
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>

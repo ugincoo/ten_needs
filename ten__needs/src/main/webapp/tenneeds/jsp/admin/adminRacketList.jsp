@@ -4,15 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자페이지-라켓 리스트</title>
 <link href = "/ten__needs/tenneeds/css/admin/adminRacketList.css" rel = "stylesheet">
 
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<!-- 헤더 정보 -->
 	<%@ include file = "/tenneeds/header.jsp" %>
-	 <a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
-	
+	<div class="admin_topbox">
+		 <a href="/ten__needs/tenneeds/jsp/main.jsp"><button onclick="go_main()" type="button" class="gomain"> 메인으로 </button></a>
+	 </div>
 	<!-- 이벤트/공지사항 커뮤니티 -->
 	<div class = "container">
 		<div class ="racketbox">
@@ -20,7 +22,7 @@
 				<h3>라켓 리스트</h3>
 			</div>
 			<div class = "rackettopetc"> <!-- 글쓰기 버튼 [관리자일 경우] -->
-				
+				<a href="/ten__needs/tenneeds/jsp/admin/adminRacket.jsp"><button onclick="go_main()" type="button" class="racketbtn"> 라켓등록 </button></a>
 			</div>
 			
 			<table class="racketTable table table-hover">

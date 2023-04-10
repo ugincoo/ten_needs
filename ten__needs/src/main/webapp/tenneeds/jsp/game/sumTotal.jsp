@@ -7,6 +7,7 @@
 <title>승률-정확도 분석</title>
 <link href="/ten__needs/tenneeds/css/game/sumTotal.css" rel="stylesheet" >
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	<%@include file = "/tenneeds/header.jsp" %>
 	

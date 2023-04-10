@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>어서오세요 Tenneeds입니다 :) </title>
 
 <link href="/ten__needs/tenneeds/css/main.css" rel="stylesheet">
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 	 <%@include file = "/tenneeds/header.jsp" %>
    <!--  메인 화면 -->

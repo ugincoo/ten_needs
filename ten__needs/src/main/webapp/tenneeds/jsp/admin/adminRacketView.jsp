@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자페이지-라켓 수정</title>
 	<link href="/ten__needs/tenneeds/css/admin/adminRacket.css" rel="stylesheet" >
 </head>
+<link rel = "shortcut icon" href="/ten__needs/tenneeds/favicon.ico" type="image/x-icon">
 <body>
 
 	<%@ include file = "/tenneeds/header.jsp" %>
@@ -45,8 +46,8 @@
 				<label for="rimg">
  					 	파일 업로드
 				</label>
-				<input onchange="prerimg(this)" name="rimg" class="rimg img" type="file"> <br/>
-				<input onchange="prerimg(this)" name="rimg" class="rimg img" type="file">
+				<input onchange="prerimg(this)" name="rimg" id="rimg" class="rimg img" type="file"> <br/>
+				<input onchange="prerimg(this)" name="rimg" id="rimg" class="rimg img" type="file">
 			</div>
 			
 			<button class="signupbtn" onclick="updateRacket()" type="button"> 라켓수정 완료 </button>
@@ -62,7 +63,7 @@
 				라켓명: <input type="text" class="dName" name="dName" id="dName">
 			</div>
 			<div class="modal_btns">
-				<button onclick="onDelete()" class="modla_cancle" type="button"> 확인 </button>
+				<button onclick="onDelete()"  class="modla_cancle" type="button"> 확인 </button>
 				<button onclick="closeModal()" class="modla_cancle" type="button"> 취소 </button>
 			</div>
 		</div>

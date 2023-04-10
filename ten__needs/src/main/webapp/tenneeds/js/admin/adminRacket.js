@@ -52,7 +52,7 @@ function racketcheck(){
 }
 
 // 3. 첨부파일 미리보기 메소드
-function premimg( object ){
+function prerimg( object ){
 	
 	let file = new FileReader();
 	file.readAsDataURL( object.files[0] )
