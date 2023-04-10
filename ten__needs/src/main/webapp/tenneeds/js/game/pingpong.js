@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
 	
 	// ------------------------------------------------------------------------------ ballSocket 
-	ballSocket = new WebSocket('ws://localhost:8089/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+	ballSocket = new WebSocket('ws://192.168.219.111:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
 	ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
 	ballSocket.onclose = (e)=>{ console.log('서버소켓 나감');}
 	ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
 	ballSocket.onmessage = (e)=>{ballMessage(e);}
 	
 	// gameSocket
-	gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+	gameSocket = new WebSocket('ws://192.168.219.111:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
 	gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -189,6 +189,7 @@ let user1 = {
 	rno : 0,
 	user : 0,
 	imageno : 0,
+	userRnoLevel : 0,
 	draw(){
 		ctx.drawImage(user1Image[user1.imageno], this.x , this.y, this.width, this.height);
 	}
@@ -215,6 +216,7 @@ let user2 = {
 	rno : 0,
 	user : 0,
 	imageno : 0,
+	userRnoLevel : 0,
 	draw(){
 		ctx.drawImage(user2Image[user2.imageno], this.x , this.y, this.width, this.height);
 	}
@@ -248,6 +250,7 @@ function onMessage(e){
 					
 					
 					if(r != null){
+						user1.userRnoLevel = r.rLevle; //라켓 객체를 밖으로 빼는 것보다 그냥 user 필드에 추가하는 것이 나을 것 같아서 그렇게함
 						document.querySelector('.player1racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
 						document.querySelector('.player1racketnm').innerHTML = r.rName
@@ -277,6 +280,7 @@ function onMessage(e){
 					
 					
 					if(r != null){
+						user2.userRnoLevel = r.rLevle; //라켓 객체를 밖으로 빼는 것보다 그냥 user 필드에 추가하는 것이 나을 것 같아서 그렇게함
 						document.querySelector('.player2racket').src = `/ten__needs/tenneeds/jsp/game/img/rimg/${r.rImg}`;
 						
 						document.querySelector('.player2racketnm').innerHTML = r.rName
@@ -300,13 +304,22 @@ function onMessage(e){
 			user2.y += userData.y;
 			user2.draw();
 		}
-	}else if(userData.type == 3){
+	}else if(userData.type == 3){ //스매시 
 		if(userData.user == 1){
 			user1.imageno = userData.x; //키값새로 만들기 귀찮아서 x로 설정
 			setTimeout(() => user1.imageno = 0, 200)
 		}else if(userData.user == 2){
 			user2.imageno = userData.x;
 			setTimeout(() => user2.imageno = 0, 200)
+		}
+	}else if(userData.type == 4){//점수판
+		if(userData.user == 1){
+			
+			user1.score = (user1.score == 0 ? userData.y : user1.score + userData.y); //키 값을 새로 만들기 번거로워서 y를 매개변수로 점수줌
+			
+		}else if(userData.user == 2){
+			user2.score = (user2.score == 0 ? userData.y : user2.score + userData.y);
+			
 		}
 	}
 	
@@ -462,7 +475,6 @@ function game(){
     drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");	// 유저1 스코어
 	drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");	// 유저2 스코어
     
-    
     // 플레어이 움직임
     if (rightPressed && (user1.mno == sendmno ? user1.x : user2.x) < canvas.width - (user1.mno == sendmno ? user1.width : user2.width)) { 
 		//user1.x += 8;
@@ -505,7 +517,7 @@ function game(){
 			
 			// X 및 Y 속도 방향 변경
 			let direction = (ball.x < canvas.width/2)? 1 : -1;
-			ball.speed += 0.5;
+			ball.speed += 0.5*(player.userRnoLevel);
 			
 			updateBall = {
 				x : ball.x,
@@ -528,7 +540,7 @@ function game(){
 	
 	// 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
 	if(ball.y -ball.radius < 0){
-		user2.score += 15;
+		sendMessage(4, user2.mno, 0, 15);
 		
 		if(user2.score >= 45){
 			
@@ -539,15 +551,15 @@ function game(){
 			openModal();
 			
 			round++;
-			user2.score = 0;
-			user1.score = 0;
+			sendMessage(4, user2.mno, 0, 0);
+			sendMessage(4, user1.mno, 0, 0);
 			user2.win += 1;
 		}
 		checkRound();
 		connectServer( "player1ResetBall", 3 );
 
 	}else if(ball.y + ball.radius > canvas.height){
-		user1.score += 15;
+		sendMessage(4, user1.mno, 0, 15);
 		
 		if(user1.score >= 45){
 			document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
@@ -557,8 +569,9 @@ function game(){
 			openModal();
 			
 			round++;
-			user1.score = 0;
-			user2.score = 0;
+			sendMessage(4, user2.mno, 0, 0);
+			sendMessage(4, user1.mno, 0, 0);
+			
 			user1.win++;
 		}
 		checkRound();

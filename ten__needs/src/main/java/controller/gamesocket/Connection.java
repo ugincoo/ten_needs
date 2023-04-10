@@ -113,9 +113,10 @@ public class Connection {
 					 }
 				 }
 			 }
-		}else { //움직였을때 보내는 데이터  + 스매싱
+		}else { //움직였을때 보내는 데이터  + 스매싱 + 점수
 			
 			GameUserDto dto = mapper.readValue(msg, GameUserDto.class);
+			
 			System.out.println(dto);
 			if(dto.getType() == 2) { //움직임
 				for(GameUserDto gameDto : connectPlayerList) {
@@ -131,8 +132,14 @@ public class Connection {
 						dto.setUser(gameDto.getUser());
 					}
 				}
+			}else if(dto.getType() == 4) { //점수
+				for(GameUserDto gameDto : connectPlayerList) {
+					if(gameDto.getMno() == dto.getMno()) {
+						dto.setRno(gameDto.getRno());
+						dto.setUser(gameDto.getUser());
+					}
+				}
 			}
-			
 			
 			for(GameUserDto userdto : connectPlayerList) {
 				if(dto.getGno() == userdto.getGno()) {
