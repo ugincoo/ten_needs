@@ -507,10 +507,10 @@ function game(){
 		 // 공이 패들에 부딪힌 경우
 		if(collision(ball, player)){
 			// 공이 패들에 닿는 위치 확인
-			let collidePoint = ball.y - (player.y + player.height/2);
+			let collidePoint = ball.y - (player.x + player.width/2);
 			
        		// -player.height/2 < 충돌 지점 < player.height/2
-			collidePoint = collidePoint/(player.height/2);
+			collidePoint = collidePoint/(player.width/2);
 			
        		// Math.PI/10 = 18도
 			let angleRad = collidePoint * Math.PI/3;
@@ -524,8 +524,8 @@ function game(){
 				y : ball.y,
 				radius : ball.radius,
 				speed : ball.speed,
-				velocityX: direction * ball.speed * Math.cos(angleRad),
-				velocityY: ball.speed * Math.sin(angleRad)
+				velocityX: ball.speed,
+				velocityY: direction * ball.speed * Math.tan(angleRad)
 			}
 					
 			if(player == user1){
@@ -539,7 +539,7 @@ function game(){
 	}
 	
 	// 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
-	if(ball.y -ball.radius < 0){
+	if(ball.y -ball.radius < 0 || (ball.x -ball.radius <0 && ball.y < canvas.height/2 ) || (ball.x +ball.radius > canvas.width && ball.y < canvas.height/2) ){
 		sendMessage(4, user2.mno, 0, 15);
 		
 		if(user2.score >= 45){
@@ -558,7 +558,7 @@ function game(){
 		checkRound();
 		connectServer( "player1ResetBall", 3 );
 
-	}else if(ball.y + ball.radius > canvas.height){
+	}else if(ball.y + ball.radius > canvas.height || (ball.x -ball.radius <0 && ball.y > canvas.height/2) || (ball.x +ball.radius > canvas.width && ball.y > canvas.height/2) ){
 		sendMessage(4, user1.mno, 0, 15);
 		
 		if(user1.score >= 45){
