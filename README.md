@@ -52,3 +52,6 @@ Ten-Needs
     font-weight: normal;
     font-style: normal;
 }
+
+#### 13. PT자료
+[TEN_NEEDS.pdf](https://github.com/Tea-ho/ten__needs/files/11197423/TEN_NEEDS.pdf)
