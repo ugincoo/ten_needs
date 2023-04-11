@@ -42,11 +42,11 @@ th, td{
 }
 
 .member_nickname{/*닉네임*/
-	width: 10%;
+	width: 15%;
 }
 
 .member_winCount{/*승리횟수*/
-	width: 10%;
+	width: 15%;
 }
 
 .member_Accute{/*정확도*/
