@@ -19,7 +19,7 @@ tenNeeds(project3)
 ![image](https://user-images.githubusercontent.com/119651889/231057898-baf7a9a2-7a9f-416e-89e8-5527f40dc60a.png)
 
 #### 4.개발 전체 일정
-![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292513-9761368f-0ca5-40ca-b470-8546b6e30b22.gif)
+![image](https://user-images.githubusercontent.com/119651889/231058396-a72ca183-3841-415e-937e-4175248c3d3f.png)
 
 #### 5. 사용한 스킬 및 외부라이브러리
 JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summernote, mychart
