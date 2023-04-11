@@ -58,7 +58,7 @@ public class GameResult extends HttpServlet {
 			ArrayList<GameResultDto> memberRankingList =  GameDao.getInstans().getSigleRanking(keyword);
 			
 			String jsonArray = mapper.writeValueAsString(memberRankingList);
-			
+		
 			response.getWriter().print(jsonArray);
 		}
 	}
@@ -73,11 +73,11 @@ public class GameResult extends HttpServlet {
 		int winner = Integer.parseInt(request.getParameter("winner"));
 		int loser = Integer.parseInt(request.getParameter("loser"));
 		
-		double winnergsAccute = Math.round(Double.parseDouble(request.getParameter("winnergsAccute"))*100)/100.0;
+		double winnergsAccute = Math.round(Double.parseDouble(request.getParameter("winnergsAccute"))*10)/100.0;
 		
 		System.out.println("winnerAccute : " + winnergsAccute);
 		
-		double losergsAccute = Math.round(Double.parseDouble(request.getParameter("losergsAccute"))*100)/100.0;
+		double losergsAccute = Math.round(Double.parseDouble(request.getParameter("losergsAccute"))*10)/100.0;
 		
 		System.out.println("losergsAccute : " + losergsAccute);
 		int winnerRno = Integer.parseInt(request.getParameter("winnerRno"));
