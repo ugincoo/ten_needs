@@ -104,12 +104,12 @@ public class RacketDao extends Dao {
 	
 	// 3-4. 라켓 수정
 	public boolean updateRacket( RacketDto dto ) {
-		String sql = "update racket set rName = ? , rImg = ? , rLevle = ? , rSize_x = ? , rSize_y = ? where rNo =";
+		String sql = "update racket set rName = ? , rImg = ? , rLevle = ? , rSize_x = ? , rSize_y = ? where rNo = ?";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getrName());	ps.setString(2, dto.getrImg());
 			ps.setInt(3, dto.getrLevle());		ps.setInt(4, dto.getrSize_x());
-			ps.setInt(5, dto.getrSize_y()); 	
+			ps.setInt(5, dto.getrSize_y()); 	ps.setInt(6, dto.getrNo());
 			if( ps.executeUpdate() == 1 ) { return true; }
 		} catch(Exception e) {	System.err.println(e.getMessage()); } return false;
 	}

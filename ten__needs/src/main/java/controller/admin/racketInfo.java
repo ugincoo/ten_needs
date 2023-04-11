@@ -125,7 +125,7 @@ public class racketInfo extends HttpServlet {
 		
 		RacketDto dto = new RacketDto(rNo, rName, rimg, rLevel, rSize_x, rSize_y);
 		
-		boolean result = RacketDao.getInstance().addRacket(dto);
+		boolean result = RacketDao.getInstance().updateRacket(dto);
 		response.getWriter().print(result);
 	}
 	

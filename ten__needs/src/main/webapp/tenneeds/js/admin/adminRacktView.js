@@ -54,7 +54,7 @@ function updateRacket(){
 		success : (r)=>{
 			if( r == 'true'){
 				alert('[알림] 라켓정보 수정 완료');
-				location.href="/ten__needs/tenneeds/jsp/main.jsp"
+				location.href="/ten__needs/tenneeds/jsp/admin/adminRacketList.jsp"
 			}else{
 				alert('[알림] 라켓정보 수정 실패')
 			}
