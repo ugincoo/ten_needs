@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-   ballSocket = new WebSocket('ws://172.30.1.24:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
    ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
    ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-   gameSocket = new WebSocket('ws://172.30.1.24:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+   gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
 
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
 
@@ -195,10 +195,12 @@ let user1 = {
    user : 0,
    imageno : 0,
    userRnoLevel : 0,
+   accute : 0,
    draw(){
       ctx.drawImage(user1Image[user1.imageno], this.x , this.y, this.width, this.height);
    }
 }
+
 
 // user2 이미지
 let user2Image = new Array(3);
@@ -222,6 +224,7 @@ let user2 = {
    user : 0,
    imageno : 0,
    userRnoLevel : 0,
+   accute : 0,
    draw(){
       ctx.drawImage(user2Image[user2.imageno], this.x , this.y, this.width, this.height);
    }
@@ -239,7 +242,7 @@ function onMessage(e){
          user1.mno = userData.mno;
          user1.x += userData.x
          user1.y += userData.y;
-         rno = userData.rno;
+         user1.rno = userData.rno;
          user1.user = userData.user;
          
          user1.draw();
@@ -252,7 +255,6 @@ function onMessage(e){
             async : false,
             success : (r) => {
                console.log(r); 
-               
                
                if(r != null){
                   user1.userRnoLevel = r.rLevle; //라켓 객체를 밖으로 빼는 것보다 그냥 user 필드에 추가하는 것이 나을 것 같아서 그렇게함
@@ -317,15 +319,12 @@ function onMessage(e){
          user2.imageno = userData.x;
          setTimeout(() => user2.imageno = 0, 200)
       }
-   }else if(userData.type == 4){//점수판
-      if(userData.user == 1){
-         
-         user1.score = (user1.score == 0 ? userData.y : user1.score + userData.y); //키 값을 새로 만들기 번거로워서 y를 매개변수로 점수줌
-         
-      }else if(userData.user == 2){
-         user2.score = (user2.score == 0 ? userData.y : user2.score + userData.y);
-         
-      }
+   }else if(userData.type == 4){
+	   if(userData.user == 1){
+		   user1.accute = userData.x;
+	   }else if(userData.user == 2){
+		   user2.accute = userData.x;
+	   }
    }
    
 }
@@ -389,10 +388,12 @@ function keyUpHandler(event) {
    } else if (event.key === "" || event.keyCode === 32) {
       //3초 후에 spacePressed = false로 적용
        setTimeout(() => spacePressed = false, (memberInfo.mno == user1.mno ? user1 : user2).imageno = 0, 3000); //정확함도를 낮추기 위해서
+     
       if(player == user1){
-            user1.swing++;
-            console.log(user1.swing)
+           sendMessage(4, user1.mno, user1.smash/(++user1.swing), 0)
+            
       }else{
+		 	sendMessage(4, user2.mno, user2.smash/(++user2.swing), 0)
             user2.swing++;   
       }
    } 
@@ -412,59 +413,77 @@ function collision(b, p){
    return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
 }
 
+let gameresult = {
+     usermno : 0,
+     winnergsAccute : 0, //정확도(이긴사람)
+     losergsAccute : 0, //정확도(진사람)
+     winnerRno : 0,
+     loserRno : 0
+  }
+      
+      
+       
+let resultcount = 0;
 let round = 1; //게임 라운드 수를 선정하는 변수(3라운드까)
  //최종 라운드 체크
 function checkRound(){
    if(user1.win >= 2 || user2.win >= 2){
-      let playerWin = "";
-      let playerLose = "";
       
-      let winnergsAccute = 0;
-      let losergsAccute = 0;
       cancelAnimationFrame(game)
       if(user1.win > user2.win){
-         playerWin = user1.mno;
-         playerLose = user2.mno;
+         gameresult.winner = user1.mno;
+         gameresult.loser = user2.mno;
          
-         winnergsAccute = user1.smash/user1.swing;
-         losergsAccute = user2.smash/user2.swing;
-         alert('user1이 최종 승리')
+         gameresult.winnergsAccute = (gameresult.winner == user1.mno ? user1.accute : user2.accute) 
+         gameresult.losergsAccute = (gameresult.loser == user1.mno ? user1.accute : user2.accute) 
+         
+         gameresult.loserRno = user1.rno;
+         gameresult.winnerRno = user2.rno;
+         
+         document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+         document.querySelector('.userMid').innerHTML = gameresult.winner == user1Mno ? user1Mid : user2Mid
+         document.querySelector('.roundContent').innerHTML = "최종 승리!"
+         
+         openModal();
          
       }else{
-         playerWin = user2.mno;
-         playerLose = user1.mno;
+         gameresult.winner = user2.mno;
+         gameresult.loser = user1.mno;
          
-         winnergsAccute = user2.smash/user2.swing;
-         losergsAccute = user1.smash/user1.swing;
-         alert('user2이 최종 승리')
-      }
-      
-      let gameresult = {
-         winner : playerWin,
-         loser : playerLose,
-         winnergsAccute : winnergsAccute, //정확도(이긴사람)
-         losergsAccute : losergsAccute, //정확도(진사람)
-         gno : gNo,
-         winnerRno : playerWin == user1.mno? user1.rno : user2.rno,
-         loserRno : playerLose == user1.mno ? user1.rno : user2.rno
-         
-      }
-      
-      console.log(user1.swing)
-      console.log(user1.smash)
-      console.log(gameresult)
+         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute)*10);
+         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute)*10);
 
-      $.ajax({
-         url : "/ten__needs/game/result",
-         method : "post",
-         data : gameresult,
-         success : (r) => {
-            if(r == 'true'){
-               location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
-            }
-         }
+         gameresult.loserRno = user1.rno;
+         gameresult.winnerRno = user2.rno;
+        
+         document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
+         document.querySelector('.userMid').innerHTML = gameresult.winner == user2Mno ? user2Mid : user1Mid
+         document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
          
-      })
+         openModal();
+      }
+
+	 if(memberInfo.mno == user1.mno){
+			$.ajax({
+	         url : "/ten__needs/game/result",
+	         method : "post",
+	         data : gameresult,
+	      	 async : false,	
+	         success : (r) => {
+	            if(r == 'true'){
+	              resultcount++;
+	            }
+	         }
+	         
+	      })		 
+	 }else{
+		 resultcount++;
+	 }
+	 
+	 if(resultcount == 1){
+		 location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
+	 }
+
    }
 }
 
@@ -478,7 +497,7 @@ function game(){
     stadium.draw(); // 경기장 
     drawCircle(ball.x, ball.y, ball.radius, ball.color);   // 공 그려주기
     drawText(user1.score, 3*canvas.width/4, canvas.height/5, "white");   // 유저1 스코어
-   drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");   // 유저2 스코어
+    drawText(user2.score, 3*canvas.width/4, 4.2*canvas.height/5, "white");   // 유저2 스코어
     
     // 플레어이 움직임
     if (rightPressed && (user1.mno == sendmno ? user1.x : user2.x) < canvas.width - (user1.mno == sendmno ? user1.width : user2.width)) { 
@@ -511,6 +530,7 @@ function game(){
    if(spacePressed){
        // 공이 패들에 부딪힌 경우
       if(collision(ball, player)){
+		   
          // 공이 패들에 닿는 위치 확인
          console.log("!!!"+ball.y)
          console.log("@@"+player.y)
@@ -541,9 +561,11 @@ function game(){
          }
                
          if(player == user1){
+			//sendMessage(4, user1.mno, (++user1.smash)/user1.swing, 0)
             user1.smash++;
             connectServer( "player1TouchBall", updateBall );
          }else{
+			//sendMessage(4, user2.mno, (++user2.smash)/user2.swing, 0)
             user2.smash++;
             connectServer( "player2TouchBall", updateBall );
          }
@@ -553,9 +575,11 @@ function game(){
    // 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
    if(ball.y -ball.radius < 0 || (ball.x -ball.radius <0 && ball.y < canvas.height/2 ) || (ball.x +ball.radius > canvas.width && ball.y < canvas.height/2) ){
       
-      sendMessage(4, user2.mno, 0, 15);
+      user2.score += 15;
       
       if(user2.score >= 45){
+         user2.score = 0;
+         user1.score = 0;
          
          document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
          document.querySelector('.userMid').innerHTML = user2.mno == user2Mno ? user2Mid : user1Mid
@@ -564,8 +588,6 @@ function game(){
          openModal();
          
          round++;
-         sendMessage(4, user2.mno, 0, 0);
-         sendMessage(4, user1.mno, 0, 0);
          user2.win += 1;
       }
       checkRound();
@@ -574,9 +596,12 @@ function game(){
 
    }else if(ball.y + ball.radius > canvas.height || (ball.x -ball.radius <0 && ball.y > canvas.height/2) || (ball.x +ball.radius > canvas.width && ball.y > canvas.height/2) ){
       
-      sendMessage(4, user1.mno, 0, 15);
+      user1.score += 15;
       
       if(user1.score >= 45){
+		 user2.score = 0;
+         user1.score = 0;
+         
          document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
          document.querySelector('.userMid').innerHTML = user1.mno == user1Mno ? user1Mid : user2Mid
          document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
@@ -584,8 +609,6 @@ function game(){
          openModal();
          
          round++;
-         sendMessage(4, user2.mno, 0, 0);
-         sendMessage(4, user1.mno, 0, 0);
          
          user1.win++;
       }
