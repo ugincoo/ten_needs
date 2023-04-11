@@ -9,6 +9,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.GameroomDao;
@@ -112,19 +113,18 @@ public class Chatting {
 				 }
 			}
 		} else if(  msg.contains("out") ) { // --- 메시지 전송
-			System.out.println("ssssss");
-			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
-			json = mapper.writeValueAsString(messageDto);
+			ArrayList<ChatMessageDto> messageList = new ArrayList<>();
+			JsonNode msgNode = mapper.readTree(msg);
 			
-			int senderGno = 0; //--- 변수 추가(이유: gNO 일치 여부 확인을 위함) 
-			for (ChatUserDto dto : connectList) { //--- 코드 추가: gNO 
-		            if (dto.getSession() == session) {
-		                senderGno = dto.getgNo();	break;
-		            }
-		     }
+			int checkGno = (int)msgNode.get("gNo").asDouble();
+			System.out.println(checkGno);
+			// json = mapper.writeValueAsString(msg);
 			for( ChatUserDto dto : connectList ) {
-				 if (dto.getgNo() == senderGno) {
-				dto.getSession().getBasicRemote().sendText(json);
+				 if (dto.getgNo() == checkGno) {
+					 messageList.add( new ChatMessageDto(dto.getSession(), msg) );
+					 
+					 json = mapper.writeValueAsString( messageList );
+					 dto.getSession().getBasicRemote().sendText(json);
 				 }
 			}
 		}
@@ -139,17 +139,15 @@ public class Chatting {
 			if( dto.getSession() == session ) {
 				connectList.remove(dto);
 				
-				String msg = "{\"type\":\"out\",\"data\":\""+dto.getmId()+"님이 게임방을 나갔습니다.\"}";
+				String msg = "{\"type\":\"out\",\"gNo\":"+gNo+",\"data\":\""+dto.getmId()+"님이 "+gNo+"번 게임방을 나갔습니다.\"}";
 				// 형태: { "필드명" : "데이터", "필드명" : 데이터 }
 				// 해석: 큰따음표 사용을 위에 이스케이프 문자 사용
 				
 				System.out.println(msg);
-				
 				OnMessage( session, msg);
-				
 				// 모든 접속명단에게 연결 끊긴 클라이언트 소캣을 알림 [접속목록]
-				OnMessage( session, "user" );
-				session.close();  break;
+				
+				break;
 			}
 		}
 		

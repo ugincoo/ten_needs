@@ -26,21 +26,17 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-   ballSocket = new WebSocket('ws://172.30.1.24:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
    ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
    ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-   gameSocket = new WebSocket('ws://172.30.1.24:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
-
+   gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+memberInfo.mno);
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
-
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
-
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
-
    gameSocket.onmessage = (e)=>{onMessage(e);}
 }
 
@@ -58,11 +54,9 @@ let ball = {
 function ballOpen(e){ console.log( 'ballOpen 확인'); }
 
 // ----------------------------------- ballSocket 메시지 받는 창구 -----------------------------------
-function ballMessage( e ){
-   console.log(e); //--- 확인 완료
+function ballMessage( e ){ // console.log(e); //--- 확인 완료
    
-   let data = JSON.parse(e.data);
-   console.log(data);
+   let data = JSON.parse(e.data); // console.log(data);
    
    if( data.ballState === 0 ){ //--------------------------------------- Start Ball
       console.log('작동확인');
@@ -98,8 +92,7 @@ function ballMessage( e ){
          velocityY : data.velocityY,
          color : data.color
       }
-   } else if( data.ballState === 3 ){ //--------------------------------------- player1 Reset Ball
-      
+   } else if( data.ballState === 3 ){ //--------------------------------------- player1 Reset Ball     
       ball = {
          x : data.x,
          y : data.y,
@@ -110,8 +103,6 @@ function ballMessage( e ){
          color : data.color
       }
    } else if( data.ballState === 4 ){ //--------------------------------------- player2 Reset Ball
-      
-      
       ball = {
          x : data.x,
          y : data.y,
