@@ -92,7 +92,7 @@ public class GameDao extends Dao {
 	public ArrayList<GameResultDto> getRanking(){
 		ArrayList<GameResultDto> memberRankingList = new ArrayList<>();
 		
-		String sql = "select m.mid, sum(gs.gsResult) as '승리횟수', avg(gs.gsAccute) as '정확도 평균' ,m.mImg from gamestatus gs natural join member m group by m.mno order by '정확도 평균' desc";
+		String sql = "select m.mid, sum(gs.gsResult) as '승리횟수', avg(gs.gsAccute) as '정확도 평균' ,m.mImg from gamestatus gs natural join member m group by m.mno order by avg(gs.gsAccute) desc";
 		
 		try {
 			ps = con.prepareStatement(sql);
@@ -119,7 +119,7 @@ public class GameDao extends Dao {
 						+ " from gamestatus gs , member m"
 						+ " where m.mid like \"%"+keyword+"%\" and m.mno = gs.mno"
 						+ " group by m.mno "
-						+ " order by '정확도 평균' desc";
+						+ " order by avg(gs.gsAccute) desc";
 		
 		try {
 			ps = con.prepareStatement(sql);

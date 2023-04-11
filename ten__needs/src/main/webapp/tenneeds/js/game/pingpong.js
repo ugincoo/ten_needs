@@ -433,8 +433,8 @@ function checkRound(){
          gameresult.winner = user1.mno;
          gameresult.loser = user2.mno;
          
-         gameresult.winnergsAccute = (gameresult.winner == user1.mno ? user1.accute : user2.accute) 
-         gameresult.losergsAccute = (gameresult.loser == user1.mno ? user1.accute : user2.accute) 
+         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute)*10)
+         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute)*10)
          
          gameresult.loserRno = user1.rno;
          gameresult.winnerRno = user2.rno;
@@ -449,8 +449,8 @@ function checkRound(){
          gameresult.winner = user2.mno;
          gameresult.loser = user1.mno;
          
-         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute));
-         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute));
+         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute)*10);
+         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute)*10);
 
          gameresult.loserRno = user1.rno;
          gameresult.winnerRno = user2.rno;
