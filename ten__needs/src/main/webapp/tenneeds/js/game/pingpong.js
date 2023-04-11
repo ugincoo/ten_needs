@@ -26,23 +26,14 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-<<<<<<< HEAD
    ballSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
-=======
-   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
->>>>>>> branch 'Ga0Kwon' of https://github.com/Tea-ho/ten__needs
    ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
    ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-<<<<<<< HEAD
    gameSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
-=======
-   gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
-
->>>>>>> branch 'Ga0Kwon' of https://github.com/Tea-ho/ten__needs
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
