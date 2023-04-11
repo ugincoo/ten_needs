@@ -132,7 +132,8 @@ public class Connection {
 						dto.setUser(gameDto.getUser());
 					}
 				}
-			}else if(dto.getType() == 4) { //점수
+			}else if(dto.getType() == 4) { //정확도
+				System.out.println("들어온 데이터 : " + dto.toString());
 				for(GameUserDto gameDto : connectPlayerList) {
 					if(gameDto.getMno() == dto.getMno()) {
 						dto.setRno(gameDto.getRno());
@@ -141,11 +142,25 @@ public class Connection {
 				}
 			}
 			
-			for(GameUserDto userdto : connectPlayerList) {
-				if(dto.getGno() == userdto.getGno()) {
-					System.out.println("보내야하는 데이터 : " + dto);
-					json = mapper.writeValueAsString(dto);
-					userdto.getSession().getBasicRemote().sendText(json);
+			if(dto.getType() <= 3) {
+				for(GameUserDto userdto : connectPlayerList) {
+					if(dto.getGno() == userdto.getGno()) {
+						System.out.println("보내야하는 데이터 : " + dto);
+						json = mapper.writeValueAsString(dto);
+						userdto.getSession().getBasicRemote().sendText(json);
+					}
+				}
+			}else {
+				int count = 1;
+				if(count == 1) {
+					for(GameUserDto userdto : connectPlayerList) {
+						if(dto.getGno() == userdto.getGno()) {
+							System.out.println("보내야하는 데이터 : " + dto);
+							json = mapper.writeValueAsString(dto);
+							userdto.getSession().getBasicRemote().sendText(json);
+							count++;
+						}
+					}
 				}
 			}
 		}

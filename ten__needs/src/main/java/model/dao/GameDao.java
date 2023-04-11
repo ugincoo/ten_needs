@@ -30,24 +30,25 @@ public class GameDao extends Dao {
 	//게임 종료시 데이터 넣기
 	public boolean endGame(GameResultDto dto) {
 		//승리자부터
-		String sql = "insert into gamestatus(gsAccute, gsResult, mNo, gNo, rNo) vlaues (?, true, ?, ?, ?) ";
+		String sql = "insert into gamestatus(gsAccute, gsResult, mNo, rNo) values(?, ?, ?, ?);";
 		
 		try {
+			System.out.println("승리자 & 패배자 : " + dto.toString());
 			ps = con.prepareStatement(sql);
 			
-			ps.setDouble(1, dto.getWinnerAccute());
-			ps.setInt(2, dto.getWinnerMno());
-			ps.setInt(3, dto.getGno());
+			ps.setDouble(1, dto.getWinnerAccute()*10);
+			ps.setBoolean(2, true);
+			ps.setInt(3, dto.getWinnerMno());
 			ps.setInt(4, dto.getWinnerRno());
 			
 			
 			if(ps.executeUpdate() == 1) {
-				//게임 승리자의 gResult의 값을 1로 바꿔준다.
-				sql = "insert into gamestatus(gsAccute, mNo, gNo, rNo) vlaues (?, ?, ?, ?) ";
+				//패배자
+				sql = "insert into gamestatus(gsAccute, gsResult, mNo, rNo) values(?, ?, ?, ?); ";
 				
-				ps.setDouble(1, dto.getLoserAccute());
-				ps.setInt(2, dto.getLoserMno());
-				ps.setInt(3, dto.getGno());
+				ps.setDouble(1, dto.getLoserAccute()*10);
+				ps.setBoolean(2, false);
+				ps.setInt(3, dto.getLoserMno());
 				ps.setInt(4, dto.getLoserRno());
 				
 				ps.executeUpdate();

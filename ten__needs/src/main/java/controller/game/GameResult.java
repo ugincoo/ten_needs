@@ -73,8 +73,6 @@ public class GameResult extends HttpServlet {
 		int winner = Integer.parseInt(request.getParameter("winner"));
 		int loser = Integer.parseInt(request.getParameter("loser"));
 		
-		int gno = Integer.parseInt(request.getParameter("gno"));
-		
 		double winnergsAccute = Math.round(Double.parseDouble(request.getParameter("winnergsAccute"))*100)/100.0;
 		
 		System.out.println("winnerAccute : " + winnergsAccute);
@@ -85,7 +83,7 @@ public class GameResult extends HttpServlet {
 		int winnerRno = Integer.parseInt(request.getParameter("winnerRno"));
 		int loserRno = Integer.parseInt(request.getParameter("loserRno"));
 		
-		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute, gno, winnerRno, loserRno);
+		GameResultDto dto =  new GameResultDto(winner, loser, winnergsAccute, losergsAccute, winnerRno, loserRno);
 		System.out.println(dto);
 		
 		boolean result = GameDao.getInstans().endGame(dto);

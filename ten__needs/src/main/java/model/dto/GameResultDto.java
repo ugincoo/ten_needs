@@ -30,14 +30,13 @@ public class GameResultDto {
 	
 
 
-	public GameResultDto(int winnerMno, int loserMno, double winnerAccute, double loserAccute, int gno, int winnerRno,
+	public GameResultDto(int winnerMno, int loserMno, double winnerAccute, double loserAccute, int winnerRno,
 			int loserRno) {
 		super();
 		this.winnerMno = winnerMno;
 		this.loserMno = loserMno;
 		this.winnerAccute = winnerAccute;
 		this.loserAccute = loserAccute;
-		this.gno = gno;
 		this.winnerRno = winnerRno;
 		this.loserRno = loserRno;
 	}
