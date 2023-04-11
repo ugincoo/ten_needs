@@ -478,7 +478,7 @@ function checkRound(){
 		 resultcount++;
 	 }
 	 
-	 if(resultcount == 1){
+	 if(resultcount == 1 && alert("게임이 종료되었습니다.")){
 		 location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
 	 }
 
