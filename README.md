@@ -34,6 +34,7 @@ JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summern
 
 
 #### 8. Front-End Structure [ layout ]
+![image](https://user-images.githubusercontent.com/119651889/231033181-7144ebfe-1a4b-4edd-9592-52da1ca77604.png)
 
 #### 9. 페이지명
 Ten-Needs
