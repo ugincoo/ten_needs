@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-   ballSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
    ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
    ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-   gameSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+   gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
@@ -388,11 +388,12 @@ function keyUpHandler(event) {
        setTimeout(() => spacePressed = false, (memberInfo.mno == user1.mno ? user1 : user2).imageno = 0, 3000); //정확함도를 낮추기 위해서
      
       if(player == user1){
+		  console.log("user2 정확도" + user1.smash/(++user1.swing))
            sendMessage(4, user1.mno, user1.smash/(++user1.swing), 0)
             
       }else{
+		  	console.log("user2 정확도" + user2.smash/(++user2.swing))
 		 	sendMessage(4, user2.mno, user2.smash/(++user2.swing), 0)
-            user2.swing++;   
       }
    } 
 }

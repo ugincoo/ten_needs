@@ -58,7 +58,7 @@ public class GameResult extends HttpServlet {
 			ArrayList<GameResultDto> memberRankingList =  GameDao.getInstans().getSigleRanking(keyword);
 			
 			String jsonArray = mapper.writeValueAsString(memberRankingList);
-			
+		
 			response.getWriter().print(jsonArray);
 		}
 	}
