@@ -26,14 +26,14 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+   ballSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
    ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
    ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-   gameSocket = new WebSocket('ws://localhost:8089/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+   gameSocket = new WebSocket('ws://192.168.17.40:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
@@ -292,12 +292,18 @@ function onMessage(e){
    }else if(userData.type == 2){ //움직임
       if(userData.user == 1){
          user1.x += userData.x;
-         user1.y += userData.y
+         user1.y += userData.y;
+         if(user1.y > canvas.height/2-150){
+			 user1.y = canvas.height/2-150
+		 }
          user1.draw();
                   
       }else if(userData.user == 2){
          user2.x += userData.x;
          user2.y += userData.y;
+         if(user2.y < canvas.height/2-100){
+			 user2.y = canvas.height/2-100
+		 }
          user2.draw();
       }
    }else if(userData.type == 3){ //스매시 
@@ -344,6 +350,7 @@ function drawText(text, x, y, color){
 }
 
 //패들 방향키 조
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
