@@ -22,7 +22,7 @@ tenNeeds(project3)
 ![tenNeeds_WBS(1)](https://user-images.githubusercontent.com/119651889/229292513-9761368f-0ca5-40ca-b470-8546b6e30b22.gif)
 
 #### 5. 사용한 스킬 및 외부라이브러리
-JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summernote
+JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summernote, mychart
 
 #### 6. mySQL ER diagram
 ![image](https://user-images.githubusercontent.com/119651889/229287219-8e486d4f-338c-4fd6-acbb-a90c3fb69fec.png)
