@@ -4,6 +4,9 @@ function openModal(){
 }
 
 function closeModal(){
+	if(document.querySelector('.roundContent').innerHTML == "최종 승리!"){
+		location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
+	}
 	document.querySelector('.modal_wrap').style.display = 'none';
 }
 
