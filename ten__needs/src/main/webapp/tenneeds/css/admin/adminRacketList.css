@@ -16,7 +16,7 @@
 .racketbtn{
    background-color: #648977;
    border: none;		border-radius: 5px;
-   padding: 5px 5px;	margin:20px 0px 10px 0px;
+   padding: 5px 5px;	margin:20px 5px 10px 5px;
    color : white;	    font-size : 12px;		text-align: left;
 }
 .rackettoptitle h3{ /*이벤트 공지 타이틀 부분*/
