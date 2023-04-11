@@ -22,6 +22,7 @@
 				<h3>라켓 리스트</h3>
 			</div>
 			<div class = "rackettopetc"> <!-- 글쓰기 버튼 [관리자일 경우] -->
+			<a href="/ten__needs/tenneeds/jsp/member/mypage.jsp"><button onclick="go_main()" type="button" class="racketbtn"> 게임현황 </button></a>
 				<a href="/ten__needs/tenneeds/jsp/admin/adminRacket.jsp"><button onclick="go_main()" type="button" class="racketbtn"> 라켓등록 </button></a>
 			</div>
 			
