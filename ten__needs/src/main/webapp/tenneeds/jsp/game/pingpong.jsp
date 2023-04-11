@@ -71,7 +71,7 @@
 				<h4 class = "roundContent"></h4>
 			</div>
 			<div class="modal_btns">
-				<button onclick="closeModal()" class="modla_cancle" type="button"> 확인 </button>
+				<button onclick="closeModa3()" class="modla_cancle" type="button"> 확인 </button>
 			</div>
 		</div>
 	</div>

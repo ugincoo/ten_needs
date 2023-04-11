@@ -449,8 +449,8 @@ function checkRound(){
          gameresult.winner = user2.mno;
          gameresult.loser = user1.mno;
          
-         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute)*10);
-         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute)*10);
+         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute));
+         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute));
 
          gameresult.loserRno = user1.rno;
          gameresult.winnerRno = user2.rno;
@@ -462,28 +462,23 @@ function checkRound(){
          openModal();
       }
 
-	 if(memberInfo.mno == user1.mno){
-			$.ajax({
-	         url : "/ten__needs/game/result",
-	         method : "post",
-	         data : gameresult,
-	      	 async : false,	
-	         success : (r) => {
-	            if(r == 'true'){
-	              resultcount++;
-	            }
-	         }
-	         
-	      })		 
-	 }else{
-		 resultcount++;
-	 }
-	 
-	 if(resultcount == 1 && alert("게임이 종료되었습니다.")){
-		 location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
-	 }
-
-   }
+	  if(memberInfo.mno == user1.mno){
+         $.ajax({
+            url : "/ten__needs/game/result",
+            method : "post",
+            data : gameresult,
+             async : false,   
+            success : (r) => {
+               if(r == 'true'){
+                 resultcount++;
+               }
+            }
+            
+         })       
+    }else{
+       resultcount++;
+    }
+  }
 }
 
  let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
@@ -573,7 +568,7 @@ function game(){
    
    // 플레이어의 점수 변경, 공이 왼쪽 "ball.y<0"으로 이동하면 컴퓨터 승리, 그렇지 않으면 "ball.y > canvas.width"인 경우 사용자 승리
    if(ball.y -ball.radius < 0 || (ball.x -ball.radius <0 && ball.y < canvas.height/2 ) || (ball.x +ball.radius > canvas.width && ball.y < canvas.height/2) ){
-      
+ 
       user2.score += 15;
       
       if(user2.score >= 45){
@@ -594,7 +589,7 @@ function game(){
       
 
    }else if(ball.y + ball.radius > canvas.height || (ball.x -ball.radius <0 && ball.y > canvas.height/2) || (ball.x +ball.radius > canvas.width && ball.y > canvas.height/2) ){
-      
+
       user1.score += 15;
       
       if(user1.score >= 45){
@@ -612,9 +607,10 @@ function game(){
          user1.win++;
       }
       checkRound();
-      connectServer( "player2ResetBall", 4 );
+     connectServer( "player2ResetBall", 4 );
       
    }
+ 
    
     if(user1.mno != 0 && user2.mno != 0){
       user1.draw();   // 유저 1 그리기
@@ -622,6 +618,4 @@ function game(){
    }
     
 }
-
-
-game();
+ let interval = setInterval(game(), 3000);
