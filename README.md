@@ -1,6 +1,8 @@
 # ten__needs
 tenNeeds(project3)
 
+#### 0. 시현 영상 
+https://youtu.be/4osNJmozpwY
 #### 1. 주제
 테니스 웹(미니게임, 채팅, 근처 체육시설 정보 제공 서비스)
 
