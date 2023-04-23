@@ -434,8 +434,8 @@ function checkRound(){
          gameresult.winner = user1.mno;
          gameresult.loser = user2.mno;
          
-         gameresult.winnergsAccute = (gameresult.winner == user1.mno ? user1.accute : user2.accute) 
-         gameresult.losergsAccute = (gameresult.loser == user1.mno ? user1.accute : user2.accute) 
+         gameresult.winnergsAccute = ((gameresult.winner == user1.mno ? user1.accute : user2.accute)*10)
+         gameresult.losergsAccute = ((gameresult.loser == user1.mno ? user1.accute : user2.accute)*10)
          
          gameresult.loserRno = user1.rno;
          gameresult.winnerRno = user2.rno;
@@ -458,7 +458,7 @@ function checkRound(){
         
          document.querySelector('.modal_title').innerHTML = "라운드 : " + round;
          document.querySelector('.userMid').innerHTML = gameresult.winner == user2Mno ? user2Mid : user1Mid
-         document.querySelector('.roundContent').innerHTML = "승리! 앞으로도 쭉쭉 전진하세요."
+         document.querySelector('.roundContent').innerHTML = "최종 승리!"
          
          openModal();
       }
@@ -478,10 +478,6 @@ function checkRound(){
 	      })		 
 	 }else{
 		 resultcount++;
-	 }
-	 
-	 if(resultcount == 1){
-		 location.href = "/ten__needs/tenneeds/jsp/game/gamelist.jsp";
 	 }
 
    }
