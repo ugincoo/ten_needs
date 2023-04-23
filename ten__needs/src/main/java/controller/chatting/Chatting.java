@@ -101,6 +101,7 @@ public class Chatting {
 			ChatMessageDto messageDto = new ChatMessageDto(session, msg);
 			json = mapper.writeValueAsString(messageDto);
 			
+		
 			int senderGno = 0; //--- 변수 추가(이유: gNO 일치 여부 확인을 위함) 
 			for (ChatUserDto dto : connectList) { //--- 코드 추가: gNO 
 		            if (dto.getSession() == session) {
