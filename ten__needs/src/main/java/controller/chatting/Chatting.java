@@ -113,10 +113,10 @@ public class Chatting {
 				 }
 			}
 		} else if(  msg.contains("out") ) { // --- 메시지 전송
-			ArrayList<ChatMessageDto> messageList = new ArrayList<>();
-			JsonNode msgNode = mapper.readTree(msg);
-			
+		ArrayList<ChatMessageDto> messageList = new ArrayList<>();
+			JsonNode msgNode = mapper.readTree(msg);			
 			int checkGno = (int)msgNode.get("gNo").asDouble();
+			String data = (String)msgNode.get("data").asText(); //전달할 메시지
 			System.out.println(checkGno);
 			// json = mapper.writeValueAsString(msg);
 			for( ChatUserDto dto : connectList ) {
@@ -124,6 +124,7 @@ public class Chatting {
 					 messageList.add( new ChatMessageDto(dto.getSession(), msg) );
 					 
 					 json = mapper.writeValueAsString( messageList );
+					 System.out.println(json);
 					 dto.getSession().getBasicRemote().sendText(json);
 				 }
 			}
@@ -138,15 +139,14 @@ public class Chatting {
 			
 			if( dto.getSession() == session ) {
 				connectList.remove(dto);
-				
 				String msg = "{\"type\":\"out\",\"gNo\":"+gNo+",\"data\":\""+dto.getmId()+"님이 "+gNo+"번 게임방을 나갔습니다.\"}";
 				// 형태: { "필드명" : "데이터", "필드명" : 데이터 }
 				// 해석: 큰따음표 사용을 위에 이스케이프 문자 사용
 				
-				System.out.println(msg);
+				//System.out.println(msg);
 				OnMessage( session, msg);
 				// 모든 접속명단에게 연결 끊긴 클라이언트 소캣을 알림 [접속목록]
-				
+				OnMessage( session, "user");
 				break;
 			}
 		}

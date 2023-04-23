@@ -65,6 +65,7 @@ public class Connection {
 		for(GameUserDto dto : connectPlayerList) {
 			if(dto.getSession() == session) {
 				connectPlayerList.remove(dto);
+
 			}
 			
 		}

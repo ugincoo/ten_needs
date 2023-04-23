@@ -61,6 +61,7 @@ function onMessage( e ){
 	
 	if( Array.isArray( data ) ){ // ------------- 상단 프로필 상태 출력
 		console.log(data);
+		
 		let html = '';
 		data.forEach( (d) =>{
 			console.log(d);
@@ -105,19 +106,13 @@ function onMessage( e ){
 					            	</div>
 									`
 		}} else if( JSON.parse(data.msg).type == "alarm" ){ // ------------- 알람 출력
+				
 				geme_chat.innerHTML += `
 									<div class="alarm">
 										<span> ${data.mId}님이 입장하셨습니다. </span>
 									</div>
 									`
-			} else if( JSON.parse(data.msg).type == 'out' ){ // ------------- 사용자 나감 알람 출력
-				console.log('out확인');
-				geme_chat.innerHTML += `
-									<div class="alarm">
-										<span> ${data.data} </span>
-									</div>
-									`
-			}  else if( JSON.parse(data.msg).type == "game" ){
+			} else if( JSON.parse(data.msg).type == "game" ){
 				
 				if( JSON.parse(data.msg).data ){
 					countStart++;
@@ -144,6 +139,15 @@ function onMessage( e ){
 					   location.href = `/ten__needs/tenneeds/jsp/game/pingpong.jsp?gNo=${gNo}&user1=${info[0].mId}&user2=${info[1].mId}`;
 					   }, 5000 )
 				}
+			}else if( JSON.parse(JSON.parse(data.msg)).type == 'out' ){ // ------------- 사용자 나감 알람 출력
+				console.log('out확인');
+				let msg = JSON.parse(data.msg);
+				
+				geme_chat.innerHTML += `
+									<div class="alarm">
+										<span> ${msg.data} </span>
+									</div>
+									`
 			}
 
 	let top = geme_chat.scrollTop;

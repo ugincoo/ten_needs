@@ -127,7 +127,8 @@ function drawCircle(x, y, r, color){
 function connectServer( type, data ){
    let msgBox = {
       type: type,
-      data: data
+      data: data,
+      gNo : gNo
    }
       console.log(msgBox);
    ballSocket.send( JSON.stringify(msgBox) );

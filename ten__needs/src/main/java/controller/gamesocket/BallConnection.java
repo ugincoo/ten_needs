@@ -46,6 +46,7 @@ public class BallConnection {
 		for(GameUserBallTestDto dto : connectList) {
 			if(dto.getSession() == session) {
 				connectList.remove(dto);
+				msgServer(session, "userOut");
 			}
 		}
 	}
@@ -53,6 +54,16 @@ public class BallConnection {
 	@OnError
 	public void errorServer( Session session , Throwable e ) throws Exception {
 		System.out.println( session );
+	}
+	//Gno 판별하는 함수
+	public int findGno(Session session) {
+		int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
+		for( GameUserBallTestDto dto: connectList ) {
+			if( dto.getSession() == session ) {
+				senderGno = dto.getGno(); break;
+			}
+		}
+		return senderGno;
 	}
 	
 	@OnMessage
@@ -72,12 +83,11 @@ public class BallConnection {
 			balldto = new BallDto(310, 120, 10, 5, 0, 0, "yellow", 0);
 			json = mapper.writeValueAsString(balldto);
 			
-			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
-			for( GameUserBallTestDto dto: connectList ) {
-				if( dto.getSession() == session ) {
-					senderGno = dto.getGno(); break;
-				}
-			}
+			int senderGno = findGno(session); //--- 다른방 유저에게 메시지 중복으로 전달 방지
+			/*
+			 * for( GameUserBallTestDto dto: connectList ) { if( dto.getSession() == session
+			 * ) { senderGno = dto.getGno(); break; } }
+			 */
 			for( GameUserBallTestDto dto : connectList ) {
 				if( dto.getGno() == senderGno ) {
 					dto.getSession().getBasicRemote().sendText(json);
@@ -109,12 +119,12 @@ public class BallConnection {
 				// System.out.println( updateBall.toString() ); //--- 확인 완료
 			json = mapper.writeValueAsString(balldto);
 			
-			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
-			for( GameUserBallTestDto dto: connectList ) {
-				if( dto.getSession() == session ) {
-					senderGno = dto.getGno(); break;
-				}
-			}
+			int senderGno = findGno(session); //--- 다른방 유저에게 메시지 중복으로 전달 방지
+//			for( GameUserBallTestDto dto: connectList ) {
+//				if( dto.getSession() == session ) {
+//					senderGno = dto.getGno(); break;
+//				}
+//			}
 			for( GameUserBallTestDto dto : connectList ) {
 				if( dto.getGno() == senderGno ) {
 					dto.getSession().getBasicRemote().sendText(json);
@@ -140,12 +150,12 @@ public class BallConnection {
 			
 			json = mapper.writeValueAsString(balldto);
 			
-			int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
-			for( GameUserBallTestDto dto: connectList ) {
-				if( dto.getSession() == session ) {
-					senderGno = dto.getGno(); break;
-				}
-			}
+			int senderGno = findGno(session); //--- 다른방 유저에게 메시지 중복으로 전달 방지
+//			for( GameUserBallTestDto dto: connectList ) {
+//				if( dto.getSession() == session ) {
+//					senderGno = dto.getGno(); break;
+//				}
+//			}
 			for( GameUserBallTestDto dto : connectList ) {
 				if( dto.getGno() == senderGno ) {
 					dto.getSession().getBasicRemote().sendText(json);
@@ -157,12 +167,12 @@ public class BallConnection {
 	     	balldto = new BallDto(310, 120, 10, 5, 0, 0, "yellow", 3); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
 	     	json = mapper.writeValueAsString(balldto);
 	     			
-	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
-	     	for( GameUserBallTestDto dto: connectList ) {
-	     		if( dto.getSession() == session ) {
-	     			senderGno = dto.getGno(); break;
-	     			}
-	     	}
+	     	int senderGno = findGno(session); //--- 다른방 유저에게 메시지 중복으로 전달 방지
+//	     	for( GameUserBallTestDto dto: connectList ) {
+//	     		if( dto.getSession() == session ) {
+//	     			senderGno = dto.getGno(); break;
+//	     			}
+//	     	}
 	     	for( GameUserBallTestDto dto : connectList ) {
 	     		if( dto.getGno() == senderGno ) {
 	     			dto.getSession().getBasicRemote().sendText(json);
@@ -174,18 +184,18 @@ public class BallConnection {
 	     	balldto = new BallDto(310, 690, 10, 5, 0, 0, "yellow", 4); //--- 리셋 작업 (상황에 맞게 값 조정하여 사용)
 	     	json = mapper.writeValueAsString(balldto);
 	     			
-	     	int senderGno = 0; //--- 다른방 유저에게 메시지 중복으로 전달 방지
-	     	for( GameUserBallTestDto dto: connectList ) {
-	     		if( dto.getSession() == session ) {
-	     			senderGno = dto.getGno(); break;
-	     			}
-	     	}
+	     	int senderGno = findGno(session); //--- 다른방 유저에게 메시지 중복으로 전달 방지
+//	     	for( GameUserBallTestDto dto: connectList ) {
+//	     		if( dto.getSession() == session ) {
+//	     			senderGno = dto.getGno(); break;
+//	     			}
+//	     	}
 	     	for( GameUserBallTestDto dto : connectList ) {
 	     		if( dto.getGno() == senderGno ) {
 	     			dto.getSession().getBasicRemote().sendText(json);
 	     		}
 	     	}	 
-	    }
+	    } 
 	}catch (Exception e) { System.out.println(e);}
 	}
 	
