@@ -409,10 +409,10 @@ function keyUpHandler(event) {
 }
 // 공과 플레이어 충돌
 function collision(b, p){
-   b.top = b.y - b.radius; 		// ball 윗면 기준점 설정 (현재 볼의 y좌표에서 반지름 뺀값)
-   b.bottom = b.y + b.radius;	// ball 아랫면 기준점 설정 (현재 볼의 y좌표에서 반지름 더한값)
-   b.left = b.x - b.radius;		// ball 왼쪽면 기준점 설정 (현재 볼의 x좌표에서 반지름 뺀값)
-   b.right = b.x + b.radius;	// ball 우측면 기준점 설정 (현재 볼의 x좌표에서 반지름 더한값)
+   b.top = b.y - b.radius; 			// ball 윗면 기준점 설정 (현재 볼의 y좌표에서 반지름 뺀값)
+   b.bottom = b.y + b.radius;		// ball 아랫면 기준점 설정 (현재 볼의 y좌표에서 반지름 더한값)
+   b.left = b.x - b.radius;			// ball 왼쪽면 기준점 설정 (현재 볼의 x좌표에서 반지름 뺀값)
+   b.right = b.x + b.radius;		// ball 우측면 기준점 설정 (현재 볼의 x좌표에서 반지름 더한값)
    
    p.top = p.y;						// player 윗면 기준점 설정 (현재 유저의 y좌표 지점)
    p.bottom = p.y + (p.height/2);	// player 아랫면 기준점 설정 (현재 유저의 y좌표 지점에서 유저 높이 더한 값)
