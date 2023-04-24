@@ -26,25 +26,25 @@ if( memberInfo == null ){}
 else{
    
    // ------------------------------------------------------------------------------ ballSocket 
-   ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
+   ballSocket = new WebSocket('ws://localhost:8087/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
    ballSocket.onopen = (e)=>{ console.log('ballSocket on'); ballOpen(e);}
    ballSocket.onclose = (e)=>{ console.log('ballSocket off'+e);}
    ballSocket.onerror = (e)=>{ console.log('ballSocket err');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
-   gameSocket = new WebSocket('ws://localhost:8080/ten__needs/game/'+gNo+'/'+memberInfo.mno);
+   gameSocket = new WebSocket('ws://localhost:8087/ten__needs/game/'+gNo+'/'+memberInfo.mno);
    gameSocket.onopen = (e)=>{ console.log('서버소켓 들어');}
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
    gameSocket.onmessage = (e)=>{onMessage(e);}
    
    // ------------------------------------------------------------------------------ alarm Socket
-   alarmSocket = new WebSocket('ws://localhost:8080/ten__needs/alarm'+gNo+'/'+memberInfo.mno);
-   alarmSocket.onopen = (e)=>{ console.log('alarmSocket on'); }
-   alarmSocket.onclose = (e)=>{ console.log('alarmSocket off'+e);console.log(e)}
-   alarmSocket.onerror = (e)=>{ console.log('alarmSocket err')}
-   alarmSocket.onmessage = (e)=>{alarmMessage(e);}
+   //alarmSocket = new WebSocket('ws://localhost:8089/ten__needs/alarm'+gNo+'/'+memberInfo.mno);
+   //alarmSocket.onopen = (e)=>{ console.log('alarmSocket on'); }
+   //alarmSocket.onclose = (e)=>{ console.log('alarmSocket off'+e);console.log(e)}
+   //alarmSocket.onerror = (e)=>{ console.log('alarmSocket err')}
+   //alarmSocket.onmessage = (e)=>{alarmMessage(e);}
 }
 
 // ------------------------------------------------------------------------------ ballSocket (생성)
@@ -137,12 +137,13 @@ function connectServer( type, data ){
       data: data
    }
 	   console.log(msgBox);
+	   ballSocket.send( JSON.stringify(msgBox) );
 	   // ------------------------------------------------------------------------- 아래 동작 여부 확인 필요
-   if( msgBox.type.contains("palyer") ){
+   /*if( msgBox.type.contains("palyer") ){
 		ballSocket.send( JSON.stringify(msgBox) );
 	} else if( msgBox.type.contains("alarm") ){
 		alarmSocket.send( JSON.stringify(msgBox) );
-	}
+	}*/
 }   
 // ------------------------------------------------------------------------------ ballSocket End
 
@@ -409,15 +410,40 @@ function keyUpHandler(event) {
 }
 // 공과 플레이어 충돌
 function collision(b, p){
+	
+	console.log(p);
+	
    b.top = b.y - b.radius; 			// ball 윗면 기준점 설정 (현재 볼의 y좌표에서 반지름 뺀값)
    b.bottom = b.y + b.radius;		// ball 아랫면 기준점 설정 (현재 볼의 y좌표에서 반지름 더한값)
    b.left = b.x - b.radius;			// ball 왼쪽면 기준점 설정 (현재 볼의 x좌표에서 반지름 뺀값)
    b.right = b.x + b.radius;		// ball 우측면 기준점 설정 (현재 볼의 x좌표에서 반지름 더한값)
    
+   console.log(p.user);
+   if( p.user == 1 ){
+	   p.top = p.y + (97*p.height/100);		// player 윗면 기준점 설정 (현재 유저의 y좌표 지점)
+	   p.bottom = p.y + (p.height);	// player 아랫면 기준점 설정 (현재 유저의 y좌표 지점에서 유저 높이 더한 값)
+	   p.left = p.x;					// player 왼쪽면 기준점 설정 (현재 유저의 x좌표 지점)
+	   p.right = p.x + p.width;			// player 우측면 기준점 설정 (현재 유저의 x좌표 지점에서 유저 높이 더한 값)
+	} else if( p.user == 2){
+	   p.top = p.y;						// player 윗면 기준점 설정 (현재 유저의 y좌표 지점)
+	   p.bottom = p.y + (2*p.height/3);	// player 아랫면 기준점 설정 (현재 유저의 y좌표 지점에서 유저 높이 더한 값)
+	   p.left = p.x;					// player 왼쪽면 기준점 설정 (현재 유저의 x좌표 지점)
+	   p.right = p.x + p.width;			// player 우측면 기준점 설정 (현재 유저의 x좌표 지점에서 유저 높이 더한 값)
+	}
+	
+   /*
    p.top = p.y;						// player 윗면 기준점 설정 (현재 유저의 y좌표 지점)
    p.bottom = p.y + (p.height/2);	// player 아랫면 기준점 설정 (현재 유저의 y좌표 지점에서 유저 높이 더한 값)
    p.left = p.x;					// player 왼쪽면 기준점 설정 (현재 유저의 x좌표 지점)
    p.right = p.x + p.width;			// player 우측면 기준점 설정 (현재 유저의 x좌표 지점에서 유저 높이 더한 값)
+   */
+   
+   /*
+   if( (p.y <= (canvas.height/2) && p.y > b.y) || (p.y>=(canvas.height/2) && p.y < b.y) ){
+		return false;
+	}*/
+	
+   
    
    return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
    // 리턴값: true or false (위에 조건 모두 만족했을 때, true / 아닌 경우 false)
