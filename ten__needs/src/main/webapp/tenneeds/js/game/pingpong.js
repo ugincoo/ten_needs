@@ -27,9 +27,9 @@ else{
    
    // ------------------------------------------------------------------------------ ballSocket 
    ballSocket = new WebSocket('ws://localhost:8080/ten__needs/ball/'+gNo+'/'+memberInfo.mno);
-   ballSocket.onopen = (e)=>{ console.log('서버소켓 들어'); ballOpen(e);}
-   ballSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);}
-   ballSocket.onerror = (e)=>{ console.log('서버소켓 오류');}
+   ballSocket.onopen = (e)=>{ console.log('ballSocket on'); ballOpen(e);}
+   ballSocket.onclose = (e)=>{ console.log('ballSocket off'+e);}
+   ballSocket.onerror = (e)=>{ console.log('ballSocket err');}
    ballSocket.onmessage = (e)=>{ballMessage(e);}
    
    // gameSocket
@@ -38,6 +38,13 @@ else{
    gameSocket.onclose = (e)=>{ console.log('서버소켓 나감'+e);console.log(e)}
    gameSocket.onerror = (e)=>{ console.log('서버소켓 오류')}
    gameSocket.onmessage = (e)=>{onMessage(e);}
+   
+   // ------------------------------------------------------------------------------ alarm Socket
+   alarmSocket = new WebSocket('ws://localhost:8080/ten__needs/alarm'+gNo+'/'+memberInfo.mno);
+   alarmSocket.onopen = (e)=>{ console.log('alarmSocket on'); }
+   alarmSocket.onclose = (e)=>{ console.log('alarmSocket off'+e);console.log(e)}
+   alarmSocket.onerror = (e)=>{ console.log('alarmSocket err')}
+   alarmSocket.onmessage = (e)=>{alarmMessage(e);}
 }
 
 // ------------------------------------------------------------------------------ ballSocket (생성)
@@ -123,20 +130,26 @@ function drawCircle(x, y, r, color){
    ctx.fill();
 }
 
-// ----------------------------------- ballSocket 메시지 보내는 창구 -----------------------------------
+// ----------------------------------- ballSocket & alarmSoket 메시지 보내는 창구 -----------------------------------
 function connectServer( type, data ){
    let msgBox = {
       type: type,
       data: data
    }
-      console.log(msgBox);
-   ballSocket.send( JSON.stringify(msgBox) );
+	   console.log(msgBox);
+	   // ------------------------------------------------------------------------- 아래 동작 여부 확인 필요
+   if( msgBox.type.contains("palyer") ){
+		ballSocket.send( JSON.stringify(msgBox) );
+	} else if( msgBox.type.contains("alarm") ){
+		alarmSocket.send( JSON.stringify(msgBox) );
+	}
 }   
 // ------------------------------------------------------------------------------ ballSocket End
 
-function onOpne(e){
+// ------------------------------------------------------------------------------ alarmSocket Start
 
-}
+
+
 
 //움직였을때의 서버에게 메시지(움직임정보) 보내 & 처음 접속했을때
 function sendMessage(type, mno, x, y){
@@ -149,10 +162,7 @@ function sendMessage(type, mno, x, y){
    }
    gameSocket.send(JSON.stringify(msg));
 }
-
-
-   
-   
+ 
 // 방향키 전역 변수
 let rightPressed = false;   // 우키 상태
 let leftPressed = false;   // 좌키 상태
@@ -295,7 +305,7 @@ function onMessage(e){
       if(userData.user == 1){
          user1.x += userData.x;
          user1.y += userData.y;
-         if(user1.y > canvas.height/2-150){
+         if(user1.y > canvas.height/2-150){ // 상대방 진영으로 움직이지 못하도록 제어(기준 값: 네트 기준 - 150으로 설정)
 			 user1.y = canvas.height/2-150
 		 }
          user1.draw();
@@ -303,7 +313,7 @@ function onMessage(e){
       }else if(userData.user == 2){
          user2.x += userData.x;
          user2.y += userData.y;
-         if(user2.y < canvas.height/2-100){
+         if(user2.y < canvas.height/2-100){ // 상대방 진영으로 움직이지 못하도록 제어(기준 값: 네트 기준 - 100으로 설정)
 			 user2.y = canvas.height/2-100
 		 }
          user2.draw();
@@ -399,17 +409,20 @@ function keyUpHandler(event) {
 }
 // 공과 플레이어 충돌
 function collision(b, p){
-   b.top = b.y - b.radius;
-   b.bottom = b.y + b.radius;
-   b.left = b.x - b.radius;
-   b.right = b.x + b.radius;
+   b.top = b.y - b.radius; 		// ball 윗면 기준점 설정 (현재 볼의 y좌표에서 반지름 뺀값)
+   b.bottom = b.y + b.radius;	// ball 아랫면 기준점 설정 (현재 볼의 y좌표에서 반지름 더한값)
+   b.left = b.x - b.radius;		// ball 왼쪽면 기준점 설정 (현재 볼의 x좌표에서 반지름 뺀값)
+   b.right = b.x + b.radius;	// ball 우측면 기준점 설정 (현재 볼의 x좌표에서 반지름 더한값)
    
-   p.top = p.y;
-   p.bottom = p.y + p.height;
-   p.left = p.x;
-   p.right = p.x + p.width;
+   p.top = p.y;						// player 윗면 기준점 설정 (현재 유저의 y좌표 지점)
+   p.bottom = p.y + (p.height/2);	// player 아랫면 기준점 설정 (현재 유저의 y좌표 지점에서 유저 높이 더한 값)
+   p.left = p.x;					// player 왼쪽면 기준점 설정 (현재 유저의 x좌표 지점)
+   p.right = p.x + p.width;			// player 우측면 기준점 설정 (현재 유저의 x좌표 지점에서 유저 높이 더한 값)
    
    return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
+   // 리턴값: true or false (위에 조건 모두 만족했을 때, true / 아닌 경우 false)
+   // 수정필요 부분: 육안으로 봤을 때, 유저를 지나친 지점에서도 true값 반환하는 현상 수정 필요
+   // 해결 방법: p.bottom 값 초기화하는 부분 변경처리 (현재 y좌표 + 유저의 절반지점으로 설정) //---- 확인 후 조정해야함
 }
 
 let gameresult = {
@@ -486,8 +499,8 @@ function checkRound(){
    }
 }
 
- let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno;
- let c = 120;
+ let sendmno = memberInfo.mno == user1Mno ? user1Mno : user2Mno; // 유저 식별용(소캣으로 뺄 예정)
+ let c = 120; // ..............?
 // 1초 반복 실행
 function game(){
     requestAnimationFrame(game);
@@ -520,7 +533,7 @@ function game(){
     
     // 공 속도
     ball.x += ball.velocityX;
-   ball.y += ball.velocityY;
+   	ball.y += ball.velocityY;
     
    
    // 패들이 user1 또는 user2 쳤는지 확인합니다.
@@ -529,7 +542,7 @@ function game(){
    if(spacePressed){
        // 공이 패들에 부딪힌 경우
       if(collision(ball, player)){
-		   
+		  
          // 공이 패들에 닿는 위치 확인
          console.log("!!!"+ball.y)
          console.log("@@"+player.y)
