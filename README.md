@@ -1,8 +1,10 @@
 # ten__needs
 tenNeeds(project3)
 
-#### 0. 시현 영상 
+#### 0. 시현 영상 및 PT자료
 https://youtu.be/4osNJmozpwY
+[tenneeds_ppt.pdf](https://github.com/Tea-ho/ten__needs/files/11355404/tenneeds_ppt.pdf)
+
 #### 1. 주제
 테니스 웹(미니게임, 채팅, 근처 체육시설 정보 제공 서비스)
 
@@ -54,6 +56,3 @@ Ten-Needs
     font-weight: normal;
     font-style: normal;
 }
-
-#### 13. PT자료
-[tenneeds_ppt.pdf](https://github.com/Tea-ho/ten__needs/files/11355404/tenneeds_ppt.pdf)
