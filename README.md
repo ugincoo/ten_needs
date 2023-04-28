@@ -29,8 +29,6 @@ JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summern
 #### 6. mySQL ER diagram
 ![image](https://user-images.githubusercontent.com/119651889/229287219-8e486d4f-338c-4fd6-acbb-a90c3fb69fec.png)
 
-
-
 #### 7. MVC Structure
 ![image](https://user-images.githubusercontent.com/119651889/230697322-7a6ced6c-654a-4370-a121-8149752464c4.png)
 
