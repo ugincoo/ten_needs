@@ -42,10 +42,10 @@ JSP Project: HTML5, JS, Java, MySQL, AJAX, JSON, BootStrap, Fontawesome, Summern
 Ten-Needs
 
 #### 10. 페이지 로고
-![image](https://user-images.githubusercontent.com/119651889/231033782-48ddd9d0-3b5d-4079-925d-69455e73df35.png)
+<img src="https://user-images.githubusercontent.com/119651889/231033782-48ddd9d0-3b5d-4079-925d-69455e73df35.png" width="50%">
 
 #### 11. 테마 색상
-![image](https://user-images.githubusercontent.com/119651889/227859770-11cd2b0b-7216-4e6e-a318-676ea4e9e624.png)
+<img src="https://user-images.githubusercontent.com/119651889/227859770-11cd2b0b-7216-4e6e-a318-676ea4e9e624.png" width="60%">
 
 #### 12. 메인 폰트
 @font-face {
