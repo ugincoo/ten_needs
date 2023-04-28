@@ -15,7 +15,7 @@ https://youtu.be/4osNJmozpwY
 
 #### 3. 팀원: 권가영, 김미영, 김태호, 오유진
 **[ R&R ]**
-![image](https://user-images.githubusercontent.com/119651889/231057928-019ee8a2-61fb-4ff0-b398-750a82b5f49a.png)
+![image](https://user-images.githubusercontent.com/119651889/235188228-bed2f16b-9b2b-40ae-982b-f96fb6f3b104.png)
 
 **[ Personal Schedule ]**
 ![image](https://user-images.githubusercontent.com/119651889/231057898-baf7a9a2-7a9f-416e-89e8-5527f40dc60a.png)
