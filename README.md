@@ -11,7 +11,7 @@ tenNeeds(project3)
 #### 2. 주제 선정 이유
 - MVC 패턴 학습
 - CRUD 기능 적용
-- sockat을 이용한 2인 전용 게임 서비스 추가
+- 채팅 및 미니 테니스게임 구현을 통한 Socket 학습
 - 공공데이터 및 kakao API 사용
 - SQL 활용(DB관리 및 통계처리)
 
