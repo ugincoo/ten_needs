@@ -1,6 +1,9 @@
 # ten__needs
 tenNeeds(project3)
 
+## 링크
+[ten_needs](http://ugincoo.github.io/ten_needs/)
+
 #### 0. 시현 영상 
 https://youtu.be/4osNJmozpwY
 #### 1. 주제
